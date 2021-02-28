@@ -1,0 +1,7 @@
+{
+  "name": "appointmentSys",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
