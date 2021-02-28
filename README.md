@@ -14,3 +14,7 @@ Before proceeding, make sure your computer has Node.js installed. See these inst
 + cd myApp
 + ionic serve
 
+## Install VSCode Plugin
++ Vetur
++ Prettier
++ Path Intellisense
