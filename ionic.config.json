@@ -1,7 +1,7 @@
 {
-  "name": "appointmentSys",
+  "name": "frontend",
   "integrations": {
     "capacitor": {}
   },
-  "type": "vue"
+  "type": "react"
 }
