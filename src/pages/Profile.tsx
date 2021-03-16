@@ -173,10 +173,8 @@ const Profile: React.FC = () => {
 
             <IonCol>
             
-              <IonButton expand="block" onClick={handleLogin}>Sign up</IonButton>
-                <p style={{ fontSize: "medium" }}>
-                 have an account? <a href="#">Sign in!</a>
-            </p>
+              <IonButton expand="block" onClick={handleLogin}>Edit</IonButton>
+
 
             </IonCol>
 
