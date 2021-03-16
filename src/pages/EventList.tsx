@@ -1,30 +1,17 @@
 import {
   IonContent,
   IonHeader,
-  IonLifeCycleContext,
   IonPage,
-  IonRoute,
-  IonTabBar,
   IonTitle,
   IonToolbar,
-  IonIcon, IonItem, IonLabel, IonReorder, IonReorderGroup,IonCardSubtitle, IonCard, IonCardHeader, IonCardTitle, IonCardContent,  IonButton
+  IonIcon, IonItem, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent,  IonButton
 
 } from "@ionic/react";
 import React, { useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import {
-  female,
-  male,
-  personCircle,
-  trash,
-  share,
-  caretForwardCircle,
-  heart,
-  close,
-  pin,
-  wifi,
-  wine, warning, walk
+  pin, idCardOutline
 } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { IonRouteInner } from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
@@ -51,18 +38,26 @@ const EventList: React.FC = () => {
         </IonHeader>
         <IonContent>
           <IonCard>
-            <IonCardHeader>
-              <IonCardTitle>Appointment</IonCardTitle>
-            </IonCardHeader>
+            <IonItem>
+              <IonIcon
+                  style={{ fontSize: "20px", color: "#0040ff" }}
+                  icon={idCardOutline} slot="start" />
+
+
+              <IonLabel>Appointment Message</IonLabel>
+
+            </IonItem>
 
             <IonCardContent>
-              ###################
+             xxxxxxxxxxxxxx
             </IonCardContent>
           </IonCard>
 
           <IonCard>
             <IonItem>
-              <IonIcon icon={pin} slot="start" />
+              <IonIcon
+                  style={{ fontSize: "20px", color: "#0040ff" }}
+                  icon={pin} slot="start" />
               <IonLabel>Location</IonLabel>
               <IonButton fill="outline" slot="end">View</IonButton>
             </IonItem>
@@ -74,12 +69,15 @@ const EventList: React.FC = () => {
 
           <IonCard>
             <IonItem href="#" className="ion-activated">
-              <IonIcon icon={calendarNumberOutline} slot="start" />
+              <IonIcon style={{ fontSize: "20px", color: "#0040ff" }}
+                       icon={calendarNumberOutline} slot="start" />
               <IonLabel>Date</IonLabel>
             </IonItem>
 
             <IonItem href="#">
-              <IonIcon icon={timerOutline} slot="start" />
+              <IonIcon
+                  style={{ fontSize: "20px", color: "#0040ff" }}
+                  icon={timerOutline} slot="start" />
               <IonLabel>Time</IonLabel>
             </IonItem>
 
