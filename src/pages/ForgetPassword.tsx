@@ -71,13 +71,12 @@ const ForgetPassword: React.FC = () => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonCol class = "ion-text-center">
-            <IonRow></IonRow><IonCol></IonCol><IonRow></IonRow><IonCol></IonCol>  
-                {/*SignUp Text*/}
-                <p style={{ fontSize: "medium" }}>  
-                    <a href="#">Already have an account? Login here!</a>
-                  </p>
-              
+            {/*Login link*/}
+            <IonCol class = "ion-text-center"> 
+                <IonButton routerLink="/LoginMX"
+                           class="button button-clear button-postive" 
+                           color = "#46b0e0"
+                ><a href="#">Already have an account? Login here!</a></IonButton>  
             </IonCol>
           </IonRow>
         </IonGrid>

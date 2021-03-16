@@ -49,6 +49,8 @@ const App: React.FC = () => (
         <Route path="/profile" component={Profile} exact={true} />
         <Route path="/register" component={Register} exact={true} />
          <Route path="/loginMX" component={Login} exact={true} />
+         <Route path="/ForgetPassword" component={ForgetPassword} exact={true} />
+         <Route path="/ResetPassword" component={ResetPassword} exact={true} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>

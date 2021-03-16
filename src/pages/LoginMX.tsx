@@ -118,23 +118,28 @@ const LoginMX: React.FC = () => {
           <IonRow></IonRow><IonCol></IonCol>
           <IonRow>
             <IonCol> 
-              <IonButton class="button button-outline button-block" color = "#46b0e0" onClick={handleLogin}>Login</IonButton>
+              <IonButton class="button button-outline button-block" 
+                          color = "#46b0e0" 
+                          // onClick={handleLogin}
+                          >Login</IonButton>
             </IonCol>
           </IonRow>
           <IonRow></IonRow>
+          
           <IonRow>
-            <IonCol class = "ion-text-left">
-                {/*SignUp Text*/}
-                <p style={{ fontSize: "medium" }}>
-                    <a href="#">Forget Password?</a>     
-                  </p>
+            {/*Forget password link*/}
+            <IonCol class = "ion-text-left"> 
+                <IonButton routerLink="/ForgetPassword"
+                           class="button button-clear button-postive" 
+                           color = "#46b0e0"
+                ><a href="#">Forget Password?</a></IonButton>  
             </IonCol>
-            <IonCol class = "ion-text-right">
-                {/*SignUp Text*/}
-                <p style={{ fontSize: "medium" }}>  
-                    <a href="#">Sign up!</a>
-                  </p>
-              
+            {/*Register link*/}
+            <IonCol class = "ion-text-right"> 
+                <IonButton routerLink="/Register"
+                           class="button button-clear button-postive" 
+                           color = "#46b0e0"
+                ><a href="#">Sign Up!</a></IonButton>  
             </IonCol>
           </IonRow>
         </IonGrid>
