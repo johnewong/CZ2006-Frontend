@@ -37,12 +37,14 @@ import Login from './pages/Login';
 import React from 'react';
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import LoginMX from "./pages/LoginMX";
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
+            <Route path="/LoginMX" component={LoginMX} exact={true} />
             <Route path="/Profile" component={Profile} exact={true} />
             <Route path="/Register" component={Register} exact={true} />
          <Route path="/login" component={Login} exact={true} />

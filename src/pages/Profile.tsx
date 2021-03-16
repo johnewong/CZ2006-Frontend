@@ -150,7 +150,7 @@ const Profile: React.FC = () => {
                                 style={{ fontSize: "20px", color: "#0040ff" }}
                                 icon={callOutline}
                             />
-                            <IonLabel position="floating">Mobile number</IonLabel>
+                            <IonLabel position="floating" >Mobile number</IonLabel>
                             <IonInput>
 
 
