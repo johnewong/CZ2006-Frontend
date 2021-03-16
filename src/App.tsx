@@ -34,13 +34,17 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 import Login from './pages/LoginMX';
+import Profile from './pages/Profile';
+import Register from './pages/Register';
 
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-         <Route path="/loginMX" component={Login} exact={true} />
+          <Route path="/register" component={Register} exact={true} />
+          <Route path="/profile" component={Profile} exact={true} />
+          <Route path="/loginMX" component={Login} exact={true} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
