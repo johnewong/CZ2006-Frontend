@@ -15,7 +15,7 @@ import {female, male, personCircle} from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonCheckbox,IonText } from '@ionic/react';
 import {IonRouteInner} from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
-import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline} from "ionicons/icons";
+import {peopleOutline, personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline} from "ionicons/icons";
 import {Profiler} from "inspector";
 
 
@@ -96,7 +96,7 @@ const Profile: React.FC = () => {
                     <IonCol>
                         <IonIcon
                             style={{ fontSize: "70px", color: "#0040ff" }}
-                            icon={personCircle}
+                            icon={peopleOutline}
                         />
                     </IonCol>
 
