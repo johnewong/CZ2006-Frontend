@@ -33,6 +33,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+//import Login from './pages/Login';
 import Login from './pages/LoginMX';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
