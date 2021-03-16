@@ -12,8 +12,8 @@ function validateEmail(email: string) {
 }
 const Login: React.FC = () => {
   const history = useHistory();
-  const [email, setEmail] = useState<string>("eve.holt@reqres.in");
-  const [password, setPassword] = useState<string>("cityslicka");
+  const [email, setEmail] = useState<string>("user01@email.com");
+  const [password, setPassword] = useState<string>("1234");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const handleLogin = () => {
