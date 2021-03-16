@@ -44,11 +44,9 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-         <Route path="/LoginMX" component={Login} exact={true} />
-         <Route path="/Register" component={Register} exact={true} />
-         <Route path="/Profile" component={Profile} exact={true} />
-         <Route path="/ForgetPassword" component={ForgetPassword} exact={true} />
-         <Route path="/ResetPassword" component={ResetPassword} exact={true} />
+        <Route path="/profile" component={Profile} exact={true} />
+        <Route path="/register" component={Register} exact={true} />
+         <Route path="/loginMX" component={Login} exact={true} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
