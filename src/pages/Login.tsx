@@ -56,7 +56,7 @@ const Login: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding ion-text-center">
