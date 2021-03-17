@@ -11,7 +11,7 @@ function validateEmail(email: string) {
   
 }
 
-const SearchResult: React.FC = () => {
+const MakeAppointment: React.FC = () => {
   const history = useHistory();
   const [email, setEmail] = useState<string>("eve.holt@reqres.in");
   const [password, setPassword] = useState<string>("cityslicka");
@@ -38,7 +38,7 @@ const SearchResult: React.FC = () => {
               <img src= "assets/images/back.png" width = "30px" />
               <IonLabel
                 style={{ fontSize: "20px", color: "dark" }}>
-                  <b>Jurong West</b>
+                  <b>Clinic Name1</b>
               </IonLabel>
             </IonCol>        
           </IonRow>
@@ -74,15 +74,14 @@ const SearchResult: React.FC = () => {
           </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-float-left">
-        <IonGrid>
-          
-          <IonRow>
+        <IonGrid>      
+          <IonRow >
             <IonCol>
-              <IonCard>
+            <IonCard style = {{height: "300px"}}>
                 <IonCardHeader>
-                  <IonCardTitle class = "ion-text-left">Clinic Name1</IonCardTitle>
+                  <img src= "assets/images/LockLogo.png" width = "100px" />
+                  <IonCardTitle class = "ion-text-left">Doctor Name1</IonCardTitle>
                 </IonCardHeader>
-
                 <IonCardContent class = "ion-text-left">
                   Location: 501 Jurong West Street 51, # 01-283
                   Hong Kah Point, Singapore 640591
@@ -90,27 +89,13 @@ const SearchResult: React.FC = () => {
               </IonCard>
             </IonCol>
           </IonRow>
-          <IonRow>
+          <IonRow >
             <IonCol>
-              <IonCard>
+            <IonCard style = {{height: "300px"}}>
                 <IonCardHeader>
-                  <IonCardTitle class = "ion-text-left">Clinic Name2</IonCardTitle>
+                  <img src= "assets/images/LockLogo.png" width = "100px" />
+                  <IonCardTitle class = "ion-text-left">Doctor Name2</IonCardTitle>
                 </IonCardHeader>
-
-                <IonCardContent class = "ion-text-left">
-                  Location: 501 Jurong West Street 51, # 01-283
-                  Hong Kah Point, Singapore 640591
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard>
-                <IonCardHeader>
-                  <IonCardTitle class = "ion-text-left">Clinic Name</IonCardTitle>
-                </IonCardHeader>
-
                 <IonCardContent class = "ion-text-left">
                   Location: 501 Jurong West Street 51, # 01-283
                   Hong Kah Point, Singapore 640591
@@ -124,4 +109,4 @@ const SearchResult: React.FC = () => {
   );
 };
 
-export default SearchResult;
+export default MakeAppointment;

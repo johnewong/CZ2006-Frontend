@@ -33,7 +33,6 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-
 import Login from './pages/LoginMX';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -41,7 +40,7 @@ import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ResetPassword';
 import EventList from "./pages/EventList";
 import SearchResult from './pages/SearchResult';
-import EventPage from "./pages/EventPage";
+import MakeAppointment from './pages/MakeAppointment';
 
 const App: React.FC = () => (
   <IonApp>
@@ -50,12 +49,12 @@ const App: React.FC = () => (
         <IonRouterOutlet>
         <Route path="/profile" component={Profile} exact={true} />
         <Route path="/register" component={Register} exact={true} />
-            <Route path="/eventpage" component={EventPage} exact={true} />
          <Route path="/loginMX" component={Login} exact={true} />
          <Route path="/EventList" component={EventList} exact={true} />
          <Route path="/ForgetPassword" component={ForgetPassword} exact={true} />
          <Route path="/ResetPassword" component={ResetPassword} exact={true} />
          <Route path="/SearchResult" component={SearchResult} exact={true} />
+         <Route path="/MakeAppointment" component={MakeAppointment} exact={true} />
           <Route exact path="/tab1">
             <Tab1 />
           </Route>
