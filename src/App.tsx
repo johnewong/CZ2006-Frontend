@@ -41,6 +41,7 @@ import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ResetPassword';
 import EventList from "./pages/EventList";
 import SearchResult from './pages/SearchResult';
+import EventPage from "./pages/EventPage";
 
 const App: React.FC = () => (
   <IonApp>
@@ -49,6 +50,7 @@ const App: React.FC = () => (
         <IonRouterOutlet>
         <Route path="/profile" component={Profile} exact={true} />
         <Route path="/register" component={Register} exact={true} />
+            <Route path="/eventpage" component={EventPage} exact={true} />
          <Route path="/loginMX" component={Login} exact={true} />
          <Route path="/EventList" component={EventList} exact={true} />
          <Route path="/ForgetPassword" component={ForgetPassword} exact={true} />
