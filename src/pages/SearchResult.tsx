@@ -1,15 +1,11 @@
-import { IonCard, IonContent, IonHeader, IonInfiniteScrollContent, IonPage, IonSlide, IonTitle, IonToolbar,IonVirtualScroll } from '@ionic/react';
+import { IonCard, IonContent, IonHeader, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { personCircle } from "ionicons/icons";
-import { lockClosed } from "ionicons/icons";
-import { useHistory } from "react-router-dom";
-import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg, IonSegment,IonSegmentButton, IonSlides, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
+import { arrowBack, arrowForward, caretBack, caretForward } from "ionicons/icons";
+import { useHistory } from "react-router-dom"
+import { IonItem, IonLabel, IonInput, IonButton, IonButtons, IonIcon, IonAlert,IonImg, IonSegment, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
 
-function validateEmail(email: string) {
-  
-}
 
 const SearchResult: React.FC = () => {
   const history = useHistory();
@@ -17,14 +13,8 @@ const SearchResult: React.FC = () => {
   const [password, setPassword] = useState<string>("cityslicka");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [showModal, setShowModal] = useState(false);
   const handleLogin = () => {
- 
-  };
-  const slideOpts = {
-    //https://swiperjs.com/swiper-api
-    initialSlide: 0,
-    speed: 300,
-    direction: "horizontal"
     
   };
   
@@ -32,45 +22,30 @@ const SearchResult: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonRow>
-            <IonCol class = "ion-text-left">
-              <img src= "assets/images/back.png" width = "30px" />
-              <IonLabel
-                style={{ fontSize: "20px", color: "dark" }}>
-                  <b>Jurong West</b>
-              </IonLabel>
-            </IonCol>        
-          </IonRow>
+          <IonToolbar>
+            <IonButtons  slot="secondary" >
+              <IonButton fill="default" routerLink= "/Home">
+                <IonIcon  icon={arrowBack}/>
+              </IonButton>
+            </IonButtons>
+            <IonLabel class = "ion-text-left" color = "#000000"><b>Jurong West</b></IonLabel>
           </IonToolbar>
           </IonHeader>
           <IonHeader>   
             <IonToolbar>
-              <IonRow>
-                <IonCol>
-                  <IonSegment>
-                    <IonSegmentButton style = {{height: "60px"}}>
-                      Select Date
-                    </IonSegmentButton>      
-                  </IonSegment>
-                </IonCol>
-              </IonRow>
-            <IonRow>
-
-                <IonCol>
-                  <IonSlides pager ={true} options={slideOpts}>
-                    <IonSlide>
-                      <IonSegment>
-                        <IonSegmentButton style = {{height: "60px"}}>Date 1</IonSegmentButton>
-                        <IonSegmentButton style = {{height: "60px"}}>Date 2</IonSegmentButton>
-                        <IonSegmentButton style = {{height: "60px"}}>Date 3</IonSegmentButton>
-                        <IonSegmentButton style = {{height: "60px"}}>Date 4</IonSegmentButton>
-                      </IonSegment>
-                    </IonSlide>
-                  </IonSlides>
-                </IonCol>
-            </IonRow>  
-          
+            <IonButtons slot="secondary">
+              <IonButton fill="clear" color="#000000">
+                <IonIcon  icon={caretBack} />
+                Previous
+              </IonButton>
+            </IonButtons>
+            <IonTitle style={{fontSize: "22px"}} color = "#000000"><b> 1 Feb 2021</b></IonTitle>
+            <IonButtons slot="primary" >
+              <IonButton fill="clear" color="#000000">Next
+                <IonIcon icon={caretForward} />
+              </IonButton>
+            </IonButtons>
+                   
           </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-float-left">
@@ -78,11 +53,10 @@ const SearchResult: React.FC = () => {
           
           <IonRow>
             <IonCol>
-              <IonCard>
+              <IonCard routerLink= "/MakeAppointment">
                 <IonCardHeader>
                   <IonCardTitle class = "ion-text-left">Clinic Name1</IonCardTitle>
                 </IonCardHeader>
-
                 <IonCardContent class = "ion-text-left">
                   Location: 501 Jurong West Street 51, # 01-283
                   Hong Kah Point, Singapore 640591
@@ -119,6 +93,7 @@ const SearchResult: React.FC = () => {
             </IonCol>
           </IonRow>
         </IonGrid>
+      
       </IonContent>
     </IonPage>
   );

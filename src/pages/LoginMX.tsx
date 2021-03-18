@@ -121,6 +121,7 @@ const LoginMX: React.FC = () => {
               <IonButton class="button button-outline button-block" 
                           color = "#46b0e0"
                           // onClick={handleLogin}
+                          routerLink="/Home"
                           ><b>Login</b></IonButton>
             </IonCol>
           </IonRow>
