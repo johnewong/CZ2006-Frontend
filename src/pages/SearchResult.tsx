@@ -13,7 +13,6 @@ const SearchResult: React.FC = () => {
   const [password, setPassword] = useState<string>("cityslicka");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [showModal, setShowModal] = useState(false);
   const handleLogin = () => {
     
   };

@@ -1,8 +1,9 @@
-import { IonCard, IonContent, IonHeader, IonButtons, IonPage, IonSlide, IonTitle, IonToolbar,IonModal } from '@ionic/react';
+import { IonCard, IonContent,IonPopover,IonSelect,IonSelectOption,
+   IonHeader, IonButtons, IonPage, IonSlide, IonTitle, IonToolbar,IonModal } from '@ionic/react';
 import React, { useState } from 'react';
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { arrowBack, caretBack,caretForward  } from "ionicons/icons";
+import { arrowBack, caretBack,caretForward,caretDown, addCircle  } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg, IonSegment,IonSegmentButton, IonSlides, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
 
@@ -17,8 +18,12 @@ const MakeAppointment: React.FC = () => {
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
-  const handleLogin = () => {
- 
+  const [AvaiTime, setAvailableTime] = useState<string>('brown');
+  const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
+  const handleMakeAppoint = () => {
+    setMessage("");
+    setMakeAppoint(true);
+    return;
   };
   
 
@@ -51,43 +56,79 @@ const MakeAppointment: React.FC = () => {
                    
           </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-float-left">
-        <IonModal isOpen={showModal} cssClass='my-custom-class'>
-          <p>This is modal content</p>
-          <IonButton onClick={() => setShowModal(false)}><b>Close</b></IonButton>
-        </IonModal>
-        <IonCard onClick={() => setShowModal(true)}
-                style = {{height: "300px"}}>
-                <IonCardHeader>
-                  <img src= "assets/images/LockLogo.png" width = "100px" />
-                  <IonCardTitle class = "ion-text-left">Doctor Name1</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent class = "ion-text-left">
-                  Location: 501 Jurong West Street 51, # 01-283
-                  Hong Kah Point, Singapore 640591
-                </IonCardContent>
-              </IonCard>
-        <IonGrid>      
-          <IonRow >
-            <IonCol>
-
-            </IonCol>
-          </IonRow>
-          <IonRow >
-            <IonCol>
-            <IonCard style = {{height: "300px"}}>
-                <IonCardHeader>
-                  <img src= "assets/images/LockLogo.png" width = "100px" />
-                  <IonCardTitle class = "ion-text-left">Doctor Name2</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent class = "ion-text-left">
-                  Location: 501 Jurong West Street 51, # 01-283
-                  Hong Kah Point, Singapore 640591
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
+      <IonContent fullscreen>
+        <IonAlert
+          isOpen={makeAppoint}
+          onDidDismiss={() => setMakeAppoint(false)}
+          cssClass="my-custom-class"
+          header={"Appointment Details"}
+          message={message}
+          buttons={["OK"]}
+        />
+        <IonCard>
+          <IonCardHeader>
+            <img src= "assets/images/LockLogo.png" width = "100px" />
+          <IonCardTitle class = "ion-text-left">Doctor Name1</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent class = "ion-text-left">
+            Location: 501 Jurong West Street 51, # 01-283
+            Hong Kah Point, Singapore 640591
+          </IonCardContent>
+        <IonItem></IonItem>
+          <IonToolbar > 
+            <IonItem>
+              <IonLabel class = "ion-text-left"> <b>Avaiable Time Slot</b> </IonLabel>
+              <IonSelect   
+                interface="popover"
+                placeholder="Select Time"
+                onIonChange={e => setAvailableTime(e.detail.value)}
+                value={AvaiTime}>
+                <IonSelectOption value="9-930">09:00 - 09:30am</IonSelectOption>
+                <IonSelectOption value="930-10">09:30 - 10:00am</IonSelectOption>
+                <IonSelectOption value="10-1030">10:00 - 10:30am</IonSelectOption>
+                <IonSelectOption value="1030-11">10:30 - 11:00am</IonSelectOption>
+                <IonSelectOption value="1130-12">11:00 - 11:30am</IonSelectOption>
+                <IonSelectOption value="1230-13">11:30 - 12:00pm</IonSelectOption>
+              </IonSelect>
+            </IonItem>
+            </IonToolbar>
+            <IonToolbar>
+            <IonButton
+                      onClick = {handleMakeAppoint} 
+                      class = "button button-outline button-block"
+                      color = "secondary"><b>Make Appointment</b></IonButton>
+          </IonToolbar>        
+        </IonCard> 
+      <IonCard>
+          <IonCardHeader>
+            <img src= "assets/images/LockLogo.png" width = "100px" />
+          <IonCardTitle class = "ion-text-left">Doctor Name1</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent class = "ion-text-left">
+            Location: 501 Jurong West Street 51, # 01-283
+            Hong Kah Point, Singapore 640591
+          </IonCardContent>
+        <IonItem></IonItem>
+          <IonToolbar > 
+            <IonItem>
+              <IonLabel class = "ion-text-left"> <b>Avaiable Time Slot</b> </IonLabel>
+              <IonSelect   
+                interface="popover"
+                placeholder="Select Time"
+                onIonChange={e => setAvailableTime(e.detail.value)}
+                value={AvaiTime}>
+                <IonSelectOption value="9-930">09:00 - 09:30am</IonSelectOption>
+                <IonSelectOption value="930-10">09:30 - 10:00am</IonSelectOption>
+                <IonSelectOption value="10-1030">10:00 - 10:30am</IonSelectOption>
+                <IonSelectOption value="1030-11">10:30 - 11:00am</IonSelectOption>
+                <IonSelectOption value="1130-12">11:00 - 11:30am</IonSelectOption>
+                <IonSelectOption value="1230-13">11:30 - 12:00pm</IonSelectOption>
+              </IonSelect>
+            </IonItem>
+            
+          </IonToolbar>        
+        </IonCard>
+      
       </IonContent>
     </IonPage>
   );
