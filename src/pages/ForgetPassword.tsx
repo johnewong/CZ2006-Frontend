@@ -18,15 +18,28 @@ const ForgetPassword: React.FC = () => {
   const [password, setPassword] = useState<string>("cityslicka");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const handleLogin = () => {
+      setMessage("");
+      setIserror(true);
+      return;
+  }
 
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
         <IonGrid>
         <IonRow>
-          <IonCol>
-          </IonCol>
-        </IonRow>
+            <IonCol>
+              <IonAlert
+                isOpen={iserror}
+                onDidDismiss={() => setIserror(false)}
+                cssClass="my-custom-class"
+                header={"A reset email has been sent!"}
+                message={message}
+                buttons={["OK"]}
+              />
+            </IonCol>
+          </IonRow>
         {/*Image logo*/}
         <IonRow>
           <IonCol>
@@ -36,6 +49,7 @@ const ForgetPassword: React.FC = () => {
         <IonRow></IonRow><IonCol></IonCol>
         {/*Forget password label*/}
           <IonRow>
+            
             <IonCol>
               <IonLabel
                 style={{ fontSize: "20px", color: "dark" }}
@@ -67,7 +81,10 @@ const ForgetPassword: React.FC = () => {
           <IonRow></IonRow><IonCol></IonCol>
           <IonRow>
             <IonCol> 
-              <IonButton class="button button-outline button-block" color = "#46b0e0"><b>Send Request</b></IonButton>
+              <IonButton class="button button-outline button-block"
+                         color = "#46b0e0" 
+                         onClick = {handleLogin}
+                         ><b>Send Request</b></IonButton>
             </IonCol>
           </IonRow>
           <IonRow>

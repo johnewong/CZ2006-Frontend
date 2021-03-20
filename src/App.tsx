@@ -34,11 +34,13 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 import Search from './pages/Search';
+//import Login from './pages/Login';
 import Login from './pages/LoginMX';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ResetPassword';
+import EventList from "./pages/EventList";
 
 const App: React.FC = () => (
   <IonApp>
@@ -49,6 +51,7 @@ const App: React.FC = () => (
         <Route path="/profile" component={Profile} exact={true} />
         <Route path="/register" component={Register} exact={true} />
          <Route path="/loginMX" component={Login} exact={true} />
+         <Route path="/EventList" component={EventList} exact={true} />
          <Route path="/ForgetPassword" component={ForgetPassword} exact={true} />
          <Route path="/ResetPassword" component={ResetPassword} exact={true} />
           <Route exact path="/tab1">

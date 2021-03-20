@@ -119,9 +119,9 @@ const LoginMX: React.FC = () => {
           <IonRow>
             <IonCol> 
               <IonButton class="button button-outline button-block" 
-                          color = "#46b0e0" 
+                          color = "#46b0e0"
                           // onClick={handleLogin}
-                          >Login</IonButton>
+                          ><b>Login</b></IonButton>
             </IonCol>
           </IonRow>
           <IonRow></IonRow>
