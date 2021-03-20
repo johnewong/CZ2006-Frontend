@@ -48,60 +48,44 @@ const EventList: React.FC = () => {
 
             </IonItem>
 
-            <IonCardContent>
-             xxxxxxxxxxxxxx
-            </IonCardContent>
+            <IonItem>
+            <IonIcon
+                style={{ fontSize: "20px", color: "#0040ff" }}
+                icon={timerOutline} slot="start" />
+
+
+
+              <IonIcon style={{ fontSize: "20px", color: "#0040ff" }}
+                       icon={calendarNumberOutline} slot="start" />
+
+            </IonItem>
           </IonCard>
 
           <IonCard>
             <IonItem>
               <IonIcon
                   style={{ fontSize: "20px", color: "#0040ff" }}
-                  icon={pin} slot="start" />
-              <IonLabel>Location</IonLabel>
-              <IonButton fill="outline" slot="end">View</IonButton>
+                  icon={idCardOutline} slot="start" />
+
+
+              <IonLabel>Appointment Message</IonLabel>
+
             </IonItem>
 
-            <IonCardContent>
-              Current Location:xxxxxxxx
-            </IonCardContent>
-          </IonCard>
-
-          <IonCard>
-            <IonItem href="#" className="ion-activated">
-              <IonIcon style={{ fontSize: "20px", color: "#0040ff" }}
-                       icon={calendarNumberOutline} slot="start" />
-              <IonLabel>Date</IonLabel>
-            </IonItem>
-
-            <IonItem href="#">
+            <IonItem>
               <IonIcon
                   style={{ fontSize: "20px", color: "#0040ff" }}
                   icon={timerOutline} slot="start" />
-              <IonLabel>Time</IonLabel>
+
+
+
+              <IonIcon style={{ fontSize: "20px", color: "#0040ff" }}
+                       icon={calendarNumberOutline} slot="start" />
+
             </IonItem>
-
-            <IonCard>
-              <IonCardHeader>
-                <IonCardTitle>Appointment 1</IonCardTitle>
-              </IonCardHeader>
-
-              <IonCardContent>
-                ###################
-              </IonCardContent>
-            </IonCard>
-            <IonCard>
-              <IonCardHeader>
-                <IonCardTitle>Appointment 2</IonCardTitle>
-              </IonCardHeader>
-
-              <IonCardContent>
-                ###################
-              </IonCardContent>
-            </IonCard>
-
-
           </IonCard>
+
+
         </IonContent>
       </IonPage>
   );

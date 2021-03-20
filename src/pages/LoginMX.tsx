@@ -85,13 +85,12 @@ const LoginMX: React.FC = () => {
                     style={{ fontSize: "30px", color: "#46b0e0"} }
                     icon={personCircle}
                     />
-                <IonItem>
                   <IonInput
                       type="email"
+                      class = "ion-text-center"
                       value={email}
                       onIonChange={(e) => setEmail(e.detail.value!)}>
                   </IonInput>
-                </IonItem>
               </IonItem>
             </IonCol>
           </IonRow>          
@@ -104,13 +103,12 @@ const LoginMX: React.FC = () => {
                     style={{ fontSize: "30px", color: "#46b0e0" }}
                     icon={lockClosed}
                     />
-                <IonItem>
                   <IonInput
                     type="password"
+                    class = "ion-text-center"
                     value={password}
                     onIonChange={(e) => setPassword(e.detail.value!)}>
                   </IonInput>
-                </IonItem>
               </IonItem>
             </IonCol>
           </IonRow>
@@ -121,6 +119,7 @@ const LoginMX: React.FC = () => {
               <IonButton class="button button-outline button-block" 
                           color = "#46b0e0"
                           // onClick={handleLogin}
+                          routerLink="/Home"
                           ><b>Login</b></IonButton>
             </IonCol>
           </IonRow>

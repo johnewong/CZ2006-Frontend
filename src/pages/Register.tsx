@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
     IonContent,
     IonHeader,
@@ -6,16 +7,14 @@ import {
     IonRoute,
     IonTabBar,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonCheckbox,IonText,IonGrid, IonRow, IonCol
 } from '@ionic/react';
-import React, { useState } from 'react';
+
 import axios from "axios";
-import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import {female, male, personCircle} from "ionicons/icons";
 import { useHistory } from "react-router-dom";
-import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonCheckbox,IonText } from '@ionic/react';
 import {IonRouteInner} from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
-import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline} from "ionicons/icons";
+import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle} from "ionicons/icons";
 
 
 
@@ -24,13 +23,19 @@ function validateEmail(email: string) {
     return re.test(String(email).toLowerCase());
 }
 
+const checkboxList = [
+    { val: 'Pepperoni', isChecked: true },
+    { val: 'Sausage', isChecked: false },
+
+]
 
 const Register: React.FC = () => {
-  const history = useHistory();
-  const [email, setEmail] = useState<string>("eve.holt@reqres.in");
-  const [password, setPassword] = useState<string>("cityslicka");
-  const [iserror, setIserror] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
+    const [checked, setChecked] = useState(false);
+    const history = useHistory();
+    const [email, setEmail] = useState<string>("eve.holt@reqres.in");
+    const [password, setPassword] = useState<string>("cityslicka");
+    const [iserror, setIserror] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("");
 
   const handleLogin = () => {
     if (!email) {
@@ -119,10 +124,10 @@ const Register: React.FC = () => {
                 />
 
                 <IonItem>
-                    <IonLabel>Male</IonLabel><IonCheckbox name={male}/>
+                    <IonCheckbox name={male}/><IonLabel>Male</IonLabel>
                 </IonItem>
                 <IonItem>
-                    <IonLabel>female</IonLabel><IonCheckbox name={female}/>
+                    <IonCheckbox name={female}/><IonLabel>female</IonLabel>
                 </IonItem>
             </IonItem>
 
