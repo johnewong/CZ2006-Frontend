@@ -9,7 +9,7 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { home, calendar, person, settings } from 'ionicons/icons';
+import { home, list, person, settings } from 'ionicons/icons';
 
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,6 +26,7 @@ import '@ionic/react/css/float-elements.css';
 import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
+import '@ionic/react/css/display.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
@@ -50,7 +51,7 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-        <Route path="/setting" component={Setting} exact={true} />
+            <Route path="/setting" component={Setting} exact={true} />
             <Route path="/account" component={Account} exact={true} />
             <Route path="/language" component={Language} exact={true} />
         <Route path="/search" component={Search} exact={true} />
@@ -66,14 +67,14 @@ const App: React.FC = () => (
           <Route exact path="/Home">
             <Home />
           </Route>
-          <Route exact path="/profile">
+          <Route exact path="/EventList">
+            <EventList />
+          </Route>
+          <Route path="/profile">
             <Profile />
           </Route>
-          <Route path="/loginMX">
-            <Login />
-          </Route>
-          <Route path="/MakeAppointment">
-            <MakeAppointment />
+          <Route path="/setting">
+            <Setting />
           </Route>
           <Route exact path="/">
             <Redirect to="/Home" />
@@ -83,13 +84,13 @@ const App: React.FC = () => (
           <IonTabButton tab="Home" href="/Home">
             <IonIcon icon={home} />
           </IonTabButton>
-          <IonTabButton tab="Profile" href="/profile">
-            <IonIcon icon={calendar} />
+          <IonTabButton tab="EventList" href="/EventList">
+            <IonIcon icon={list} />
           </IonTabButton>
-          <IonTabButton tab="Login" href="/loginMX">
+          <IonTabButton tab="Profile" href="/profile">
             <IonIcon icon={person} />
           </IonTabButton>
-          <IonTabButton tab="MakeAppointment" href="/MakeAppointment">
+          <IonTabButton tab="Setting" href="/setting">
             <IonIcon icon={settings} />
           </IonTabButton>
         </IonTabBar>

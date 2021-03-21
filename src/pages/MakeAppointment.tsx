@@ -1,9 +1,9 @@
 import { IonCard, IonContent,IonPopover,IonSelect,IonSelectOption,
    IonHeader, IonButtons, IonPage, IonSlide, IonTitle, IonToolbar,IonModal } from '@ionic/react';
 import React, { useState } from 'react';
-import axios from "axios";
+import "./MakeAppointment.css";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { arrowBack, caretBack,caretForward,caretDown, addCircle  } from "ionicons/icons";
+import { arrowBack, caretBack,caretForward,location, time, person  } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg, IonSegment,IonSegmentButton, IonSlides, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
 
@@ -17,12 +17,15 @@ const MakeAppointment: React.FC = () => {
   const [password, setPassword] = useState<string>("cityslicka");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [showMessage, setShowMessage] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
-  const [AvaiTime, setAvailableTime] = useState<string>('brown');
+  const [AvaiTime, setAvailableTime] = useState<string>('');
   const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
+  
   const handleMakeAppoint = () => {
     setMessage("");
     setMakeAppoint(true);
+
     return;
   };
   
@@ -57,22 +60,15 @@ const MakeAppointment: React.FC = () => {
           </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonAlert
-          isOpen={makeAppoint}
-          onDidDismiss={() => setMakeAppoint(false)}
-          cssClass="my-custom-class"
-          header={"Appointment Details"}
-          message={message}
-          buttons={["OK"]}
-        />
         <IonCard>
           <IonCardHeader>
-            <img src= "assets/images/LockLogo.png" width = "100px" />
+            <img src= "assets/images/PersonHead.png" width = "100px" />
           <IonCardTitle class = "ion-text-left">Doctor Name1</IonCardTitle>
           </IonCardHeader>
-          <IonCardContent class = "ion-text-left">
-            Location: 501 Jurong West Street 51, # 01-283
-            Hong Kah Point, Singapore 640591
+          <IonCardContent className = "doctorDetailFontSize">
+            <div>Location: 501 Jurong West Street 51,</div> 
+            <div># 01-283 Hong Kah Point, </div>
+            <div>Singapore 640591</div>
           </IonCardContent>
         <IonItem></IonItem>
           <IonToolbar > 
@@ -94,19 +90,62 @@ const MakeAppointment: React.FC = () => {
             </IonToolbar>
             <IonToolbar>
             <IonButton
-                      onClick = {handleMakeAppoint} 
+                      onClick = {() => setShowModal(true)}   
                       class = "button button-outline button-block"
                       color = "secondary"><b>Make Appointment</b></IonButton>
+              <IonModal isOpen={showModal} cssClass='my-custom-class'>
+                <IonContent fullscreen className="ion-padding ion-text-center">
+                  <IonGrid>
+                    <IonRow>
+                      <IonCol>
+                        <IonHeader>
+                          <IonToolbar >
+                            <IonLabel  className = "modal">Appointment Summary</IonLabel>
+                          </IonToolbar>
+                          <IonRow><IonCol></IonCol></IonRow><IonRow><IonCol></IonCol></IonRow>
+                          <IonItem>
+                            <IonIcon icon={location}></IonIcon>
+                            <IonLabel className = "ion-text-center">Jurong West Clinic 1</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                            <IonIcon icon={person}></IonIcon>
+                            <IonLabel className = "ion-text-center">Dortor Name 1</IonLabel>
+                          </IonItem>
+                          <IonItem>
+                            <IonIcon icon={time}></IonIcon>
+                            <IonLabel className = "ion-text-center">09:00 - 09:30</IonLabel>
+                          </IonItem>
+                        </IonHeader>
+                      </IonCol>
+                    </IonRow>
+                  </IonGrid>
+                </IonContent>
+                
+                <IonButton onClick={() => {setShowModal(false); handleMakeAppoint()}}><b>Confirm Appointment</b></IonButton>
+              </IonModal>
+              <IonRow>
+                <IonCol>
+                  <IonAlert
+                    isOpen={makeAppoint}
+                    onDidDismiss={() => setMakeAppoint(false)}
+                    cssClass="my-custom-class"
+                    header={"The appointment has been confirmed!"}
+                    message={message}
+                    buttons={["OK"]}
+                  />
+                </IonCol>
+              </IonRow>
           </IonToolbar>        
         </IonCard> 
       <IonCard>
           <IonCardHeader>
-            <img src= "assets/images/LockLogo.png" width = "100px" />
+            <img src= "assets/images/PersonHead.png" width = "100px" />
           <IonCardTitle class = "ion-text-left">Doctor Name1</IonCardTitle>
           </IonCardHeader>
-          <IonCardContent class = "ion-text-left">
-            Location: 501 Jurong West Street 51, # 01-283
-            Hong Kah Point, Singapore 640591
+          <IonCardContent className = "doctorDetailFontSize">
+            <div>Location: 501 Jurong West Street 51,</div> 
+            <div># 01-283 Hong Kah Point, </div>
+            <div>Singapore 640591</div>
           </IonCardContent>
         <IonItem></IonItem>
           <IonToolbar > 
@@ -126,6 +165,12 @@ const MakeAppointment: React.FC = () => {
               </IonSelect>
             </IonItem>
             
+          </IonToolbar> 
+          <IonToolbar>
+            <IonButton
+                      onClick = {handleMakeAppoint} 
+                      class = "button button-outline button-block"
+                      color = "secondary"><b>Make Appointment</b></IonButton>
           </IonToolbar>        
         </IonCard>
       
