@@ -58,7 +58,7 @@ const locationButton = document.createElement("button");
   locationButton.textContent = "Pan to Current Location";
   locationButton.classList.add("custom-map-control-button");
 
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+  //map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
 
 let center = {
   lat: 41.3954,
@@ -115,8 +115,7 @@ function MapContainer() {
       center={center}
       zoom={5}
       onLoad={onLoad}
-      onUnmount={onUnmount} 
-      onRightClick     
+      onUnmount={onUnmount}            
     >
       {
         /* Child components, such as markers, info windows, etc. */

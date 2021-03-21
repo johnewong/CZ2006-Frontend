@@ -31,6 +31,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import Search from './pages/Search';
 import Login from './pages/LoginMX';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -46,6 +47,7 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
+        <Route path="/search" component={Search} exact={true} />
         <Route path="/profile" component={Profile} exact={true} />
         <Route path="/register" component={Register} exact={true} />
          <Route path="/loginMX" component={Login} exact={true} />
