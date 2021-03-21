@@ -24,7 +24,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import {
-    settingsOutline,saveOutline,informationCircleOutline, idCardOutline,peopleOutline,notificationsOutline,languageOutline
+    settingsOutline,chevronForwardCircleOutline, saveOutline,informationCircleOutline, idCardOutline,peopleOutline,notificationsOutline,languageOutline
 } from "ionicons/icons";
 
 const Setting: React.FC = () => {
@@ -35,7 +35,6 @@ const Setting: React.FC = () => {
             <IonHeader>
 
                     <IonItem>
-                    <IonIcon style={{ fontSize: "20px", color: "#0040ff" }} icon={settingsOutline}/>
                     <IonTitle>Setting</IonTitle>
                     </IonItem>
 
@@ -47,27 +46,42 @@ const Setting: React.FC = () => {
                     <IonIcon style={{ fontSize: "20px", color: "#0040ff" }} icon={peopleOutline}/>
                     <IonGrid>
                     <IonLabel>Account</IonLabel></IonGrid>
+                    <IonButton>
+                        <IonIcon style={{ fontSize: "20px" }} icon={chevronForwardCircleOutline}/>
+                    </IonButton>
 
                 </IonItem>
                 <IonItem>
                     <IonIcon style={{ fontSize: "20px", color: "#0040ff" }} icon={notificationsOutline}/>
                     <IonGrid>
                     <IonLabel>Notification</IonLabel></IonGrid>
+                    <IonButton>
+                        <IonIcon style={{ fontSize: "20px" }} icon={chevronForwardCircleOutline}/>
+                    </IonButton>
                 </IonItem>
                 <IonItem>
                     <IonIcon style={{ fontSize: "20px", color: "#0040ff" }} icon={languageOutline}/>
                     <IonGrid>
                     <IonLabel>Language</IonLabel></IonGrid>
+                    <IonButton>
+                        <IonIcon style={{ fontSize: "20px" }} icon={chevronForwardCircleOutline}/>
+                    </IonButton>
                 </IonItem>
                 <IonItem>
                     <IonIcon style={{ fontSize: "20px", color: "#0040ff" }} icon={saveOutline}/>
                     <IonGrid>
                     <IonLabel>Privacy & Security</IonLabel></IonGrid>
+                    <IonButton>
+                        <IonIcon style={{ fontSize: "20px" }} icon={chevronForwardCircleOutline}/>
+                    </IonButton>
                 </IonItem>
                 <IonItem>
                     <IonIcon style={{ fontSize: "20px", color: "#0040ff" }} icon={informationCircleOutline}/>
                     <IonGrid>
                     <IonLabel>About</IonLabel></IonGrid>
+                    <IonButton>
+                        <IonIcon style={{ fontSize: "20px" }} icon={chevronForwardCircleOutline}/>
+                    </IonButton>
                 </IonItem>
             </IonList>
 

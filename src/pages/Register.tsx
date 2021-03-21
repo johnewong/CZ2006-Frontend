@@ -124,10 +124,12 @@ const Register: React.FC = () => {
                 />
 
                 <IonItem>
-                    <IonCheckbox name={male}/><IonLabel>Male</IonLabel>
+                    <IonLabel>Male</IonLabel>
+                    <IonCheckbox name={male}/>
                 </IonItem>
                 <IonItem>
-                    <IonCheckbox name={female}/><IonLabel>female</IonLabel>
+                    <IonLabel>female</IonLabel>
+                    <IonCheckbox name={female}/>
                 </IonItem>
             </IonItem>
 
