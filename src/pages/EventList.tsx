@@ -18,17 +18,10 @@ import { IonRouteInner } from "@ionic/react-router/dist/types/ReactRouter/IonRou
 import {calendarNumberOutline,timerOutline
 
 } from "ionicons/icons";
-import { Profiler } from "inspector";
-
 
 
 const EventList: React.FC = () => {
 
-
-
-
-
-  // @ts-ignore
   return (
       <IonPage>
         <IonHeader>

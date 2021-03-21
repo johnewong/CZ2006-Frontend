@@ -62,7 +62,7 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.7",
+    "@capacitor/cli": "^0.0.113",
     "@types/google.maps": "^3.44.2",
     "react-scripts": "4.0.2"
   },
