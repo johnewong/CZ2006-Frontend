@@ -23,7 +23,7 @@ const SearchResult: React.FC = () => {
       <IonHeader>
           <IonToolbar>
             <IonButtons  slot="secondary" >
-              <IonButton fill="default" routerLink= "/Home">
+              <IonButton fill="default" routerLink = "/Home">
                 <IonIcon  icon={arrowBack}/>
               </IonButton>
             </IonButtons>
@@ -33,7 +33,7 @@ const SearchResult: React.FC = () => {
           <IonHeader>   
             <IonToolbar>
             <IonButtons slot="secondary">
-              <IonButton fill="clear" color="#000000">
+              <IonButton fill="clear" color="#000000" >
                 <IonIcon  icon={caretBack} />
                 Previous
               </IonButton>
@@ -52,7 +52,7 @@ const SearchResult: React.FC = () => {
           
           <IonRow>
             <IonCol>
-              <IonCard routerLink= "/MakeAppointment">
+              <IonCard routerLink= "/Home/SearchResult/MakeAppointment">
                 <IonCardHeader>
                   <IonCardTitle class = "ion-text-left">Clinic Name1</IonCardTitle>
                 </IonCardHeader>

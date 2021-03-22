@@ -35,7 +35,7 @@ const MakeAppointment: React.FC = () => {
       <IonHeader>
       <IonToolbar>
             <IonButtons  slot="secondary" >
-              <IonButton fill="default" routerLink= "/SearchResult">
+              <IonButton fill="default" routerLink= "/Home/SearchResult">
                 <IonIcon  icon={arrowBack}/>
               </IonButton>
             </IonButtons>

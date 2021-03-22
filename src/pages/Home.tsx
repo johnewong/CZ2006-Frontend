@@ -95,7 +95,7 @@ const Home: React.FC = () => {
               <IonButton class="button button-outline button-block"
                          color = "#46b0e0" 
                          onClick = {handleSearch}
-                         routerLink = "/SearchResult"
+                         routerLink = "/Home/SearchResult"
                          ><b>Search</b></IonButton>
             </IonCol>
           </IonRow>

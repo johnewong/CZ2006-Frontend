@@ -61,8 +61,8 @@ const App: React.FC = () => (
          <Route path="/EventList" component={EventList} exact={true} />
          <Route path="/ForgetPassword" component={ForgetPassword} exact={true} />
          <Route path="/ResetPassword" component={ResetPassword} exact={true} />
-         <Route path="/SearchResult" component={SearchResult} exact={true} />
-         <Route path="/MakeAppointment" component={MakeAppointment} exact={true} />
+         <Route path="/Home/SearchResult" component={SearchResult} exact={true} />
+         <Route path="/Home/SearchResult/MakeAppointment" component={MakeAppointment} exact={true} />
          <Route path="/Home" component={Home} exact={true} />
           <Route exact path="/Home">
             <Home />
