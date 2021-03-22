@@ -19,7 +19,12 @@ import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import { pin, idCardOutline } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { IonRouteInner } from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
-import { calendarNumberOutline, timerOutline, chevronDown } from "ionicons/icons";
+import {
+  calendarNumberOutline,
+  timerOutline,
+  chevronDown,
+  chevronUp
+} from "ionicons/icons";
 import "./EventList.css";
 
 const EventList: React.FC = () => {
@@ -46,7 +51,8 @@ const EventList: React.FC = () => {
                   <IonIcon
                     style={{ fontSize: "25px", color: "#0040ff" }}
                     icon={calendarNumberOutline}
-                  />                  
+                  />
+                  <IonLabel> </IonLabel>
                   <IonLabel>4 Feb 2021</IonLabel>
                 </IonCol>
                 <IonCol size="5">
@@ -54,64 +60,104 @@ const EventList: React.FC = () => {
                     style={{ fontSize: "25px", color: "#0040ff" }}
                     icon={timerOutline}
                   />
+                  <IonLabel> </IonLabel>
                   <IonLabel>10:30 AM</IonLabel>
                 </IonCol>
                 <IonCol>
-                <IonIcon
+                  <IonIcon
                     style={{ fontSize: "25px", color: "#0040ff" }}
                     icon={chevronDown}
                   />
                 </IonCol>
               </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>Vet: </IonLabel>
+                  <IonLabel>Dr.Lee </IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>Treatment/Service: </IonLabel>
+                  <IonLabel>Dental Scaling</IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>Address: </IonLabel>
+                  <IonLabel>681 Hougang Ave 8, Singapore 530681</IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>Tel: </IonLabel>
+                  <IonLabel>62468681</IonLabel>
+                </IonCol>
+              </IonRow>
             </IonGrid>
           </IonCardContent>
-          {/* <IonItem>
-            <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
-              icon={idCardOutline}
-              slot="start"
-            />
-            <IonLabel>Appointment Message</IonLabel>
-          </IonItem>
-
-          <IonItem>
-            <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
-              icon={calendarNumberOutline}
-              slot="start"
-            />
-            <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
-              icon={timerOutline}
-              slot="start"
-            />
-          </IonItem> */}
         </IonCard>
 
         <IonCard>
-          <IonItem>
-            <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
-              icon={idCardOutline}
-              slot="start"
-            />
-
-            <IonLabel>Appointment Message</IonLabel>
-          </IonItem>
-
-          <IonItem>
-            <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
-              icon={timerOutline}
-              slot="start"
-            />
-
-            <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
-              icon={calendarNumberOutline}
-              slot="start"
-            />
-          </IonItem>
+          <IonCardContent class="ion-text-left">
+            <IonGrid>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>
+                    <div className="card-title">Appointment 2</div>
+                  </IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="5">
+                  <IonIcon
+                    style={{ fontSize: "25px", color: "#0040ff" }}
+                    icon={calendarNumberOutline}
+                  />
+                  <IonLabel> </IonLabel>
+                  <IonLabel>4 Feb 2021</IonLabel>
+                </IonCol>
+                <IonCol size="5">
+                  <IonIcon
+                    style={{ fontSize: "25px", color: "#0040ff" }}
+                    icon={timerOutline}
+                  />
+                  <IonLabel> </IonLabel>
+                  <IonLabel>10:30 AM</IonLabel>
+                </IonCol>
+                <IonCol>
+                  <IonIcon
+                    style={{ fontSize: "25px", color: "#0040ff" }}
+                    icon={chevronUp}
+                  />
+                </IonCol>
+              </IonRow>
+              {/* <IonRow>
+                <IonCol>
+                  <IonLabel>Vet: </IonLabel>
+                  <IonLabel>Dr.Lee </IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>Treatment/Service: </IonLabel>
+                  <IonLabel>Dental Scaling</IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>Address: </IonLabel>
+                  <IonLabel>681 Hougang Ave 8, Singapore 530681</IonLabel>
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol>
+                  <IonLabel>Tel: </IonLabel>
+                  <IonLabel>62468681</IonLabel>
+                </IonCol>
+              </IonRow> */}
+            </IonGrid>
+          </IonCardContent>
         </IonCard>
       </IonContent>
     </IonPage>
