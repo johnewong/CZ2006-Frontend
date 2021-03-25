@@ -16,9 +16,7 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import { pin, idCardOutline } from "ionicons/icons";
-import { useHistory } from "react-router-dom";
-import { IonRouteInner } from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
+
 import {
   calendarNumberOutline,
   timerOutline,
@@ -28,6 +26,8 @@ import {
 import "./EventList.css";
 
 const EventList: React.FC = () => {
+
+
   return (
     <IonPage>
       <IonHeader>
@@ -132,30 +132,7 @@ const EventList: React.FC = () => {
                   />
                 </IonCol>
               </IonRow>
-              {/* <IonRow>
-                <IonCol>
-                  <IonLabel>Vet: </IonLabel>
-                  <IonLabel>Dr.Lee </IonLabel>
-                </IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol>
-                  <IonLabel>Treatment/Service: </IonLabel>
-                  <IonLabel>Dental Scaling</IonLabel>
-                </IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol>
-                  <IonLabel>Address: </IonLabel>
-                  <IonLabel>681 Hougang Ave 8, Singapore 530681</IonLabel>
-                </IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol>
-                  <IonLabel>Tel: </IonLabel>
-                  <IonLabel>62468681</IonLabel>
-                </IonCol>
-              </IonRow> */}
+
             </IonGrid>
           </IonCardContent>
         </IonCard>
