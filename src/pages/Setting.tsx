@@ -29,12 +29,10 @@ import {
 
 const Setting: React.FC = () => {
 
-    const [showModal,setShowModal] = useState(false);
 
     return (
         <IonContent>
             <IonHeader>
-
                     <IonItem>
                     <IonTitle>Setting</IonTitle>
                     </IonItem>
@@ -43,6 +41,7 @@ const Setting: React.FC = () => {
             
 
             <IonList>
+
 
                 <IonItem>
                     <IonIcon style={{ fontSize: "20px", color: "#0040ff" }} icon={peopleOutline}/>
@@ -84,6 +83,9 @@ const Setting: React.FC = () => {
                         <IonIcon style={{ fontSize: "20px" }} item-right icon={chevronForwardCircleOutline}/>
 
                 </IonItem>
+
+
+
             </IonList>
 
 
