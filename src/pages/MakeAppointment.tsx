@@ -1,4 +1,4 @@
-import { IonCard, IonContent,IonPopover,IonSelect,IonSelectOption,
+import { IonCard, IonContent,IonBackdrop,IonSelect,IonSelectOption,
    IonHeader, IonButtons, IonPage, IonSlide, IonTitle, IonToolbar,IonModal } from '@ionic/react';
 import React, { useState } from 'react';
 import "./MakeAppointment.css";
@@ -21,13 +21,14 @@ const MakeAppointment: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [AvaiTime, setAvailableTime] = useState<string>('');
   const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
+  const [showBackDrop, setBackDrop] = useState<boolean>(false);
   
   const handleMakeAppoint = () => {
     setMessage("");
     setMakeAppoint(true);
-
     return;
   };
+
   
 
   return (
@@ -60,6 +61,7 @@ const MakeAppointment: React.FC = () => {
           </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+      
         <IonCard>
           <IonCardHeader>
             <img src= "assets/images/PersonHead.png" width = "100px" />
@@ -123,15 +125,17 @@ const MakeAppointment: React.FC = () => {
                 
                 <IonButton onClick={() => {setShowModal(false); handleMakeAppoint()}}><b>Confirm Appointment</b></IonButton>
               </IonModal>
+              
               <IonRow>
                 <IonCol>
                   <IonAlert
                     isOpen={makeAppoint}
                     onDidDismiss={() => setMakeAppoint(false)}
-                    cssClass="my-custom-class"
+                    
                     header={"The appointment has been confirmed!"}
-                    message={message}
+                    message='<icon src = "assets/images/Icon.jpg" width="35px" height="35px"> Delete this file?'
                     buttons={["OK"]}
+                    
                   />
                 </IonCol>
               </IonRow>

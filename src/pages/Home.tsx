@@ -6,20 +6,31 @@ import { navigate } from "ionicons/icons";
 import { calendar } from "ionicons/icons";
 import { search } from "ionicons/icons";
 import { person } from "ionicons/icons";
-import { useHistory } from "react-router-dom";
-import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg } from '@ionic/react';
+import "./Home.css";
+import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonSelect,IonSelectOption } from '@ionic/react';
 
 
 const Home: React.FC = () => {
   const [location, SetLocation] = useState<string>("Jurong West");
   const [date, SetDate] = useState<string>("1 Feb 2021");
-  const [clinicName, SetClinicName] = useState<string>("Happy Pet Clinic");
-  const [doctorName, SetDoctorName] = useState<string>("Dr Goh Seng Hong");
-  const [iserror, SetIserror] = useState<boolean>(false);
-  const [message, SetMessage] = useState<string>("");
+  const [clinicName, SetClinicName] = useState<string>("Enter Clinic Name");
+  const [doctorName, SetDoctorName] = useState<string>("Enter Veter Name");
+  const [message, setMessage] = useState<string>("");
+  const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
+  const [AvaiTime, setAvailableTime] = useState<string>('');
+  //const [value, onChange] = useState(new Date());
+  const handleMakeAppoint = () => {
+    setMessage("");
+    setMakeAppoint(true);
+    return;
+  };
+
   const handleSearch = () => {
       return;
-  }
+  };
+
+
+ 
 
   return (
     <IonPage>
@@ -32,32 +43,35 @@ const Home: React.FC = () => {
           </IonCol>
         </IonRow>
         {/*Login input*/}
-          <IonRow>
-            <IonCol>
-              <IonItem>
-                <IonIcon
+        <IonToolbar>
+          <IonItem >
+                  <IonIcon
                     style={{ fontSize: "30px", color: "#46b0e0"} }
                     icon={navigate}
-                    />
-                  <IonInput class = "ion-text-center"
-                      style={{color: "#46b0e0"} }
-                      //type="email"
-                      value={location}
-                      onIonChange={(e) => SetLocation(e.detail.value!)}>
-                  </IonInput>       
-              </IonItem>
-              <IonRow></IonRow><IonCol></IonCol>
+                      />
+                  <IonSelect  
+                    interface="popover"
+                    placeholder="Select location"
+                    style={{color: "#46b0e0"} }
+                    onIonChange={e => setAvailableTime(e.detail.value)}
+                    value={AvaiTime}>
+                      <IonSelectOption value="Jurong East">Jurong West</IonSelectOption>
+                      <IonSelectOption value="Clementi">Clementi</IonSelectOption>
+                      <IonSelectOption value="Bishan">Bishan</IonSelectOption>
+                      <IonSelectOption value="Dover">Dover</IonSelectOption>
+                      <IonSelectOption value="Tuas">Tuas</IonSelectOption>
+                  </IonSelect>
+          </IonItem>
+          <IonRow></IonRow><IonCol></IonCol>
+        </IonToolbar>
+        <IonToolbar>
               <IonItem>
                 <IonIcon
                     style={{ fontSize: "30px", color: "#46b0e0"} }
                     icon={calendar}
                     />
-                  <IonInput class = "ion-text-center"
-                      style={{color: "#46b0e0"} }
-                      //type="email"
-                      value={date}
-                      onIonChange={(e) => SetDate(e.detail.value!)}>
-                  </IonInput>       
+                    <IonLabel class = "ion-text-center"
+                      style={{color: "#46b0e0"} }>Select Date</IonLabel>     
               </IonItem>
               <IonRow></IonRow><IonCol></IonCol>
               <IonItem>
@@ -85,20 +99,16 @@ const Home: React.FC = () => {
                       onIonChange={(e) => SetDoctorName(e.detail.value!)}>
                   </IonInput>       
               </IonItem>
-            </IonCol>
-          </IonRow>  
-          <IonRow></IonRow><IonCol></IonCol><IonRow></IonRow><IonCol></IonCol>         
+            </IonToolbar>     
           {/*Login button*/}
           <IonRow></IonRow><IonCol></IonCol>
-          <IonRow>
-            <IonCol> 
+          <IonToolbar>
               <IonButton class="button button-outline button-block"
                          color = "#46b0e0" 
                          onClick = {handleSearch}
                          routerLink = "/Home/SearchResult"
                          ><b>Search</b></IonButton>
-            </IonCol>
-          </IonRow>
+          </IonToolbar>
         </IonGrid>
       </IonContent>
     </IonPage>
