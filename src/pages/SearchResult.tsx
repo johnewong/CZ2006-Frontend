@@ -15,11 +15,6 @@ let clinic_data = [
       address: "681 Hougang Ave 8, Singapore 530681",
       tel: "62468681",
     },
-    veterAvailable: {
-      veterName1: "Dr.Lee",
-      veterName2: "Dr.Hoh",
-      veterName3: "Dr.Seh",
-    },
     treatmentAvailable: {
       treatmentName: "Dental Scaling",
     },
@@ -32,11 +27,6 @@ let clinic_data = [
       address: "681 Hougang Ave 8, Singapore 530681",
       tel: "62468681",
     },
-    veterAvailable: {
-      veterName1: "Dr.Lee",
-      veterName2: "Dr.Hoh",
-      veterName3: "Dr.Seh",
-    },
     treatmentAvailable: {
       treatmentName: "Dental Scaling",
     },
@@ -48,11 +38,6 @@ let clinic_data = [
       name: "Hougang Vet Center",
       address: "681 Hougang Ave 8, Singapore 530681",
       tel: "62468681",
-    },
-    veterAvailable: {
-      veterName1: "Dr.Lee",
-      veterName2: "Dr.Hoh",
-      veterName3: "Dr.Seh",
     },
     treatmentAvailable: {
       treatmentName: "Dental Scaling",
@@ -70,25 +55,25 @@ function ClinicDetail(item:any){
     <div>
        <IonRow>
             <IonCol>
-              <IonLabel>Clinic: </IonLabel>
+              <IonLabel><b>Name: </b></IonLabel>
               <IonLabel>{item.clinic.name}</IonLabel>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonLabel>Treatment/Service: </IonLabel>
-              <IonLabel>{item.treatment.treatmentName}</IonLabel>
+              <IonLabel><b>Treatment/Service: </b></IonLabel>
+              <IonLabel>{item.treatmentAvailable.treatmentName}</IonLabel>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonLabel>Address: </IonLabel>
+              <IonLabel><b>Address: </b></IonLabel>
               <IonLabel>{item.clinic.address}</IonLabel>
             </IonCol>
           </IonRow>
           <IonRow>
             <IonCol>
-              <IonLabel>Tel: </IonLabel>
+              <IonLabel><b>Tel: </b></IonLabel>
               <IonLabel>{item.clinic.tel}</IonLabel>
             </IonCol>
           </IonRow>
@@ -98,16 +83,17 @@ function ClinicDetail(item:any){
 
 function displayEvent(item: any, index: any) {
   return (
-   <IonCard>
+   <IonCard routerLink= "/Home/SearchResult/MakeAppointment">
       <IonCardContent class="ion-text-left">
+        <IonToolbar>
+          <IonItem>
+          <IonLabel>
+            <div className="card-title"> <b>Clinic 1</b></div>
+          </IonLabel>
+          <img src= "assets/images/Logo.png" width = "150px" />
+          </IonItem>       
+        </IonToolbar>
         <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonLabel>
-                <div className="card-title">Clinics</div>
-              </IonLabel>
-            </IonCol>
-          </IonRow>
           <IonRow>
             <IonCol size="5">
               <IonLabel> </IonLabel>
