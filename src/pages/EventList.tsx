@@ -78,7 +78,9 @@ const EventList: React.FC = () => {
       console.log("toggle");
       setCollapseNumber(100);
     }
-    setCollapseNumber(index);
+    else{
+      setCollapseNumber(index);
+    }   
   };
 
   return (
@@ -123,7 +125,7 @@ const EventList: React.FC = () => {
                     <IonCol>
                       <IonIcon
                         style={{ fontSize: "25px", color: "#0040ff" }}
-                        icon={chevronDown}
+                        icon={index == collapseNumber?chevronDown : chevronUp}
                         onClick={(e) => onClick(index)}
                       />
                     </IonCol>
