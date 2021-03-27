@@ -6,18 +6,123 @@ import { arrowBack, arrowForward, caretBack, caretForward } from "ionicons/icons
 import { useHistory } from "react-router-dom"
 import { IonItem, IonLabel, IonInput, IonButton, IonButtons, IonIcon, IonAlert,IonImg, IonSegment, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
 
+let dataString = "";
+let clinic_data = [
+  {
+    isActive:false,
+    clinic: {
+      name: "Hougang Vet Center",
+      address: "681 Hougang Ave 8, Singapore 530681",
+      tel: "62468681",
+    },
+    veterAvailable: {
+      veterName1: "Dr.Lee",
+      veterName2: "Dr.Hoh",
+      veterName3: "Dr.Seh",
+    },
+    treatmentAvailable: {
+      treatmentName: "Dental Scaling",
+    },
+  },
+
+  {
+    isActive:false,
+    clinic: {
+      name: "Hougang Vet Center",
+      address: "681 Hougang Ave 8, Singapore 530681",
+      tel: "62468681",
+    },
+    veterAvailable: {
+      veterName1: "Dr.Lee",
+      veterName2: "Dr.Hoh",
+      veterName3: "Dr.Seh",
+    },
+    treatmentAvailable: {
+      treatmentName: "Dental Scaling",
+    },
+  },
+
+  {
+    isActive:false,
+    clinic: {
+      name: "Hougang Vet Center",
+      address: "681 Hougang Ave 8, Singapore 530681",
+      tel: "62468681",
+    },
+    veterAvailable: {
+      veterName1: "Dr.Lee",
+      veterName2: "Dr.Hoh",
+      veterName3: "Dr.Seh",
+    },
+    treatmentAvailable: {
+      treatmentName: "Dental Scaling",
+    },
+  },
+
+];
+
+//const [activeItem, setActiveItem] = React.useState(1);
+
+
+function ClinicDetail(item:any){
+  //alert("displayDetail"+item.isActive);
+  return (
+    <div>
+       <IonRow>
+            <IonCol>
+              <IonLabel>Clinic: </IonLabel>
+              <IonLabel>{item.clinic.name}</IonLabel>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonLabel>Treatment/Service: </IonLabel>
+              <IonLabel>{item.treatment.treatmentName}</IonLabel>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonLabel>Address: </IonLabel>
+              <IonLabel>{item.clinic.address}</IonLabel>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonLabel>Tel: </IonLabel>
+              <IonLabel>{item.clinic.tel}</IonLabel>
+            </IonCol>
+          </IonRow>
+    </div>
+  );
+}
+
+function displayEvent(item: any, index: any) {
+  return (
+   <IonCard>
+      <IonCardContent class="ion-text-left">
+        <IonGrid>
+          <IonRow>
+            <IonCol>
+              <IonLabel>
+                <div className="card-title">Clinics</div>
+              </IonLabel>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="5">
+              <IonLabel> </IonLabel>
+              <IonLabel>{item.clinicDate}</IonLabel>
+            </IonCol>
+          </IonRow>       
+           {ClinicDetail(item)}
+        </IonGrid>
+      </IonCardContent>
+    </IonCard>
+  );
+}
 
 const SearchResult: React.FC = () => {
-  const history = useHistory();
-  const [email, setEmail] = useState<string>("eve.holt@reqres.in");
-  const [password, setPassword] = useState<string>("cityslicka");
-  const [iserror, setIserror] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
-  const handleLogin = () => {
-    
-  };
-  
-
+  //getData();
   return (
     <IonPage>
       <IonHeader>
@@ -43,56 +148,11 @@ const SearchResult: React.FC = () => {
               <IonButton fill="clear" color="#000000">Next
                 <IonIcon icon={caretForward} />
               </IonButton>
-            </IonButtons>
-                   
+            </IonButtons>      
           </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="ion-float-left">
-        <IonGrid>
-          
-          <IonRow>
-            <IonCol>
-              <IonCard routerLink= "/Home/SearchResult/MakeAppointment">
-                <IonCardHeader>
-                  <IonCardTitle class = "ion-text-left">Clinic Name1</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent class = "ion-text-left">
-                  Location: 501 Jurong West Street 51, # 01-283
-                  Hong Kah Point, Singapore 640591
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard>
-                <IonCardHeader>
-                  <IonCardTitle class = "ion-text-left">Clinic Name2</IonCardTitle>
-                </IonCardHeader>
-
-                <IonCardContent class = "ion-text-left">
-                  Location: 501 Jurong West Street 51, # 01-283
-                  Hong Kah Point, Singapore 640591
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonCard>
-                <IonCardHeader>
-                  <IonCardTitle class = "ion-text-left">Clinic Name</IonCardTitle>
-                </IonCardHeader>
-
-                <IonCardContent class = "ion-text-left">
-                  Location: 501 Jurong West Street 51, # 01-283
-                  Hong Kah Point, Singapore 640591
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      
+      <IonContent>
+        {clinic_data.map((item, index) => displayEvent(item, index))}
       </IonContent>
     </IonPage>
   );
