@@ -14,39 +14,41 @@ function validateEmail(email: string) {
 
 const LoginMX: React.FC = () => {
   const history = useHistory();
-  const [email, setEmail] = useState<string>("eve.holt@reqres.in");
-  const [password, setPassword] = useState<string>("cityslicka");
+  const [username, setUsername] = useState<string>("user02");
+  const [password, setPassword] = useState<string>("user02");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const handleLogin = () => {
-    if (!email) {
-        setMessage("Please enter a valid email");
+    alert("handleLogin");   
+    if (!username) {
+        setMessage("Please enter a valid username");
         setIserror(true);
         return;
     }
-    if (validateEmail(email) === false) {
-        setMessage("Your email is invalid");
-        setIserror(true);
-        return;
-    }
+    // if (validateEmail(email) === false) {
+    //     setMessage("Your email is invalid");
+    //     setIserror(true);
+    //     return;
+    // }
 
-    if (!password || password.length < 6) {
-        setMessage("Please enter your password");
-        setIserror(true);
-        return;
-    }
+    // if (!password || password.length < 6) {
+    //     setMessage("Please enter your password");
+    //     setIserror(true);
+    //     return;
+    // }
 
     const loginData = {
-        "email": email,
+        "username": username,
         "password": password
     }
 
+    console.log("loginData", loginData);
     const api = axios.create({
-        baseURL: `https://reqres.in/api`
+        baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com/account/user`
     })
     api.post("/login", loginData)
         .then(res => {             
-            history.push("/dashboard/" + email);
+            history.push("/dashboard/" + username);
          })
          .catch(error=>{
             setMessage("Auth failure! Please create an account");
@@ -88,8 +90,8 @@ const LoginMX: React.FC = () => {
                   <IonInput
                       type="email"
                       class = "ion-text-center"
-                      value={email}
-                      onIonChange={(e) => setEmail(e.detail.value!)}>
+                      value={username}
+                      onIonChange={(e) => setUsername(e.detail.value!)}>
                   </IonInput>
               </IonItem>
             </IonCol>
@@ -118,8 +120,8 @@ const LoginMX: React.FC = () => {
             <IonCol> 
               <IonButton class="button button-outline button-block" 
                           color = "#46b0e0"
-                          // onClick={handleLogin}
-                          routerLink="/Home"
+                           onClick={handleLogin}
+                          //routerLink="/Home"
                           ><b>Login</b></IonButton>
             </IonCol>
           </IonRow>
