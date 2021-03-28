@@ -10,6 +10,7 @@ import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import { navigate } from "ionicons/icons";
 import { calendar } from "ionicons/icons";
+import Calendar from "react-calendar";
 import { search } from "ionicons/icons";
 import { person } from "ionicons/icons";
 import "./Home.css";
@@ -36,14 +37,14 @@ const Home: React.FC = ({}) => {
   const [message, setMessage] = useState<string>("");
   const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
   const [AvaiTime, setAvailableTime] = useState<string>("");
-  //const [value, onChange] = useState(new Date());
+  const [now, onChange] = useState(new Date());
 
   useEffect(() => {
-    let userInfo = storage.getItem("userInfo"); 
+    let userInfo = storage.getItem("userInfo");
 
-    if(!userInfo){     
-      history.push('/Login');
-    } 
+    if (!userInfo) {
+      history.push("/Login");
+    }
   }, [history]);
 
   const handleMakeAppoint = () => {
@@ -101,6 +102,7 @@ const Home: React.FC = ({}) => {
               <IonLabel class="ion-text-center" style={{ color: "#46b0e0" }}>
                 Select Date
               </IonLabel>
+              <Calendar onChange={(e) =>onChange} value={now} />
             </IonItem>
             <IonRow></IonRow>
             <IonCol></IonCol>
