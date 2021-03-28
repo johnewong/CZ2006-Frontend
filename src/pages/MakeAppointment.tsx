@@ -1,6 +1,6 @@
 import { IonCard, IonContent,IonBackdrop,IonSelect,IonSelectOption,
    IonHeader, IonButtons, IonPage, IonSlide, IonTitle, IonToolbar,IonModal } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./MakeAppointment.css";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
 import { arrowBack, caretBack,caretForward,location, time, person  } from "ionicons/icons";
@@ -40,11 +40,23 @@ let veter_data = [
 
 ];
 
+
+
 const MakeAppointment: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
   const [AvaiTime, setAvailableTime] = useState<string>('');
   const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
+  const storage = window.localStorage;
+  const history = useHistory();
+
+  useEffect(() => {
+    let userInfo = storage.getItem("userInfo"); 
+  
+    if(!userInfo){     
+      history.push('/Login');
+    } 
+  }, [history]);
   
   function veterDetail(item:any){
     //alert("displayDetail"+item.isActive);

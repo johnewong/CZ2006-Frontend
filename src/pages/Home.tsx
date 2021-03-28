@@ -2,7 +2,7 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
+  IonModal,
   IonToolbar,
 } from "@ionic/react";
 import React, { useEffect, useState } from "react";
@@ -30,14 +30,15 @@ const Home: React.FC = ({}) => {
   const storage = window.localStorage;
   const history = useHistory();
 
-  const [location, SetLocation] = useState<string>("Jurong West");
-  const [date, SetDate] = useState<string>("1 Feb 2021");
   const [clinicName, SetClinicName] = useState<string>("Enter Clinic Name");
   const [doctorName, SetDoctorName] = useState<string>("Enter Veter Name");
-  const [message, setMessage] = useState<string>("");
-  const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
-  const [AvaiTime, setAvailableTime] = useState<string>("");
-  const [now, onChange] = useState(new Date());
+  const [showModal, setShowModal] = useState(false);
+  const [location, SetLocation] = useState<string>("");
+  const [date, SetDate] = useState(new Date());
+
+  const onChange = (date: any) => {
+    SetDate(date);
+  };
 
   useEffect(() => {
     let userInfo = storage.getItem("userInfo");
@@ -47,19 +48,26 @@ const Home: React.FC = ({}) => {
     }
   }, [history]);
 
-  const handleMakeAppoint = () => {
-    setMessage("");
-    setMakeAppoint(true);
-    return;
-  };
 
   const handleSearch = () => {
     return;
   };
 
+
+
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
+        <IonModal isOpen={showModal}>
+          <Calendar onChange={onChange} value={date} />
+          <IonLabel>{date.toDateString()}</IonLabel>
+          
+          <IonButton onClick={() => setShowModal(false)}
+                            
+          
+          >Close Modal</IonButton>
+        </IonModal>
+        
         <IonGrid>
           {/*Image logo*/}
           <IonRow>
@@ -78,8 +86,8 @@ const Home: React.FC = ({}) => {
                 interface="popover"
                 placeholder="Select location"
                 style={{ color: "#46b0e0" }}
-                onIonChange={(e) => setAvailableTime(e.detail.value)}
-                value={AvaiTime}
+                onIonChange={(e) => SetLocation(e.detail.value)}
+                value={location}
               >
                 <IonSelectOption value="Jurong East">
                   Jurong West
@@ -99,10 +107,8 @@ const Home: React.FC = ({}) => {
                 style={{ fontSize: "30px", color: "#46b0e0" }}
                 icon={calendar}
               />
-              <IonLabel class="ion-text-center" style={{ color: "#46b0e0" }}>
-                Select Date
-              </IonLabel>
-              <Calendar onChange={(e) =>onChange} value={now} />
+            <IonButton class = "button button-clear"  onClick={() => setShowModal(true)}>{date.toDateString()}</IonButton>
+            
             </IonItem>
             <IonRow></IonRow>
             <IonCol></IonCol>
