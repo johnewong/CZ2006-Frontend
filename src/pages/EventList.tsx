@@ -14,7 +14,7 @@ import {
   IonButton,
 } from "@ionic/react";
 import { Collapse } from "react-collapse";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import { pin, idCardOutline } from "ionicons/icons";
@@ -27,8 +27,6 @@ import {
   chevronUp,
 } from "ionicons/icons";
 import "./EventList.css";
-
-// const [isActive, setActive] = useState<boolean>(false);
 
 let dataString = "";
 const appointment_data = [
@@ -69,6 +67,16 @@ const appointment_data = [
 ];
 
 const EventList: React.FC = () => {
+  const history = useHistory();
+  const storage = window.localStorage;
+  useEffect(()=>{
+    let userInfo = storage.getItem("userInfo");
+    
+    if(!userInfo){    
+      history.push('/Login');      
+    } 
+  },[history]);
+
   const [collapseNumber, setCollapseNumber] = useState(0);
   function onClick (index:number) {
     //useCallback(()=>setCollapseNumber(index), [collapseNumber]);
