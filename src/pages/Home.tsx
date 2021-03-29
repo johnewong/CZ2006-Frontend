@@ -78,13 +78,14 @@ const Home: React.FC = ({}) => {
             </IonCol>
           </IonRow>
           {/*Login input*/}
-          <IonToolbar>
-            <IonItem>
+          <IonToolbar >
+            <IonItem >
               <IonIcon
                 style={{ fontSize: "30px", color: "#46b0e0" }}
                 icon={navigate}
               />
               <IonSelect
+                class="text-align:center"
                 interface="popover"
                 placeholder="Select location"
                 style={{ color: "#46b0e0" }}
@@ -127,7 +128,7 @@ const Home: React.FC = ({}) => {
                 class="ion-text-center"
                 style={{ color: "#46b0e0" }}
                 //type="email"
-                value={clinicName}
+                placeholder={clinicName}
                 onIonChange={(e) => SetClinicName(e.detail.value!)}
               ></IonInput>
             </IonItem>
@@ -142,7 +143,7 @@ const Home: React.FC = ({}) => {
                 class="ion-text-center"
                 style={{ color: "#46b0e0" }}
                 //type="email"
-                value={doctorName}
+                placeholder={doctorName}
                 onIonChange={(e) => SetDoctorName(e.detail.value!)}
               ></IonInput>
             </IonItem>
