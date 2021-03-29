@@ -2,10 +2,10 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import React, { useState } from 'react';
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { personCircle } from "ionicons/icons";
+import { arrowBack } from "ionicons/icons";
 import { mail } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
-import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg } from '@ionic/react';
+import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonChip } from '@ionic/react';
 
 function validateEmail(email: string) {
   const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
@@ -26,8 +26,16 @@ const ForgetPassword: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent fullscreen className="ion-padding ion-text-center">
-        <IonGrid>
+      <IonContent fullscreen>
+        <IonButton routerLink="/Login" class = "button button-clear"> 
+          <IonChip color = "dark">
+            <IonIcon icon={arrowBack}
+                    color="#bd9e07" />
+            <IonLabel color="#bd9e07" >Back</IonLabel>
+          </IonChip>
+        </IonButton>
+     
+        <IonGrid  className="ion-padding ion-text-center">
         <IonRow>
             <IonCol>
               <IonAlert
@@ -43,9 +51,11 @@ const ForgetPassword: React.FC = () => {
         {/*Image logo*/}
         <IonRow>
           <IonCol>
-            <img src= "assets/images/LockLogo.png" width = "200px" />
+            <img src= "assets/images/LockLogo.png" width = "150px" />
           </IonCol>
         </IonRow>
+        <IonRow></IonRow><IonCol></IonCol>
+        <IonRow></IonRow><IonCol></IonCol>
         <IonRow></IonRow><IonCol></IonCol>
         {/*Forget password label*/}
           <IonRow>
@@ -63,16 +73,14 @@ const ForgetPassword: React.FC = () => {
             <IonCol>
               <IonItem>
                 <IonIcon
-                    style={{ fontSize: "30px", color: "#46b0e0"} }
+                    style={{color: "#ffd401"} }
                     icon={mail}
                     />
-                <IonItem>
                   <IonInput class = "ion-text-center"
                       type="email"
                       value={registeredEmail}
                       onIonChange={(e) => setRegisteredEmail(e.detail.value!)}>
                   </IonInput>
-                </IonItem>
               </IonItem>
             </IonCol>
           </IonRow>  
@@ -81,8 +89,9 @@ const ForgetPassword: React.FC = () => {
           <IonRow></IonRow><IonCol></IonCol>
           <IonRow>
             <IonCol> 
-              <IonButton class="button button-outline button-block"
-                         color = "#46b0e0" 
+              <IonButton size = "default"
+                          color="warning"
+                          expand="block"
                          onClick = {handleLogin}
                          ><b>Send Request</b></IonButton>
             </IonCol>
@@ -90,7 +99,7 @@ const ForgetPassword: React.FC = () => {
           <IonRow>
             {/*Login link*/}
             <IonCol class = "ion-text-center"> 
-                <IonButton routerLink="/LoginMX"
+                <IonButton routerLink="/Login"
                            class="button button-clear button-postive" 
                            color = "#46b0e0"
                 ><a href="#">Already have an account? Login here!</a></IonButton>  
