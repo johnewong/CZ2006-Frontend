@@ -14,7 +14,7 @@ import Calendar from "react-calendar";
 import { search } from "ionicons/icons";
 import { person } from "ionicons/icons";
 import "./Home.css";
-import './Calendar.css';
+import "./Calendar.css";
 import {
   IonItem,
   IonLabel,
@@ -49,23 +49,26 @@ const Home: React.FC = ({}) => {
     }
   }, [history]);
 
-
   const handleSearch = () => {
     return;
   };
-
-
 
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
         <IonModal isOpen={showModal}>
           <Calendar onChange={onChange} value={date} />
-          <IonLabel>Date Selected:{date.toDateString()}</IonLabel>
-          
-          <IonButton onClick={() => setShowModal(false)}>Confirm</IonButton>
+          <IonGrid>
+            <IonRow>
+              <IonCol size="12">
+                <IonButton onClick={() => setShowModal(false)}>
+                  Confirm
+                </IonButton>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
         </IonModal>
-        
+
         <IonGrid>
           {/*Image logo*/}
           <IonRow>
@@ -105,8 +108,12 @@ const Home: React.FC = ({}) => {
                 style={{ fontSize: "30px", color: "#46b0e0" }}
                 icon={calendar}
               />
-            <IonButton class = "button button-clear"  onClick={() => setShowModal(true)}>{date.toDateString()}</IonButton>
-            
+              <IonButton
+                class="button button-clear"
+                onClick={() => setShowModal(true)}
+              >
+                {date.toDateString()}
+              </IonButton>
             </IonItem>
             <IonRow></IonRow>
             <IonCol></IonCol>
