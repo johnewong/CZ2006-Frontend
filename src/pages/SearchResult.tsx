@@ -90,7 +90,7 @@ function displayEvent(item: any, index: any) {
           <IonLabel>
             <div className="card-title"> <b>Clinic 1</b></div>
           </IonLabel>
-          <img src= "assets/images/Logo.png" width = "150px" />
+          <img src= "assets/images/Clinic.png" width = "130px" />
           </IonItem>       
         </IonToolbar>
         <IonGrid>
