@@ -14,6 +14,7 @@ import Calendar from "react-calendar";
 import { search } from "ionicons/icons";
 import { person } from "ionicons/icons";
 import "./Home.css";
+import "./CalendarModal.css"
 import "./Calendar.css";
 import {
   IonItem,
@@ -56,11 +57,11 @@ const Home: React.FC = ({}) => {
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
-        <IonModal isOpen={showModal}>
+        <IonModal isOpen={showModal}  swipeToClose={true} cssClass="calendar-modal"> 
           <Calendar onChange={onChange} value={date} />
           <IonGrid>
             <IonRow>
-              <IonCol size="12">
+              <IonCol>
                 <IonButton onClick={() => setShowModal(false)}>
                   Confirm
                 </IonButton>
