@@ -82,12 +82,15 @@ const Home: React.FC = ({}) => {
           {/*Login input*/}
           <IonToolbar >
             <IonItem >
+            
+
               <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={navigate}
-              />
+                        style={{ fontSize: "30px", color: "#46b0e0" }}
+                        icon={navigate}
+                      />
+        
               <IonSelect
-                class="text-align:center"
+                class="ion-select"
                 interface="popover"
                 placeholder="Select location"
                 style={{ color: "#46b0e0" }}
@@ -113,7 +116,7 @@ const Home: React.FC = ({}) => {
                 icon={calendar}
               />
               <IonButton
-                class="button button-clear"
+                class="button button-clear calendar"
                 onClick={() => setShowModal(true)}
               >
                 {date.toDateString()}
