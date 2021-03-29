@@ -2,27 +2,18 @@
     font-size:  17px;
 }
 
-.modal{
-    font-size:  20px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
+.modalCus{
+    border-radius: 5%;
+}
+
+.buttonCus{
+    width: 100%;
+    text-align: center;
     margin-top: 50%;
+  }
+
+.content{
+    
 }
 
 
-
-/*.my-custom-class{
-   height: 50%;
-   top: 25%;
-   bottom: 20%;
-   right: 10%;
-   left: 10%;
-   position:absolute; 
-   border-radius: 5%;
-   
-}
-
-.backdrop-class{
-    opacity: 50%;
-}*/

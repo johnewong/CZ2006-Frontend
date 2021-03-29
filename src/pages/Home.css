@@ -3,3 +3,14 @@
    right: 50%;
 }
 
+.ion-select {
+   width: 100%;
+   text-align: center;
+   justify-content: center;
+ }
+ 
+ .calendar{
+   width: 100%;
+   text-align: center;
+   justify-content: center;
+ }

@@ -1,9 +1,10 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import "./Login.css"
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { personCircle } from "ionicons/icons";
-import { lockClosed } from "ionicons/icons";
+import { personCircleOutline } from "ionicons/icons";
+import { lockClosedOutline } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg } from '@ionic/react';
 
@@ -80,23 +81,14 @@ const LoginMX: React.FC = () => {
             <img src= "assets/images/Logo.png" width = "300px" />
           </IonCol>
         </IonRow>
-
-        {/*Login label*/}
-          <IonRow>
-            <IonCol>
-              <IonLabel
-                style={{ fontSize: "30px", color: "dark" }}
-                > <b>Login</b></IonLabel>
-            </IonCol>
-          </IonRow>
         <IonRow></IonRow><IonCol></IonCol>
         {/*Login input*/}
           <IonRow>
             <IonCol>
               <IonItem>
                 <IonIcon
-                    style={{ fontSize: "30px", color: "#46b0e0"} }
-                    icon={personCircle}
+                    style={{ color: "#ffd401" }}
+                    icon={personCircleOutline}
                     />
                   <IonInput
                       type="email"
@@ -113,8 +105,8 @@ const LoginMX: React.FC = () => {
             <IonCol>
               <IonItem>
                 <IonIcon
-                    style={{ fontSize: "30px", color: "#46b0e0" }}
-                    icon={lockClosed}
+                    style={{ color: "#ffd401" }}
+                    icon={lockClosedOutline}
                     />
                   <IonInput
                     type="password"
@@ -129,9 +121,10 @@ const LoginMX: React.FC = () => {
           <IonRow></IonRow><IonCol></IonCol>
           <IonRow>
             <IonCol> 
-              <IonButton class="button button-outline button-block" 
-                          color = "#46b0e0"
-                           onClick={handleLogin}
+              <IonButton  size = "default"
+                          color="warning"
+                          expand="block"
+                          onClick={handleLogin}
                           //routerLink="/Home"
                           ><b>Login</b></IonButton>
             </IonCol>
