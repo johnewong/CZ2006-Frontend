@@ -14,7 +14,7 @@ import Calendar from "react-calendar";
 import { search } from "ionicons/icons";
 import { person } from "ionicons/icons";
 import "./Home.css";
-import 'react-calendar/dist/Calendar.css';
+import './Calendar.css';
 import {
   IonItem,
   IonLabel,
