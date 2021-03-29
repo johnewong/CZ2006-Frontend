@@ -76,3 +76,5 @@ export const EventList = ({ users }: any) => {
 
 
 }
+export default class EventPlugin {
+}
