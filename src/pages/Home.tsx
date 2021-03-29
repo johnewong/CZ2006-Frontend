@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import { navigate } from "ionicons/icons";
+import { medkit, navigate } from "ionicons/icons";
 import { calendar } from "ionicons/icons";
 import Calendar from "react-calendar";
 import { search } from "ionicons/icons";
@@ -27,17 +27,38 @@ import {
   IonSelectOption,
 } from "@ionic/react";
 import { useHistory } from "react-router";
+ 
+  
+var treatment_data: any[] = []
+const api = axios.create({
+  baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+})
+
+const GetTreatments = async () => {
+  try {
+    const res = await api.get("/treatment");
+    console.log("data", res.data);
+    return res.data;
+  } catch (error) { }
+
+};
+
 
 const Home: React.FC = ({}) => {
+  
   const storage = window.localStorage;
   const history = useHistory();
 
-  const [clinicName, SetClinicName] = useState<string>("Enter Clinic Name");
-  const [doctorName, SetDoctorName] = useState<string>("Enter Veter Name");
+
+  const [treatmentItems, setItems] = useState([]);
+
+  // const [clinicName, SetClinicName] = useState<string>("Enter Clinic Name");
+  // const [doctorName, SetDoctorName] = useState<string>("Enter Veter Name");
+  const [treatmentID, SetTreatmentID] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
   const [location, SetLocation] = useState<string>("");
   const [date, SetDate] = useState(new Date());
-
+  
   const onChange = (date: any) => {
     SetDate(date);
   };
@@ -48,11 +69,16 @@ const Home: React.FC = ({}) => {
     if (!userInfo) {
       history.push("/Login");
     }
+
+    GetTreatments().then(data => setItems(data));
+
   }, [history]);
 
   const handleSearch = () => {
     return;
   };
+
+
 
   return (
     <IonPage>
@@ -124,34 +150,33 @@ const Home: React.FC = ({}) => {
             </IonItem>
             <IonRow></IonRow>
             <IonCol></IonCol>
-            <IonItem>
+            
+               <IonItem>
               <IonIcon
                 style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={search}
+                icon={medkit}
               />
-              <IonInput
-                class="ion-text-center"
+
+              <IonSelect
+                class="ion-select"
+                interface="popover"
+                placeholder="Select treatment"
                 style={{ color: "#46b0e0" }}
-                //type="email"
-                placeholder={clinicName}
-                onIonChange={(e) => SetClinicName(e.detail.value!)}
-              ></IonInput>
-            </IonItem>
-            <IonRow></IonRow>
-            <IonCol></IonCol>
-            <IonItem>
-              <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={person}
-              />
-              <IonInput
-                class="ion-text-center"
-                style={{ color: "#46b0e0" }}
-                //type="email"
-                placeholder={doctorName}
-                onIonChange={(e) => SetDoctorName(e.detail.value!)}
-              ></IonInput>
-            </IonItem>
+                onIonChange={(e) => SetTreatmentID(e.detail.value!)}
+                value={treatmentID}
+                
+              >
+            {
+              treatmentItems.map((item, index) => {
+
+                  return (
+                <IonSelectOption key={index} value={item['treatmentID']}>{item['treatmentName']}</IonSelectOption>  
+                )
+              })
+            }
+              </IonSelect>
+
+            </IonItem> 
           </IonToolbar>
           {/*Login button*/}
           <IonRow></IonRow>
