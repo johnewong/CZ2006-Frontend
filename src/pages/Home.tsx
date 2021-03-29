@@ -14,7 +14,7 @@ import Calendar from "react-calendar";
 import { search } from "ionicons/icons";
 import { person } from "ionicons/icons";
 import "./Home.css";
-import "./CalendarModal.css"
+import "./CalendarModal.css";
 import "./Calendar.css";
 import {
   IonItem,
@@ -57,9 +57,12 @@ const Home: React.FC = ({}) => {
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
-        <IonModal isOpen={showModal}  swipeToClose={true} cssClass="calendar-modal"
-           onDidDismiss={() => setShowModal(false)}>
-        
+        <IonModal
+          isOpen={showModal}
+          swipeToClose={true}
+          cssClass="calendar-modal"
+          onDidDismiss={() => setShowModal(false)}
+        >
           <Calendar onChange={onChange} value={date} />
           <IonGrid>
             <IonRow>
@@ -80,88 +83,89 @@ const Home: React.FC = ({}) => {
             </IonCol>
           </IonRow>
           {/*Login input*/}
-          <IonToolbar>
-            <IonItem>
-              <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={navigate}
-              />
-              <IonSelect
-                interface="popover"
-                placeholder="Select location"
-                style={{ color: "#46b0e0" }}
-                onIonChange={(e) => SetLocation(e.detail.value)}
-                value={location}
-              >
-                <IonSelectOption value="Jurong East">
-                  Jurong West
-                </IonSelectOption>
-                <IonSelectOption value="Clementi">Clementi</IonSelectOption>
-                <IonSelectOption value="Bishan">Bishan</IonSelectOption>
-                <IonSelectOption value="Dover">Dover</IonSelectOption>
-                <IonSelectOption value="Tuas">Tuas</IonSelectOption>
-              </IonSelect>
-            </IonItem>
-            <IonRow></IonRow>
-            <IonCol></IonCol>
-          </IonToolbar>
-          <IonToolbar>
-            <IonItem>
-              <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={calendar}
-              />
-              <IonButton
-                class="button button-clear"
-                onClick={() => setShowModal(true)}
-              >
-                {date.toDateString()}
-              </IonButton>
-            </IonItem>
-            <IonRow></IonRow>
-            <IonCol></IonCol>
-            <IonItem>
-              <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={search}
-              />
+
+          <IonItem>
+            <IonIcon
+              style={{ fontSize: "30px", color: "#46b0e0" }}
+              icon={navigate}
+            />
+            <IonSelect
+              interface="popover"
+              placeholder="Select location"
+              style={{ color: "#46b0e0" }}
+              onIonChange={(e) => SetLocation(e.detail.value)}
+              value={location}
+            >
+              <IonSelectOption value="Jurong East">Jurong West</IonSelectOption>
+              <IonSelectOption value="Clementi">Clementi</IonSelectOption>
+              <IonSelectOption value="Bishan">Bishan</IonSelectOption>
+              <IonSelectOption value="Dover">Dover</IonSelectOption>
+              <IonSelectOption value="Tuas">Tuas</IonSelectOption>
+            </IonSelect>
+          </IonItem>
+          <IonRow></IonRow>
+          <IonCol></IonCol>
+
+          <IonItem>
+            <IonIcon
+              style={{ fontSize: "30px", color: "#46b0e0" }}
+              icon={calendar}
+            />
+            <IonButton
+              class="button button-clear"
+              onClick={() => setShowModal(true)}
+            >
               <IonInput
                 class="ion-text-center"
-                style={{ color: "#46b0e0" }}
+                style={{ color: "#46b0e0", fontSize: "1.3em" }}
                 //type="email"
-                value={clinicName}
-                onIonChange={(e) => SetClinicName(e.detail.value!)}
+                value={date.toDateString()}
               ></IonInput>
-            </IonItem>
-            <IonRow></IonRow>
-            <IonCol></IonCol>
-            <IonItem>
-              <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={person}
-              />
-              <IonInput
-                class="ion-text-center"
-                style={{ color: "#46b0e0" }}
-                //type="email"
-                value={doctorName}
-                onIonChange={(e) => SetDoctorName(e.detail.value!)}
-              ></IonInput>
-            </IonItem>
-          </IonToolbar>
+            </IonButton>
+          </IonItem>
+          <IonRow></IonRow>
+          <IonCol></IonCol>
+          <IonItem>
+            <IonIcon
+              style={{ fontSize: "30px", color: "#46b0e0" }}
+              icon={search}
+            />
+            <IonInput
+              class="ion-text-center"
+              style={{ color: "#46b0e0" }}
+              //type="email"
+              value={clinicName}
+              onIonChange={(e) => SetClinicName(e.detail.value!)}
+            ></IonInput>
+          </IonItem>
+          <IonRow></IonRow>
+          <IonCol></IonCol>
+          <IonItem>
+            <IonIcon
+              style={{ fontSize: "30px", color: "#46b0e0" }}
+              icon={person}
+            />
+            <IonInput
+              class="ion-text-center"
+              style={{ color: "#46b0e0" }}
+              //type="email"
+              value={doctorName}
+              onIonChange={(e) => SetDoctorName(e.detail.value!)}
+            ></IonInput>
+          </IonItem>
+
           {/*Login button*/}
           <IonRow></IonRow>
           <IonCol></IonCol>
-          <IonToolbar>
-            <IonButton
-              class="button button-outline button-block"
-              color="#46b0e0"
-              onClick={handleSearch}
-              routerLink="/Home/SearchResult"
-            >
-              <b>Search</b>
-            </IonButton>
-          </IonToolbar>
+
+          <IonButton
+            class="button button-outline button-block"
+            color="#46b0e0"
+            onClick={handleSearch}
+            routerLink="/Home/SearchResult"
+          >
+            <b>Search</b>
+          </IonButton>
         </IonGrid>
       </IonContent>
     </IonPage>
