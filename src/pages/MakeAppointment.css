@@ -4,14 +4,13 @@
 
 .modal{
     font-size:  20px;
-}
-
-.modal-content{
     position: relative;
     display: flex;
     flex-direction: column;
     margin-top: 50%;
 }
+
+
 
 /*.my-custom-class{
    height: 50%;
