@@ -61,7 +61,7 @@ const Home: React.FC = ({}) => {
       <IonContent fullscreen className="ion-padding ion-text-center">
         <IonModal isOpen={showModal}>
           <Calendar onChange={onChange} value={date} />
-          <IonLabel>{date.toDateString()}</IonLabel>
+          <IonLabel>Date Selected:{date.toDateString()}</IonLabel>
           
           <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
         </IonModal>
