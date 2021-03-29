@@ -63,7 +63,7 @@ const Home: React.FC = ({}) => {
           <Calendar onChange={onChange} value={date} />
           <IonLabel>Date Selected:{date.toDateString()}</IonLabel>
           
-          <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
+          <IonButton onClick={() => setShowModal(false)}>Confirm</IonButton>
         </IonModal>
         
         <IonGrid>
