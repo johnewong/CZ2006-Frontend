@@ -136,14 +136,14 @@ const LoginMX: React.FC = () => {
             <IonCol class = "ion-text-left"> 
                 <IonButton routerLink="/ForgetPassword"
                            class="button button-clear button-postive" 
-                           color = "#46b0e0"
+                           color = "#ffd401"
                 ><a href="#">Forget Password?</a></IonButton>  
             </IonCol>
             {/*Register link*/}
             <IonCol class = "ion-text-right"> 
                 <IonButton routerLink="/Register"
                            class="button button-clear button-postive" 
-                           color = "#46b0e0"
+                           color = "#ffd401"
                 ><a href="#">Sign Up!</a></IonButton>  
             </IonCol>
           </IonRow>
