@@ -57,7 +57,9 @@ const Home: React.FC = ({}) => {
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
-        <IonModal isOpen={showModal}  swipeToClose={true} cssClass="calendar-modal"> 
+        <IonModal isOpen={showModal}  swipeToClose={true} cssClass="calendar-modal"
+           onDidDismiss={() => setShowModal(false)}>
+        
           <Calendar onChange={onChange} value={date} />
           <IonGrid>
             <IonRow>
