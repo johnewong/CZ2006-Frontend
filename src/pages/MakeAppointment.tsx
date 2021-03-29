@@ -129,40 +129,46 @@ const MakeAppointment: React.FC = () => {
               </IonItem>
               </IonToolbar>
               <IonToolbar>
-              <IonButton
-                        onClick = {() => setShowModal(true)}   
-                        class = "button button-outline button-block"
-                        color = "secondary"><b>Make Appointment</b></IonButton>
-                <IonModal isOpen={showModal} //cssClass='my-custom-class'
-                >
-                  <IonContent fullscreen className="ion-padding ion-text-center">
-                    <IonGrid>
-                      <IonRow>
-                        <IonCol>
-                          <IonHeader>
-                            <IonToolbar >
-                              <IonLabel  className = "modal">Appointment Summary</IonLabel>
-                            </IonToolbar>
-                            <IonRow><IonCol></IonCol></IonRow><IonRow><IonCol></IonCol></IonRow>
+              <IonButton onClick = {() => setShowModal(true)}   
+                         class = "button button-outline button-block"
+                         color = "secondary"><b>Make Appointment</b></IonButton>
+                <IonModal isOpen={showModal}  swipeToClose={true} cssClass="calendar-modal"
+                          onDidDismiss={() => setShowModal(false)}>  
+                  
+                  <IonContent fullscreen>
+                    <IonGrid>    
+                        <IonRow>
+                          <IonCol>
+                            <IonHeader>
+                              <IonLabel><b>Appointment Summary</b></IonLabel>
+                            </IonHeader>
                             <IonItem>
                               <IonIcon icon={location}></IonIcon>
-                              <IonLabel className = "ion-text-center">Jurong West Clinic 1</IonLabel>
+                              <IonLabel ><b>Location:</b></IonLabel>
+                              <IonLabel>Jurong West Clinic 1</IonLabel>
                             </IonItem>
                             <IonItem>
                               <IonIcon icon={person}></IonIcon>
-                              <IonLabel className = "ion-text-center">Dortor Name 1</IonLabel>
+                              <IonLabel><b>Veter Name:</b></IonLabel>
+                              <IonLabel>Dortor Name 1</IonLabel>
                             </IonItem>
                             <IonItem>
                               <IonIcon icon={time}></IonIcon>
-                              <IonLabel className = "ion-text-center">09:00 - 09:30</IonLabel>
+                              <IonLabel><b>Time Slot:</b></IonLabel>
+                              <IonLabel>09:00 - 09:30</IonLabel>
                             </IonItem>
-                          </IonHeader>
-                        </IonCol>
+                            <IonItem>
+                              <IonButton  className = "buttonCus button-outline" size = "default" onClick={() => {setShowModal(false)}}><b>Cancel</b></IonButton>
+                              <IonButton className = "buttonCus button-outline" size = "default" onClick={() => {setShowModal(false); handleMakeAppoint()}}><b>Confirm</b></IonButton>
+                            </IonItem>
+                          </IonCol>
                       </IonRow>
                     </IonGrid>
+                   
                   </IonContent>
                   
-                  <IonButton onClick={() => {setShowModal(false); handleMakeAppoint()}}><b>Confirm Appointment</b></IonButton>
+                  
+                  
                 </IonModal>
                 
                 <IonRow>
