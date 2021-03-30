@@ -8,7 +8,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import { female, male, personCircle } from "ionicons/icons";
@@ -35,56 +35,55 @@ import {
   mailOutline,
   lockClosedOutline,
 } from "ionicons/icons";
-import { Profiler } from "inspector";
 
+const api = axios.create({
+  baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+})
 
-function validateEmail(email: string) {
-  const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
-  return re.test(String(email).toLowerCase());
-}
+const GetProfile = async () => {
+  try {
+    const res = await api.get("/account/user/all");
+    console.log("data", res.data);
+    return res.data;
+  } catch (error) { }
+  
+};
 
 const Profile: React.FC = () => {
   const history = useHistory();
-  const [email, setEmail] = useState<string>("eve.holt@reqres.in");
-  const [password, setPassword] = useState<string>("cityslicka");
-  const [iserror, setIserror] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
+  const storage = window.localStorage;
+  const [birthday, setBirthday] = useState<string>("");
+  const [mobile, setMobile] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [profileItems, setItems] = useState([]);
 
-  const handleLogin = () => {
-    if (!email) {
-      setMessage("Please enter a valid email");
-      setIserror(true);
-      return;
-    }
-    if (validateEmail(email) === false) {
-      setMessage("Your email is invalid");
-      setIserror(true);
-      return;
-    }
+  
 
-    if (!password || password.length < 6) {
-      setMessage("Please enter your password");
-      setIserror(true);
-      return;
+  useEffect(() => {
+    var userInfo = storage.getItem("userInfo");
+
+    console.log(userInfo);
+    //console.log("current user: " + currentUser);
+
+    if (!userInfo) {
+      history.push("/Login");
     }
 
-    const loginData = {
-      email: email,
-      password: password,
-    };
+    GetProfile().then(data => setItems(data));
 
-    const api = axios.create({
-      baseURL: `https://reqres.in/api`,
-    });
-    api
-      .post("/login", loginData)
-      .then((res) => {
-        history.push("/dashboard/" + email);
-      })
-      .catch((error) => {
-        setMessage("Auth failure! Please create an account");
-        setIserror(true);
-      });
+  }, [history]);
+
+  var obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
+
+  var currentUser = obj.userName;
+  var currentBirthDate = obj.birthDate;
+  var ContactNumber = obj.contactNumber;
+  var CurrentEmail = obj.emailAddress;
+  //return currentUser;
+    //console.log("username is " +obj.userName);
+
+  const handleEdit = () => {
+    return;
   };
 
   // @ts-ignore
@@ -99,14 +98,6 @@ const Profile: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonAlert
-                isOpen={iserror}
-                onDidDismiss={() => setIserror(false)}
-                cssClass="my-custom-class"
-                header={"Error!"}
-                message={message}
-                buttons={["Dismiss"]}
-              />
             </IonCol>
           </IonRow>
 
@@ -123,7 +114,8 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#0040ff" }}
                 icon={personOutline}
               />
-              <IonLabel position="floating"> User Name</IonLabel>
+              <IonLabel position="floating">{currentUser}</IonLabel>
+            
               <IonInput></IonInput>
             </IonItem>
           </IonCol>
@@ -150,7 +142,7 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#0040ff" }}
                 icon={calendarNumberOutline}
               />
-              <IonLabel position="floating">Birth Date</IonLabel>
+              <IonLabel position="floating">{currentBirthDate}</IonLabel>
               <IonInput></IonInput>
             </IonItem>
           </IonCol>
@@ -161,7 +153,7 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#0040ff" }}
                 icon={callOutline}
               />
-              <IonLabel position="floating">Mobile number</IonLabel>
+              <IonLabel position="floating">{ContactNumber}</IonLabel>
               <IonInput></IonInput>
             </IonItem>
           </IonCol>
@@ -172,7 +164,7 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#0040ff" }}
                 icon={mailOutline}
               />
-              <IonLabel position="floating"> Email</IonLabel>
+              <IonLabel position="floating">{CurrentEmail}</IonLabel>
               <IonInput
                 type="email"
                 value={email}
@@ -182,7 +174,7 @@ const Profile: React.FC = () => {
           </IonCol>
 
           <IonCol>
-            <IonButton expand="block" onClick={handleLogin}>
+            <IonButton expand="block" onClick={handleEdit}>
               Edit
             </IonButton>
           </IonCol>
