@@ -8,8 +8,8 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import { medkit, navigate } from "ionicons/icons";
-import { calendar } from "ionicons/icons";
+import { medkitOutline, navigateOutline } from "ionicons/icons";
+import { calendarOutline } from "ionicons/icons";
 import Calendar from "react-calendar";
 import { search } from "ionicons/icons";
 import { person } from "ionicons/icons";
@@ -155,7 +155,7 @@ export const Home: React.FC = ({}) => {
           {/*Image logo*/}
           <IonRow>
             <IonCol>
-              <img src="assets/images/Logo.png" width="300px" />
+              <img src="assets/images/Logo.png" width="280px" />
             </IonCol>
           </IonRow>
           {/*Login input*/}
@@ -171,15 +171,15 @@ export const Home: React.FC = ({}) => {
             
 
               <IonIcon
-                        style={{ fontSize: "30px", color: "#46b0e0" }}
-                        icon={navigate}
+                        style={{ fontSize: "30px", color: "#ffd401" }}
+                        icon={navigateOutline}
                       />
         
               <IonSelect
                 class="ion-select"
                 interface="popover"
                 placeholder="Select location"
-                style={{ color: "#46b0e0" }}
+                style={{ color: "#000000" }}
                 onIonChange={(e) => SetLocation(e.detail.value)}
                 value={location}
               >
@@ -198,11 +198,11 @@ export const Home: React.FC = ({}) => {
           <IonToolbar>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={calendar}
+                style={{ fontSize: "30px", color: "#ffd401" }}
+                icon={calendarOutline}
               />
               <IonButton
-                class="button button-clear calendar"
+                class="button button-clear calendar "
                 onClick={() => setShowModal(true)}
               >
                 {date.toDateString()}
@@ -213,15 +213,15 @@ export const Home: React.FC = ({}) => {
             
                <IonItem>
               <IonIcon
-                style={{ fontSize: "30px", color: "#46b0e0" }}
-                icon={medkit}
+                style={{ fontSize: "30px", color: "#ffd401" }}
+                icon={medkitOutline}
               />
 
               <IonSelect
                 class="ion-select"
                 interface="popover"
                 placeholder="Select treatment"
-                style={{ color: "#46b0e0" }}
+                style={{ color: "#000000" }}
                 onIonChange={(e) => SetTreatmentID(e.detail.value!)}
                 value={treatmentID}
                 
@@ -243,8 +243,9 @@ export const Home: React.FC = ({}) => {
           <IonCol></IonCol>
           <IonToolbar>
             <IonButton
-              class="button button-outline button-block"
-              color="#46b0e0"
+              size = "default"
+              color="warning"
+              expand="block"
               onClick={handleSearch}
           //    routerLink="/Home/SearchResult"
             >
