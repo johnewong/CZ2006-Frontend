@@ -14,3 +14,19 @@
    text-align: center;
    justify-content: center;
  }
+
+ .calendar-modal{
+  width: 100%;
+  min-height:800px;
+}
+
+
+#calendarConfirm{
+  
+  font-size:14px
+}
+
+.error{
+  color:red;
+  
+}

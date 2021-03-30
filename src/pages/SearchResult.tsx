@@ -1,113 +1,124 @@
-import { IonCard, IonContent, IonHeader, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonCard, IonContent, IonHeader, IonModal, IonPage, IonSelectPopover, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
 import { arrowBack, arrowForward, caretBack, caretForward } from "ionicons/icons";
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import { IonItem, IonLabel, IonInput, IonButton, IonButtons, IonIcon, IonAlert,IonImg, IonSegment, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
 
 let dataString = "";
-let clinic_data = [
-  {
-    isActive:false,
-    clinic: {
-      name: "Hougang Vet Center",
-      address: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-    treatmentAvailable: {
-      treatmentName: "Dental Scaling",
-    },
-  },
 
-  {
-    isActive:false,
-    clinic: {
-      name: "Hougang Vet Center",
-      address: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-    treatmentAvailable: {
-      treatmentName: "Dental Scaling",
-    },
-  },
+// let clinic_data = [
+//   {
+//     isActive:false,
+//     clinic: {
+//       name: "Hougang Vet Center",
+//       address: "681 Hougang Ave 8, Singapore 530681",
+//       tel: "62468681",
+//     },
+//     treatmentAvailable: {
+//       treatmentName: "Dental Scaling",
+//     },
+//   },
 
-  {
-    isActive:false,
-    clinic: {
-      name: "Hougang Vet Center",
-      address: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-    treatmentAvailable: {
-      treatmentName: "Dental Scaling",
-    },
-  },
+//   {
+//     isActive:false,
+//     clinic: {
+//       name: "Hougang Vet Center",
+//       address: "681 Hougang Ave 8, Singapore 530681",
+//       tel: "62468681",
+//     },
+//     treatmentAvailable: {
+//       treatmentName: "Dental Scaling",
+//     },
+//   },
 
-];
+//   {
+//     isActive:false,
+//     clinic: {
+//       name: "Hougang Vet Center",
+//       address: "681 Hougang Ave 8, Singapore 530681",
+//       tel: "62468681",
+//     },
+//     treatmentAvailable: {
+//       treatmentName: "Dental Scaling",
+//     },
+//   },
 
+// ];
 //const [activeItem, setActiveItem] = React.useState(1);
 
 
-function ClinicDetail(item:any){
-  //alert("displayDetail"+item.isActive);
-  return (
-    <div>
-       <IonRow>
-            <IonCol>
-              <IonLabel><b>Name: </b></IonLabel>
-              <IonLabel>{item.clinic.name}</IonLabel>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonLabel><b>Treatment/Service: </b></IonLabel>
-              <IonLabel>{item.treatmentAvailable.treatmentName}</IonLabel>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonLabel><b>Address: </b></IonLabel>
-              <IonLabel>{item.clinic.address}</IonLabel>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonLabel><b>Tel: </b></IonLabel>
-              <IonLabel>{item.clinic.tel}</IonLabel>
-            </IonCol>
-          </IonRow>
-    </div>
-  );
-}
-
-function displayEvent(item: any, index: any) {
-  return (
-   <IonCard routerLink= "/Home/SearchResult/MakeAppointment">
-      <IonCardContent class="ion-text-left">
-        <IonToolbar>
-          <IonItem>
-          <IonLabel>
-            <div className="card-title"> <b>Clinic 1</b></div>
-          </IonLabel>
-          <img src= "assets/images/Logo.png" width = "150px" />
-          </IonItem>       
-        </IonToolbar>
-        <IonGrid>
-          <IonRow>
-            <IonCol size="5">
-              <IonLabel> </IonLabel>
-              <IonLabel>{item.clinicDate}</IonLabel>
-            </IonCol>
-          </IonRow>       
-           {ClinicDetail(item)}
-        </IonGrid>
-      </IonCardContent>
-    </IonCard>
-  );
-}
 
 const SearchResult: React.FC = () => {
+const history = useHistory();
+
+
+const location = useLocation();
+const resultlist = location.state as any;
+
+  console.log(resultlist)
+  function ClinicDetail(item:any){
+    //alert("displayDetail"+item.isActive);
+    return (
+      <div>
+        <IonRow>
+              <IonCol>
+                <IonLabel><b>Description: </b></IonLabel>
+                <IonLabel>{item.vetDescription}</IonLabel>
+              </IonCol>
+            </IonRow>
+          
+            <IonRow>
+              <IonCol>
+                <IonLabel><b>Address: </b></IonLabel>
+                <IonLabel>{item.vetAddress}</IonLabel>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonLabel><b>Tel: </b></IonLabel>
+                <IonLabel>{item.tel_office_1}</IonLabel>
+              </IonCol>
+            </IonRow>
+      </div>
+    );
+  }
+
+  function Redirect (item: any) {
+    history.push( "/Home/SearchResult/MakeAppointment",
+              { veterdetail: item, vetdetail: resultlist.vetdetail});
+    return;
+  }
+
+  function displayEvent(item: any, index: any) {
+    return (
+      
+    <IonCard onClick={() => Redirect(item.veterSlot)}>
+        <IonCardContent class="ion-text-left">
+          <IonToolbar>
+            <IonItem>
+            <IonLabel>
+              <div className="card-title"> <b>{item["vet"].vetName}</b></div>
+            </IonLabel>
+            <img src= "assets/images/Logo.png" width = "150px" />
+            </IonItem>       
+          </IonToolbar>
+          <IonGrid>
+            <IonRow>
+              <IonCol size="5">
+                <IonLabel> </IonLabel>
+                <IonLabel>{}</IonLabel>
+              </IonCol>
+            </IonRow>       
+            {ClinicDetail(item["vet"])}
+          </IonGrid>
+        </IonCardContent>
+      </IonCard>
+    );
+  }
+
+
   //getData();
   return (
     <IonPage>
@@ -138,7 +149,7 @@ const SearchResult: React.FC = () => {
           </IonToolbar>
       </IonHeader>
       <IonContent>
-        {clinic_data.map((item, index) => displayEvent(item, index))}
+        {typeof resultlist !== 'undefined' ? resultlist.vetdetail.map((item: any, index: any) => displayEvent(item, index)) : null}
       </IonContent>
     </IonPage>
   );

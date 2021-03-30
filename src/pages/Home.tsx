@@ -27,11 +27,26 @@ import {
   IonSelectOption,
 } from "@ionic/react";
 import { useHistory } from "react-router";
- 
+
+
+function  formatDate(d:  Date) {
+  var 
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2) 
+      month = '0' + month;
+  if (day.length < 2) 
+      day = '0' + day;
+
+  return [year, month, day].join('-');
+}
   
 var treatment_data: any[] = []
 const api = axios.create({
-  baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+ // baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+  baseURL: `http://localhost:8080`
 })
 
 const GetTreatments = async () => {
@@ -44,7 +59,8 @@ const GetTreatments = async () => {
 };
 
 
-const Home: React.FC = ({}) => {
+
+export const Home: React.FC = ({}) => {
   
   const storage = window.localStorage;
   const history = useHistory();
@@ -58,9 +74,12 @@ const Home: React.FC = ({}) => {
   const [showModal, setShowModal] = useState(false);
   const [location, SetLocation] = useState<string>("");
   const [date, SetDate] = useState(new Date());
-  
+  const [message, setMessage] = useState<string>("");
+
+  const [iserror, setIserror] = useState<boolean>(false);
   const onChange = (date: any) => {
     SetDate(date);
+    console.log(date)
   };
 
   useEffect(() => {
@@ -74,8 +93,44 @@ const Home: React.FC = ({}) => {
 
   }, [history]);
 
-  const handleSearch = () => {
-    return;
+  const handleSearch = async () => {
+    
+    if (!location || location == "") {
+      setMessage("Please select a location!");
+      setIserror(true);
+      return;
+    }
+
+    if (!date || date == null ) {
+      setMessage("Please select a date!");
+      setIserror(true);
+      return;
+    }
+
+    if (!treatmentID  || treatmentID == "") {
+      setMessage("Please select a treatment!");
+      setIserror(true);
+      return;
+    }
+    setMessage("");
+    setIserror(false);
+    var formatdate = formatDate(date) 
+    
+    await api.get("/appointment/search/" + location + "/" + formatdate + "/" + treatmentID)
+        .then(res => {       
+            console.log("data",res.data);       
+            
+            history.push( "/Home/SearchResult",
+             { vetdetail: res.data,
+                 });
+
+        })
+        .catch(error=>{
+            setMessage("Failed to search please try again!");
+            setIserror(true)
+        })
+
+      return;
   };
 
 
@@ -86,16 +141,14 @@ const Home: React.FC = ({}) => {
         <IonModal isOpen={showModal}  swipeToClose={true} cssClass="calendar-modal"
            onDidDismiss={() => setShowModal(false)}>
         
-          <Calendar onChange={onChange} value={date} />
-          <IonGrid>
-            <IonRow>
-              <IonCol>
-                <IonButton onClick={() => setShowModal(false)}>
+          <Calendar onChange={onChange}  value={date} />
+          
+          <IonGrid >
+                <IonButton id="calendarConfirm" onClick={() => setShowModal(false)}>
                   Confirm
                 </IonButton>
-              </IonCol>
-            </IonRow>
           </IonGrid>
+          
         </IonModal>
 
         <IonGrid>
@@ -106,6 +159,13 @@ const Home: React.FC = ({}) => {
             </IonCol>
           </IonRow>
           {/*Login input*/}
+
+          <IonRow>
+            <IonCol>
+              
+           <h6 className="error"> { message } </h6>
+            </IonCol>
+            </IonRow>
           <IonToolbar >
             <IonItem >
             
@@ -123,13 +183,13 @@ const Home: React.FC = ({}) => {
                 onIonChange={(e) => SetLocation(e.detail.value)}
                 value={location}
               >
-                <IonSelectOption value="Jurong East">
+                <IonSelectOption value="1">
                   Jurong West
                 </IonSelectOption>
-                <IonSelectOption value="Clementi">Clementi</IonSelectOption>
-                <IonSelectOption value="Bishan">Bishan</IonSelectOption>
-                <IonSelectOption value="Dover">Dover</IonSelectOption>
-                <IonSelectOption value="Tuas">Tuas</IonSelectOption>
+                <IonSelectOption value="2">Clementi</IonSelectOption>
+                <IonSelectOption value="3">Bishan</IonSelectOption>
+                <IonSelectOption value="4">Dover</IonSelectOption>
+                <IonSelectOption value="5">Tuas</IonSelectOption>
               </IonSelect>
             </IonItem>
             <IonRow></IonRow>
@@ -186,7 +246,7 @@ const Home: React.FC = ({}) => {
               class="button button-outline button-block"
               color="#46b0e0"
               onClick={handleSearch}
-              routerLink="/Home/SearchResult"
+          //    routerLink="/Home/SearchResult"
             >
               <b>Search</b>
             </IonButton>

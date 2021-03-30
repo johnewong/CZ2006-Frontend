@@ -27,7 +27,7 @@ const LoginMX: React.FC = () => {
     //if(userInfo) history.push('/home');
   },[history]);
 
-  const handleLogin = () => {
+  const handleLogin =  () => {
     if (!username) {
         setMessage("Please enter a valid username");
         setIserror(true);
@@ -54,18 +54,19 @@ const LoginMX: React.FC = () => {
     const api = axios.create({
         baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com/account/user`
     })
-    api.post("/login", loginData)
+     api.post("/login", loginData)
         .then(res => {       
-            console.log("data",res.data);       
+            console.log("data",res);       
 
             let str =JSON.stringify(res.data); 
             storage.setItem("userInfo", str);
-            history.push("/Home/" + loginData.username);
+            history.push("/Home");
          })
-         .catch(error=>{
+         .catch((error)=>{
             setMessage("Auth failure! Please create an account");
             setIserror(true)
          })
+        
   };
   return (
     <IonPage>

@@ -4,41 +4,41 @@ import React, { useEffect, useState } from 'react';
 import "./MakeAppointment.css";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
 import { arrowBack, caretBack,caretForward,location, time, person  } from "ionicons/icons";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg, IonSegment,IonSegmentButton, IonSlides, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
 
-let veter_data = [
-  {
-    isActive:false,
-    veter: {
-      name: "Dr Goh",
-      major: "Pet Surgery",
-      address: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-  },
+// let veter_data = [
+//   {
+//     isActive:false,
+//     veter: {
+//       name: "Dr Goh",
+//       major: "Pet Surgery",
+//       address: "681 Hougang Ave 8, Singapore 530681",
+//       tel: "62468681",
+//     },
+//   },
 
-  {
-    isActive:false,
-    veter: {
-      name: "Dr Goh",
-      major: "Pet Surgery",
-      address: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-  },
+//   {
+//     isActive:false,
+//     veter: {
+//       name: "Dr Goh",
+//       major: "Pet Surgery",
+//       address: "681 Hougang Ave 8, Singapore 530681",
+//       tel: "62468681",
+//     },
+//   },
 
-  {
-    isActive:false,
-    veter: {
-      name: "Dr Goh",
-      major: "Pet Surgery",
-      address: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-  },
+//   {
+//     isActive:false,
+//     veter: {
+//       name: "Dr Goh",
+//       major: "Pet Surgery",
+//       address: "681 Hougang Ave 8, Singapore 530681",
+//       tel: "62468681",
+//     },
+//   },
 
-];
+// ];
 
 
 
@@ -50,6 +50,9 @@ const MakeAppointment: React.FC = () => {
   const storage = window.localStorage;
   const history = useHistory();
 
+  const locationpara = useLocation();
+  const resultlist = locationpara.state as any;
+  console.log(resultlist)
   useEffect(() => {
     let userInfo = storage.getItem("userInfo"); 
   
@@ -97,7 +100,7 @@ const MakeAppointment: React.FC = () => {
           <IonToolbar>
             <IonItem>
             <IonLabel>
-              <div className="card-title"> <b>Veter Name 1</b></div>
+              <div className="card-title"> <b>{item.veter.veterName}</b></div>
             </IonLabel>
             <img src= "assets/images/personHead.png" width = "80px" />
             </IonItem>       
@@ -109,7 +112,7 @@ const MakeAppointment: React.FC = () => {
                 <IonLabel>{item.clinicDate}</IonLabel>
               </IonCol>
             </IonRow>       
-             {veterDetail(item)}
+             {/* {veterDetail(item)} */}
           </IonGrid>
           <IonToolbar > 
               <IonItem>
@@ -223,7 +226,7 @@ const MakeAppointment: React.FC = () => {
           </IonToolbar>
       </IonHeader>
       <IonContent >
-      {veter_data.map((item, index) => displayVeter(item, index))}
+      {typeof resultlist !== 'undefined' ? resultlist.veterdetail.map((item: any, index:any) => displayVeter(item, index)): null}
       </IonContent>
     </IonPage>
   );
