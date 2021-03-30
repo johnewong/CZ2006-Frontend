@@ -57,6 +57,17 @@ const MakeAppointment: React.FC = () => {
       history.push('/Login');
     } 
   }, [history]);
+
+  const OnClickMakeAppoint = () => {
+    let time = AvaiTime;
+    if(!time.trim()){
+      setMessage("Please choose time slot!");
+      setMakeAppoint(true);
+    }else{
+      setShowModal(true);
+    }
+      
+  };
   
   function veterDetail(item:any){
     //alert("displayDetail"+item.isActive);
@@ -116,20 +127,20 @@ const MakeAppointment: React.FC = () => {
                 <IonLabel class = "ion-text-left"> <b>Avaiable Time Slot</b> </IonLabel>
                 <IonSelect   
                   interface="popover"
-                  placeholder="Select Time"
+                  //placeholder="Select Time"
                   onIonChange={e => setAvailableTime(e.detail.value)}
                   value={AvaiTime}>
-                  <IonSelectOption value="9-930">09:00 - 09:30am</IonSelectOption>
-                  <IonSelectOption value="930-10">09:30 - 10:00am</IonSelectOption>
-                  <IonSelectOption value="10-1030">10:00 - 10:30am</IonSelectOption>
-                  <IonSelectOption value="1030-11">10:30 - 11:00am</IonSelectOption>
-                  <IonSelectOption value="1130-12">11:00 - 11:30am</IonSelectOption>
-                  <IonSelectOption value="1230-13">11:30 - 12:00pm</IonSelectOption>
+                  <IonSelectOption value="09:00 - 09:30am">09:00 - 09:30am</IonSelectOption>
+                  <IonSelectOption value="09:30 - 10:00am">09:30 - 10:00am</IonSelectOption>
+                  <IonSelectOption value="10:00 - 10:30am">10:00 - 10:30am</IonSelectOption>
+                  <IonSelectOption value="10:30 - 11:00am">10:30 - 11:00am</IonSelectOption>
+                  <IonSelectOption value="11:00 - 11:30am">11:00 - 11:30am</IonSelectOption>
+                  <IonSelectOption value="11:30 - 12:00pm">11:30 - 12:00pm</IonSelectOption>
                 </IonSelect>
               </IonItem>
               </IonToolbar>
               <IonToolbar>
-              <IonButton onClick = {() => setShowModal(true)}   
+              <IonButton onClick = {OnClickMakeAppoint}   
                          class = "button button-outline button-block"
                          color = "secondary"><b>Make Appointment</b></IonButton>
                 <IonModal isOpen={showModal}  swipeToClose={true} cssClass="calendar-modal"
@@ -155,7 +166,7 @@ const MakeAppointment: React.FC = () => {
                             <IonItem>
                               <IonIcon icon={time}></IonIcon>
                               <IonLabel><b>Time Slot:</b></IonLabel>
-                              <IonLabel>09:00 - 09:30</IonLabel>
+                              <IonLabel>{AvaiTime}</IonLabel>
                             </IonItem>
                             <IonItem>
                               <IonButton  className = "buttonCus button-outline" size = "default" onClick={() => {setShowModal(false)}}><b>Cancel</b></IonButton>
@@ -176,7 +187,7 @@ const MakeAppointment: React.FC = () => {
                     <IonAlert
                       isOpen={makeAppoint}
                       onDidDismiss={() => setMakeAppoint(false)}
-                      header={"The appointment has been confirmed!"}
+                      header={message}
                       //message='<icon src = "assets/images/Icon.jpg" width="35px" height="35px"> Delete this file?'
                       buttons={["OK"]} 
                     />
@@ -189,9 +200,8 @@ const MakeAppointment: React.FC = () => {
   }
 
   const handleMakeAppoint = () => {
-    setMessage("");
-    setMakeAppoint(true);
-    return;
+      setMessage("The appointment has been confirmed!");
+      setMakeAppoint(true);
   };
   return (
     <IonPage>
@@ -230,3 +240,7 @@ const MakeAppointment: React.FC = () => {
 };
 
 export default MakeAppointment;
+
+function value(value: any) {
+  throw new Error('Function not implemented.');
+}
