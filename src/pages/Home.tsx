@@ -120,10 +120,13 @@ export const Home: React.FC = ({}) => {
         .then(res => {       
             console.log("data",res.data);       
             
-            history.push( "/Home/SearchResult",
-             { vetdetail: res.data,
-                 });
-
+            
+            history.push({
+              pathname: '/Home/SearchResult',
+              state: {
+                vetdetail: res.data
+              }
+            });
         })
         .catch(error=>{
             setMessage("Failed to search please try again!");

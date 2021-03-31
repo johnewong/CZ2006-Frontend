@@ -9,11 +9,14 @@
 .buttonCus{
     width: 100%;
     text-align: center;
-    margin-top: 50%;
+    margin-top: 70%;
+    font-size:14px;
   }
 
-.content{
-    
+.veterimage{
+    padding-bottom: 20px;
 }
-
-
+.select-modal {
+    background: rgba(0, 0, 0, 0.5) !important;
+    padding:50% 5%  !important;
+ }

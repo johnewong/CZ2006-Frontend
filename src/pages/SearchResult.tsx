@@ -57,7 +57,6 @@ const history = useHistory();
 const location = useLocation();
 const resultlist = location.state as any;
 
-  console.log(resultlist)
   function ClinicDetail(item:any){
     //alert("displayDetail"+item.isActive);
     return (
@@ -86,15 +85,29 @@ const resultlist = location.state as any;
   }
 
   function Redirect (item: any) {
-    history.push( "/Home/SearchResult/MakeAppointment",
-              { veterdetail: item, vetdetail: resultlist.vetdetail});
+    console.log(item)
+    history.push({
+      pathname: '/Home/SearchResult/MakeAppointment',
+      state: {
+        veterdetail: item.veterSlot, vetdetail: resultlist.vetdetail, selectedVet: item["vet"]
+      }
+    });
+    return;
+  }
+
+  function Back(){
+    
+      history.push({
+        pathname: '/Home',
+      
+      });
     return;
   }
 
   function displayEvent(item: any, index: any) {
     return (
       
-    <IonCard onClick={() => Redirect(item.veterSlot)}>
+    <IonCard key={index} onClick={() => Redirect(item)}>
         <IonCardContent class="ion-text-left">
           <IonToolbar>
             <IonItem>
@@ -125,7 +138,7 @@ const resultlist = location.state as any;
       <IonHeader>
           <IonToolbar>
             <IonButtons  slot="secondary" >
-              <IonButton fill="default" routerLink = "/Home">
+              <IonButton fill="default" onClick = {Back}>
                 <IonIcon  icon={arrowBack}/>
               </IonButton>
             </IonButtons>
@@ -149,7 +162,7 @@ const resultlist = location.state as any;
           </IonToolbar>
       </IonHeader>
       <IonContent>
-        {typeof resultlist !== 'undefined' ? resultlist.vetdetail.map((item: any, index: any) => displayEvent(item, index)) : null}
+        {typeof resultlist !== 'undefined' && resultlist.hasOwnProperty('vetdetail') !==  false ? resultlist.vetdetail.map((item: any, index: any) => displayEvent(item, index)) : null}
       </IonContent>
     </IonPage>
   );
