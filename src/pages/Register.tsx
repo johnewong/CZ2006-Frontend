@@ -15,6 +15,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {IonRouteInner} from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
 import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle} from "ionicons/icons";
+import userEvent from "@testing-library/user-event";
 
 
 
@@ -55,17 +56,22 @@ const Register: React.FC = () => {
         return;
     }
 
-    const loginData = {
+
+
+    const registerData = {
         "email": email,
-        "password": password
+        "password": password,
+
     }
 
+
+
     const api = axios.create({
-        baseURL: `https://reqres.in/api`
+        baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
     })
-    api.post("/login", loginData)
+    api.post("/user", registerData)
         .then(res => {             
-            history.push("/dashboard/" + email);
+            history.push("/dashboard/" );
          })
          .catch(error=>{
             setMessage("Auth failure! Please create an account");
