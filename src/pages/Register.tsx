@@ -67,11 +67,11 @@ const Register: React.FC = () => {
 
 
     const api = axios.create({
-        baseURL: `https://reqres.in/api`
+        baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
     })
-    api.post("/login", registerData)
+    api.post("/user", registerData)
         .then(res => {             
-            history.push("/dashboard/" + email);
+            history.push("/dashboard/" );
          })
          .catch(error=>{
             setMessage("Auth failure! Please create an account");
