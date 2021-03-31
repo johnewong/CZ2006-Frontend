@@ -60,7 +60,7 @@ const LoginMX: React.FC = () => {
 
             let str =JSON.stringify(res.data); 
             storage.setItem("userInfo", str);
-            history.push("/Home/" + loginData.username);
+            history.push("/Home/");
          })
          .catch(error=>{
             setMessage("Auth failure! Please create an account");
