@@ -68,7 +68,7 @@ export const Home: React.FC = ({}) => {
 
   const [treatmentItems, setItems] = useState([]);
 
-  // const [clinicName, SetClinicName] = useState<string>("Enter Clinic Name");
+  // const [clinicNa, SetClinicName] = useState<string>("Enter Clinic Name");
   // const [doctorName, SetDoctorName] = useState<string>("Enter Veter Name");
   const [treatmentID, SetTreatmentID] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
