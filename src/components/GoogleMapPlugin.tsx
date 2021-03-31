@@ -32,7 +32,8 @@ function MapContainer(props: any) {
   const locations = [
     {
       name: "aaaaa",
-      location: {       
+      location: {
+       
         lat: 1.422,
         lng: 103.762,
       },
