@@ -45,14 +45,13 @@ function  formatDate(d:  Date) {
   
 var treatment_data: any[] = []
 const api = axios.create({
-  baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
- // baseURL: `http://localhost:8080`
+ // baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+  baseURL: `http://localhost:8080`
 })
 
 const GetTreatments = async () => {
   try {
     const res = await api.get("/treatment");
-    console.log("data", res.data);
     return res.data;
   } catch (error) { }
 
@@ -79,7 +78,6 @@ export const Home: React.FC = ({}) => {
   const [iserror, setIserror] = useState<boolean>(false);
   const onChange = (date: any) => {
     SetDate(date);
-    console.log(date)
   };
 
   useEffect(() => {
@@ -115,15 +113,19 @@ export const Home: React.FC = ({}) => {
     setMessage("");
     setIserror(false);
     var formatdate = formatDate(date) 
-    
+    console.log(formatdate)
     await api.get("/appointment/search/" + location + "/" + formatdate + "/" + treatmentID)
         .then(res => {       
-            console.log("data",res.data);       
             
-            history.push( "/Home/SearchResult",
-             { vetdetail: res.data,
-                 });
-
+            
+            history.push({
+              pathname: '/Home/SearchResult',
+              state: {
+                vetdetail: res.data,
+                treatmentID : treatmentID,
+                appointmentDate: formatdate
+              }
+            });
         })
         .catch(error=>{
             setMessage("Failed to search please try again!");
