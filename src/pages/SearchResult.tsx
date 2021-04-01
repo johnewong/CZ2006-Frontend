@@ -89,7 +89,11 @@ const resultlist = location.state as any;
     history.push({
       pathname: '/Home/SearchResult/MakeAppointment',
       state: {
-        veterdetail: item.veterSlot, vetdetail: resultlist.vetdetail, selectedVet: item["vet"]
+        veterdetail: item.veterSlot, 
+        vetdetail: resultlist.vetdetail, 
+        selectedVet: item["vet"],
+        treatmentID : resultlist.treatmentID,
+        appointmentDate: resultlist.appointmentDate
       }
     });
     return;
