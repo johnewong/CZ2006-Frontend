@@ -60,7 +60,7 @@ const Profile: React.FC = () => {
   
 
   useEffect(() => {
-    var userInfo = storage.getItem("userInfo");
+    const userInfo = storage.getItem("userInfo");
 
     console.log(userInfo);
     //console.log("current user: " + currentUser);
@@ -73,12 +73,12 @@ const Profile: React.FC = () => {
 
   }, [history]);
 
-  var obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
-  var currentUser = obj.userName;
-  var currentBirthDate = obj.birthDate;
-  var ContactNumber = obj.contactNumber;
-  var CurrentEmail = obj.emailAddress;
+  const currentUser = obj.userName;
+  const currentBirthDate = obj.birthDate;
+  const ContactNumber = obj.contactNumber;
+  const CurrentEmail = obj.emailAddress;
   //return currentUser;
     //console.log("username is " +obj.userName);
 
