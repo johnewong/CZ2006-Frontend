@@ -45,7 +45,6 @@ const api = axios.create({
   baseURL: `http://localhost:8080`,
 });
 
-
 const getTreatments = async () => {
   try {
     const res = await api.get("/treatment");
@@ -62,18 +61,20 @@ const getLocations = async () => {
   } catch (error) {}
 };
 
+interface LocationPair{
+  Id:number;
+  Name:string;
+}
+
 export const Home: React.FC = ({}) => {
   const storage = window.localStorage;
   const history = useHistory();
 
   const [treatmentItems, setTreatmentItems] = useState([]);
   const [locationItems, setLocationItems] = useState([]);
-
-  // const [clinicNa, SetClinicName] = useState<string>("Enter Clinic Name");
-  // const [doctorName, SetDoctorName] = useState<string>("Enter Veter Name");
   const [treatmentID, SetTreatmentID] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
-  const [location, SetLocation] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
   const [date, SetDate] = useState(new Date());
   const [message, setMessage] = useState<string>("");
 
@@ -114,10 +115,12 @@ export const Home: React.FC = ({}) => {
     setMessage("");
     setIserror(false);
     let formatdate = formatDate(date);
+    let locationID = location;
+    let locationPair = locationItems.find(m => m["LocationID"]==locationID)! as LocationPair;
     console.log("home formatdate", formatdate);
     await api
       .get(
-        "/appointment/search/" + location + "/" + formatdate + "/" + treatmentID
+        "/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID
       )
       .then((res) => {
         console.log("search data", res.data);
@@ -126,7 +129,8 @@ export const Home: React.FC = ({}) => {
           pathname: "/Home/SearchResult",
           state: {
             vetdetail: res.data,
-            location: location,
+            location: locationID,
+            locationName: locationPair.Name,
             date: date,
             treatmentID: treatmentID,
           },
@@ -184,16 +188,22 @@ export const Home: React.FC = ({}) => {
                 interface="popover"
                 placeholder="Select location"
                 style={{ color: "#000000" }}
-                onIonChange={(e) => SetLocation(e.detail.value)}
+                onIonChange={(e) => {
+                  setLocation(e.detail.value);                           
+                }}
                 value={location}
               >
-                {locationItems.map((item, index) => {
-                  return (
-                    <IonSelectOption key={index} value={item["LocationID"]}>
-                      {item["Name"]}
-                    </IonSelectOption>
-                  );
-                })}
+                {typeof locationItems !== "undefined" &&
+                  locationItems.map((item, index) => {
+                    return (
+                      <IonSelectOption
+                        key={index}
+                        value={item["LocationID"]}
+                      >
+                        {item["Name"]}
+                      </IonSelectOption>
+                    );
+                  })}
               </IonSelect>
             </IonItem>
             <IonRow></IonRow>
@@ -229,13 +239,14 @@ export const Home: React.FC = ({}) => {
                 onIonChange={(e) => SetTreatmentID(e.detail.value!)}
                 value={treatmentID}
               >
-                {treatmentItems.map((item, index) => {
-                  return (
-                    <IonSelectOption key={index} value={item["treatmentID"]}>
-                      {item["treatmentName"]}
-                    </IonSelectOption>
-                  );
-                })}
+                {typeof treatmentItems !== "undefined" &&
+                  treatmentItems.map((item, index) => {
+                    return (
+                      <IonSelectOption key={index} value={item["treatmentID"]}>
+                        {item["treatmentName"]}
+                      </IonSelectOption>
+                    );
+                  })}
               </IonSelect>
             </IonItem>
           </IonToolbar>

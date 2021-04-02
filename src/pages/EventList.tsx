@@ -27,6 +27,7 @@ import {
   chevronUp,
 } from "ionicons/icons";
 import "./EventList.css";
+import { userInfo } from "node:os";
 
 let dataString = "";
 const appointment_data = [
@@ -66,30 +67,53 @@ const appointment_data = [
   },
 ];
 
+interface UserInfo {
+  userID: number;
+  customerName: string;
+}
 const EventList: React.FC = () => {
   const history = useHistory();
   const storage = window.localStorage;
-  useEffect(()=>{
-    let userInfo = storage.getItem("userInfo");
-    
-    if(!userInfo){    
-      history.push('/Login');      
-    } 
-  },[history]);
+  const [appointment, setAppointment] = useState([]);
+  const [userInfo, setUserInfo] = useState<UserInfo>();
+
+  useEffect(() => {
+    let _userInfo = storage.getItem("userInfo");
+    let _userInfoObj = JSON.parse(_userInfo || "{}");
+
+    if (!_userInfo) {
+      history.push("/Login");
+    } else {
+      setUserInfo(_userInfoObj);
+      getAppointments(_userInfoObj).then((data) => setAppointment(data));
+    }
+  }, []);
+
+  const api = axios.create({
+    //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+    baseURL: `http://localhost:8080`,
+  });
+
+  const getAppointments = async (_userInfoObj: UserInfo) => {
+    try {
+      const res = await api.get("appointment/customer/" + _userInfoObj.userID);
+      console.log("treatment data", res.data);
+      return res.data;
+    } catch (error) {}
+  };
 
   const [collapseNumber, setCollapseNumber] = useState(0);
-  function onClick (index:number) {
+  function onClick(index: number) {
     //useCallback(()=>setCollapseNumber(index), [collapseNumber]);
     console.log("click!", index);
     console.log("collapseNumber!", collapseNumber);
-    if(index ==  collapseNumber){
+    if (index == collapseNumber) {
       console.log("toggle");
       setCollapseNumber(100);
-    }
-    else{
+    } else {
       setCollapseNumber(index);
-    }   
-  };
+    }
+  }
 
   return (
     <IonPage>
@@ -133,7 +157,7 @@ const EventList: React.FC = () => {
                     <IonCol>
                       <IonIcon
                         style={{ fontSize: "25px", color: "#0040ff" }}
-                        icon={index == collapseNumber?chevronDown : chevronUp}
+                        icon={index == collapseNumber ? chevronDown : chevronUp}
                         onClick={(e) => onClick(index)}
                       />
                     </IonCol>

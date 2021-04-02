@@ -112,7 +112,9 @@ function displayEvent(item: any, index: any) {
 interface ResultList {
   date: Date;
   location: Number;
+  locationName:string;
   treatmentID: Number;
+  appointmentDate:Date;
   vetdetail: [];
 }
 
@@ -208,8 +210,10 @@ const SearchResult: React.FC = () => {
         setResultlist({
           vetdetail: res.data,
           location: resultlist.location,
+          locationName:resultlist.locationName,
           date: _date.toDate(),
           treatmentID: resultlist.treatmentID,
+          appointmentDate:_date.toDate()
         });
 
         // history.push({
@@ -230,16 +234,16 @@ const SearchResult: React.FC = () => {
     return;
   };
 
-  function Redirect(item: any) {
+  function viewVet(item: any) {
     console.log(item);
     history.push({
       pathname: "/Home/SearchResult/MakeAppointment",
       state: {
         veterdetail: item.veterSlot, 
         vetdetail: resultlist.vetdetail, 
-        selectedVet: item["vet"],
+        selectedVet: item.vet,
         treatmentID : resultlist.treatmentID,
-        appointmentDate: resultlist.appointmentDate
+        appointmentDate: resultlist.date
       }
     });
     return;
@@ -254,7 +258,7 @@ const SearchResult: React.FC = () => {
 
   function displayEvent(item: any, index: any) {
     return (
-      <IonCard key={index} onClick={() => Redirect(item)}>
+      <IonCard key={index} onClick={() => viewVet(item)}>
         <IonCardContent class="ion-text-left">
           <IonToolbar>
             <IonItem>
@@ -291,7 +295,7 @@ const SearchResult: React.FC = () => {
             </IonButton>
           </IonButtons>
           <IonLabel class="ion-text-left" color="#000000">
-            <b>Jurong West</b>
+          <b>{typeof resultlist !== "undefined" && typeof resultlist.locationName !== "undefined" && resultlist.locationName}</b>
           </IonLabel>
         </IonToolbar>
       </IonHeader>
