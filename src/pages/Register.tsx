@@ -32,6 +32,7 @@ const checkboxList = [
 ]
 
 const Register: React.FC = () => {
+    const storage = window.localStorage;
     const [checked, setChecked] = useState(false);
     const history = useHistory();
     const [email, setEmail] = useState<string>("eve.holt@reqres.in");
@@ -75,13 +76,17 @@ const Register: React.FC = () => {
         baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
     })
     api.post("/user", registerData)
-        .then(res => {             
-            history.push("/login/" );
-         })
-         .catch(error=>{
-            setMessage("register failure!");
+        .then(res => {
+            console.log("data",res);
+
+            let str =JSON.stringify(res.data);
+            storage.setItem("userInfo", str);
+            history.push("/Home/");
+        })
+        .catch((error)=>{
+            setMessage("Auth failure! Please create an account");
             setIserror(true)
-         })
+        })
   };
 
   // @ts-ignore
