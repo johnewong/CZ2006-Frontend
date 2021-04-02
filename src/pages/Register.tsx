@@ -89,7 +89,7 @@ const Register: React.FC = () => {
 
             let str =JSON.stringify(res.data);
             storage.setItem("userInfo", str);
-            history.push("/Home/");
+
         })
         .catch((error)=>{
             setMessage("register failure! ");
