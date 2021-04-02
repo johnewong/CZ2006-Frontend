@@ -35,6 +35,7 @@ const Register: React.FC = () => {
     const storage = window.localStorage;
     const [checked, setChecked] = useState(false);
     const history = useHistory();
+    const [username,seruserusername]= useState<string>("");
     const [email, setEmail] = useState<string>("eve.holt@reqres.in");
     const [password, setPassword] = useState<string>("cityslicka");
     const [iserror, setIserror] = useState<boolean>(false);
@@ -51,6 +52,16 @@ const Register: React.FC = () => {
         setIserror(true);
         return;
     }
+      if (!username) {
+          setMessage("Please enter a valid username");
+          setIserror(true);
+          return;
+      }
+      if (validateEmail(email) === false) {
+          setMessage("Your email is invalid");
+          setIserror(true);
+          return;
+      }
 
     if (!password || password.length < 6) {
         setMessage("Please enter your password");
@@ -65,6 +76,7 @@ const Register: React.FC = () => {
 
 
     const registerData = {
+        "username":username,
         "email": email,
         "password": password,
 
