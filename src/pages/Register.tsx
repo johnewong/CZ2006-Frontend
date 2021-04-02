@@ -16,6 +16,7 @@ import { useHistory } from "react-router-dom";
 import {IonRouteInner} from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
 import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle} from "ionicons/icons";
 import userEvent from "@testing-library/user-event";
+import {register} from "../serviceWorkerRegistration";
 
 
 
@@ -31,8 +32,10 @@ const checkboxList = [
 ]
 
 const Register: React.FC = () => {
+    const storage = window.localStorage;
     const [checked, setChecked] = useState(false);
     const history = useHistory();
+    const [username,seruserusername]= useState<string>("");
     const [email, setEmail] = useState<string>("eve.holt@reqres.in");
     const [password, setPassword] = useState<string>("cityslicka");
     const [iserror, setIserror] = useState<boolean>(false);
@@ -49,6 +52,12 @@ const Register: React.FC = () => {
         setIserror(true);
         return;
     }
+      if (!username) {
+          setMessage("Please enter a valid username");
+          setIserror(true);
+          return;
+      }
+
 
     if (!password || password.length < 6) {
         setMessage("Please enter your password");
@@ -56,9 +65,14 @@ const Register: React.FC = () => {
         return;
     }
 
+      function validateEmail(email: string) {
+          const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
+          return re.test(String(email).toLowerCase());
+      }
 
 
     const registerData = {
+        "username":username,
         "email": email,
         "password": password,
 
@@ -70,13 +84,17 @@ const Register: React.FC = () => {
         baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
     })
     api.post("/user", registerData)
-        .then(res => {             
-            history.push("/dashboard/" );
-         })
-         .catch(error=>{
-            setMessage("Auth failure! Please create an account");
+        .then(res => {
+            console.log("data",res);
+
+            let str =JSON.stringify(res.data);
+            storage.setItem("userInfo", str);
+
+        })
+        .catch((error)=>{
+            setMessage("register failure! ");
             setIserror(true)
-         })
+        })
   };
 
   // @ts-ignore
@@ -117,7 +135,7 @@ const Register: React.FC = () => {
                             icon={personAddOutline}
                         />
                         <IonLabel position="floating"> User Name</IonLabel>
-                        <IonInput>
+                        <IonInput name={"name"} >
 
                         </IonInput>
                     </IonItem>

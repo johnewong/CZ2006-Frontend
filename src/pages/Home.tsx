@@ -45,6 +45,7 @@ const api = axios.create({
   baseURL: `http://localhost:8080`,
 });
 
+
 const getTreatments = async () => {
   try {
     const res = await api.get("/treatment");
@@ -79,7 +80,6 @@ export const Home: React.FC = ({}) => {
   const [iserror, setIserror] = useState<boolean>(false);
   const onChange = (date: any) => {
     SetDate(date);
-    console.log(date);
   };
 
   useEffect(() => {

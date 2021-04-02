@@ -3,7 +3,7 @@ import { IonCard, IonContent,IonBackdrop,IonSelect,IonSelectOption,IonSelectPopo
 import React, { useEffect, useState } from 'react';
 import "./MakeAppointment.css";
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { arrowBack, caretBack,caretForward,location, time, person  } from "ionicons/icons";
+import { arrowBack, caretBack,caretForward,location, time, person, constructOutline  } from "ionicons/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg, 
   IonSegment,IonSegmentButton, IonSlides, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
@@ -44,11 +44,15 @@ import axios from 'axios';
 
 function  formatTime(d:  Date) {
   var 
-      hour = '' + (d.getHours() + 1),
+      hour = '' + (d.getHours()),
       min = '' + d.getMinutes()
      
- 
-
+  if(d.getHours() < 10){
+    hour = "0" + d.getHours()
+  }
+  if(d.getMinutes() < 10){
+    min = "0" + d.getMinutes()
+  }
   return [hour, min].join(':');
 }
 
@@ -65,8 +69,9 @@ const MakeAppointment: React.FC = () => {
   const [iserror, setIserror] = useState<boolean>(false);
   const locationpara = useLocation();
   const resultlist = locationpara.state as any;
+
   useEffect(() => {
-    let userInfo = storage.getItem("userInfo"); 
+   let userInfo = storage.getItem("userInfo"); 
   
     if(!userInfo){     
       history.push('/Login');
@@ -91,21 +96,28 @@ const MakeAppointment: React.FC = () => {
     history.push("/EventList")
   }
   const api = axios.create({
-    baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-    //baseURL: `http://localhost:8080`
+    //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+    baseURL: `http://localhost:8080`
   })
-  const handleMakeAppoint = async () => {
+
+  
+  const handleMakeAppoint = async (veterid: number, vetid: number) => {
     
+    let userinfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    console.log(userinfo)
+    let time = AvaiTime.split("-");
+    console.log(vetid);
     const appointmentData = {
-      "appointmentDate": "2021-03-31T00:00:00.000Z",
-      "appointmentEndTime": "2021-03-31T20:23:32.625Z",
-      "appointmentStartTime": "2021-03-31T22:23:31.625Z",
-      "customerID": 2,
-      "customerName": "user02",
+      "appointmentDate": resultlist.appointmentDate + "T00:00:00.000Z",
+      "appointmentEndTime": resultlist.appointmentDate + "T" + time[1] +".000Z",
+      "appointmentStartTime": resultlist.appointmentDate + "T" + time[0] +".000Z",
+      "customerID": userinfo.userID,
+      "customerName": userinfo.userName,
       "status": 1,
-      "treatmentID": 1,
-      "vetID": 1,
-      "veterID": 1
+      "treatmentID":  resultlist.treatmentID,
+      "createdBy":  userinfo.userID,
+      "vetID": vetid,
+      "veterID": veterid
     }
     try {
       await api.post("/appointment/add", appointmentData)
@@ -171,7 +183,6 @@ const MakeAppointment: React.FC = () => {
   }
 
   function displayVeter(item: any, index: any) {
-    console.log(resultlist.selectedVet)
     if(item.availableSlots != null){
      
     return (
@@ -204,7 +215,6 @@ const MakeAppointment: React.FC = () => {
                   //placeholder="Select Time"
                   
                   onIonChange={e => setAvailableTime(e.detail.value)}
-                  value={AvaiTime}
                 >
                   { item.availableSlots.map((item: any, index:any) =>{
                 
@@ -215,7 +225,7 @@ const MakeAppointment: React.FC = () => {
                   var endTime = formatTime(end);
 
                   return (
-                  <IonSelectOption  value={startTime + "-" + endTime}>{startTime + " - " + endTime}</IonSelectOption>
+                  <IonSelectOption key={index}  value={startTime + "-" + endTime}>{startTime + " - " + endTime}</IonSelectOption>
 
                   )
                   })
@@ -260,7 +270,7 @@ const MakeAppointment: React.FC = () => {
                             </IonItem>
                             <IonItem lines="none">
                               <IonButton  className = "buttonCus button"  expand="block" size="default" onClick={() => {setShowModal(false)}}><b>Cancel</b></IonButton>
-                              <IonButton  className = "buttonCus button" expand="block" size="default" onClick={() => {setShowModal(false); handleMakeAppoint()}}><b>Confirm</b></IonButton>
+                              <IonButton  className = "buttonCus button" expand="block" size="default" onClick={() => {setShowModal(false); handleMakeAppoint(item.veter.veterID,resultlist.selectedVet.vetId)}}><b>Confirm</b></IonButton>
                               
                             </IonItem>
                            
@@ -274,25 +284,7 @@ const MakeAppointment: React.FC = () => {
                   
                 </IonModal>
                 
-                <IonRow>
-                  <IonCol>
-                    <IonAlert
-                      isOpen={makeAppoint}
-                      onDidDismiss={() => setMakeAppoint(false)}
-                      header={message}
-                      //message='<icon src = "assets/images/Icon.jpg" width="35px" height="35px"> Delete this file?'
-                      buttons={["OK"]} 
-                    />
-
-                    <IonAlert
-                      isOpen={confirmAppoint}
-                      onDidDismiss={() => RedirectEventlist()}
-                      header={message}
-                      //message='<icon src = "assets/images/Icon.jpg" width="35px" height="35px"> Delete this file?'
-                      buttons={["OK"]} 
-                    />
-                  </IonCol>
-                </IonRow>
+              
             </IonToolbar>   
         </IonCardContent>
       </IonCard>
@@ -334,6 +326,25 @@ const MakeAppointment: React.FC = () => {
       <IonContent >
       {typeof resultlist !== 'undefined' && resultlist.hasOwnProperty('veterdetail') !==  false ? resultlist.veterdetail.map((item: any, index:any) => displayVeter(item, index)): null}
       </IonContent>
+      <IonRow>
+                  <IonCol>
+                    <IonAlert
+                      isOpen={makeAppoint}
+                      onDidDismiss={() => setMakeAppoint(false)}
+                      header={message}
+                      //message='<icon src = "assets/images/Icon.jpg" width="35px" height="35px"> Delete this file?'
+                      buttons={["OK"]} 
+                    />
+
+                    <IonAlert
+                      isOpen={confirmAppoint}
+                      onDidDismiss={() => RedirectEventlist()}
+                      header={message}
+                      //message='<icon src = "assets/images/Icon.jpg" width="35px" height="35px"> Delete this file?'
+                      buttons={["OK"]} 
+                    />
+                  </IonCol>
+                </IonRow>
     </IonPage>
   );
 };

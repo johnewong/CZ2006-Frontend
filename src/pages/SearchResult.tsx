@@ -235,10 +235,12 @@ const SearchResult: React.FC = () => {
     history.push({
       pathname: "/Home/SearchResult/MakeAppointment",
       state: {
-        veterdetail: item.veterSlot,
-        vetdetail: resultlist.vetdetail,
+        veterdetail: item.veterSlot, 
+        vetdetail: resultlist.vetdetail, 
         selectedVet: item["vet"],
-      },
+        treatmentID : resultlist.treatmentID,
+        appointmentDate: resultlist.appointmentDate
+      }
     });
     return;
   }
