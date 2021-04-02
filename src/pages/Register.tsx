@@ -84,7 +84,7 @@ const Register: React.FC = () => {
             history.push("/Home/");
         })
         .catch((error)=>{
-            setMessage("Auth failure! Please create an account");
+            setMessage("register failure! ");
             setIserror(true)
         })
   };
