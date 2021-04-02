@@ -4,6 +4,9 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
+
+// <script src="http://maps.google.com/maps/api/js"></script>;
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
