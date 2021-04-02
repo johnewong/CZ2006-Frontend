@@ -57,11 +57,7 @@ const Register: React.FC = () => {
           setIserror(true);
           return;
       }
-      if (validateEmail(email) === false) {
-          setMessage("Your email is invalid");
-          setIserror(true);
-          return;
-      }
+
 
     if (!password || password.length < 6) {
         setMessage("Please enter your password");
