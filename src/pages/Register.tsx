@@ -205,7 +205,8 @@ const Register: React.FC = () => {
                             style={{ fontSize: "20px", color: "#ffd401" }}
                             icon={callOutline}
                         />
-                        <IonInput   class = "ion-text-center"  
+                        <IonInput   type = "number"
+                                    class = "ion-text-center"  
                                     placeholder = "Contact Number"
                                     onIonChange={(e) => setContactNumber(e.detail.value!)} >
                         </IonInput>
