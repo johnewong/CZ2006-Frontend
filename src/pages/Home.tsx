@@ -153,7 +153,7 @@ export const Home: React.FC = ({}) => {
           cssClass="calendar-modal"
           onDidDismiss={() => setShowModal(false)}
         >
-          <Calendar onChange={onChange} value={date} />
+          <Calendar onChange={onChange} value={date} minDate={new Date()}/>
 
           <IonGrid>
             <IonButton id="calendarConfirm" onClick={() => setShowModal(false)} 

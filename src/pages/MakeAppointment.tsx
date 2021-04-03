@@ -249,12 +249,13 @@ const MakeAppointment: React.FC = () => {
               {/* {showDetail(item)} */}
             </IonGrid>
             <IonToolbar>
-              <IonItem>
+              <IonItem >
                 <IonLabel class="ion-text-left">
                   {" "}
                   <b>Available Slot</b>
                 </IonLabel>
-                <IonSelect
+                <IonSelect 
+                  style={{innerWidth: "10px"}}
                   value={avaiTime}
                   interface="action-sheet"
                   onIonChange={(e) => setAvailableTime(e.detail.value)}
@@ -270,7 +271,7 @@ const MakeAppointment: React.FC = () => {
                     var endTime = formatTime(end);
 
                     return (
-                      <IonSelectOption
+                      <IonSelectOption 
                         key={index}
                         value={startTime + "-" + endTime}
                       >

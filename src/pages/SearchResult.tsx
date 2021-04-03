@@ -262,15 +262,22 @@ const SearchResult: React.FC = () => {
         <IonCardContent class="ion-text-left">
           <IonToolbar>
             <IonItem>
-              <IonLabel>
-                <div className="card-title">
-                  {" "}
-                  <b>{item["vet"].vetName}</b>
-                </div>
-              </IonLabel>
-              <img src="assets/images/Logo.png" width="150px" />
+              
+              <img src="assets/images/ClinicName.png" width="250px" />
+            </IonItem>
+            <IonItem>
+              <IonGrid>
+                <IonRow>
+                  <IonCol size="20">
+                    <IonLabel>
+                        <b>{item["vet"].vetName}</b>
+                    </IonLabel>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
             </IonItem>
           </IonToolbar>
+          <IonToolbar>
           <IonGrid>
             <IonRow>
               <IonCol size="5">
@@ -280,6 +287,8 @@ const SearchResult: React.FC = () => {
             </IonRow>
             {ClinicDetail(item["vet"])}
           </IonGrid>
+          </IonToolbar>
+          
         </IonCardContent>
       </IonCard>
     );

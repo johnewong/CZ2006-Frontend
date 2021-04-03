@@ -17,8 +17,8 @@ function validateEmail(email: string) {
 const LoginMX: React.FC = () => {
   const storage = window.localStorage;
   const history = useHistory();
-  const [username, setUsername] = useState<string>("user02");
-  const [password, setPassword] = useState<string>("user02");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
@@ -28,49 +28,45 @@ const LoginMX: React.FC = () => {
   },[history]);
 
   const handleLogin =  () => {
-    if (!username) {
-        setMessage("Please enter a valid username");
-        setIserror(true);
-        return;
+    if(username == "" || password == "")
+    {
+      setMessage("Please enter username or password!");
+      setIserror(true)
+    }else{
+        const loginData = {
+          "username": username,
+          "password": password
+      }
+
+      console.log("loginData", loginData);
+      const api = axios.create({
+        baseURL: `http://localhost:8080`
+      })
+      api.post("/account/user/login", loginData)
+          .then(res => {       
+              console.log("data",res);       
+
+              let str =JSON.stringify(res.data); 
+              storage.setItem("userInfo", str);
+              history.push("/Home/");
+          })
+          .catch((error)=>{
+              setMessage("Auth failure! Please create an account");
+              setIserror(true)
+          })
     }
-    // if (validateEmail(email) === false) {
-    //     setMessage("Your email is invalid");
-    //     setIserror(true);
-    //     return;
-    // }
-
-    // if (!password || password.length < 6) {
-    //     setMessage("Please enter your password");
-    //     setIserror(true);
-    //     return;
-    // }
-
-    const loginData = {
-        "username": username,
-        "password": password
-    }
-
-    console.log("loginData", loginData);
-    const api = axios.create({
-        baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com/account/user`
-    })
-     api.post("/login", loginData)
-        .then(res => {       
-            console.log("data",res);       
-
-            let str =JSON.stringify(res.data); 
-            storage.setItem("userInfo", str);
-            history.push("/Home/");
-         })
-         .catch((error)=>{
-            setMessage("Auth failure! Please create an account");
-            setIserror(true)
-         })
+    
         
   };
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
+        <IonAlert
+          isOpen={iserror}
+          onDidDismiss={() => setIserror(false)}
+          message={message}
+          buttons={["OK"]}
+              />
         <IonGrid>
         <IonRow>
           <IonCol>
@@ -95,6 +91,7 @@ const LoginMX: React.FC = () => {
                       type="email"
                       class = "ion-text-center"
                       value={username}
+                      placeholder = "Username"
                       onIonChange={(e) => setUsername(e.detail.value!)}>
                   </IonInput>
               </IonItem>
@@ -113,6 +110,7 @@ const LoginMX: React.FC = () => {
                     type="password"
                     class = "ion-text-center"
                     value={password}
+                    placeholder = "Password"
                     onIonChange={(e) => setPassword(e.detail.value!)}>
                   </IonInput>
               </IonItem>
