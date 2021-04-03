@@ -80,7 +80,7 @@ const Profile: React.FC = () => {
     })
 
     try {
-      await api.post("/account/user", EditData)
+      await api.post("/account/user/profile", EditData)
           .then(res => {
             let str = JSON.stringify(res.data);
             console.log(res.data);
