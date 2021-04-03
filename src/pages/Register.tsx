@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import {
     IonContent,
     IonHeader,
@@ -8,7 +9,7 @@ import {
     IonTabBar,
     IonTitle,
     IonToolbar,
-    IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonSegment,IonSegmentButton,IonGrid, IonRow, IonCol
+    IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonSegment,IonSegmentButton,IonGrid, IonRow, IonCol, IonRouterLink
 } from '@ionic/react';
 
 import axios from "axios";
@@ -16,6 +17,7 @@ import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mai
 
 
 const Register: React.FC = () => {
+    const history = useHistory();
     const [password, setPassword] = useState<string>("");
     const [confirmedPassword, setConfirmedPassword] = useState<string>("");
     const [userName, setUsername] = useState<string>("");
@@ -28,9 +30,7 @@ const Register: React.FC = () => {
 
     const [iserror, setIserror] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
-
-    const handleGender = () =>{
-    }
+    const [redirect, setRedirect] = useState<string>("");
 
     const handleRegister = async () => {
         const RegisterData = {
@@ -64,14 +64,19 @@ const Register: React.FC = () => {
                    // console.log(str);
                    setMessage("Registered successfully!");
                    setIserror(true);
+                   redirectEventlist();
                 });
               } catch(err){
-                setMessage("User Existed! Please make sure your User Name, Email, IC number, Contact Number ");
+                setMessage("User Existed!");
                 setIserror(true)
               }
         }
     };
 
+    function redirectEventlist() {
+        setIserror(false);
+        history.push("/login");
+      }
   // @ts-ignore
     return (
     <IonPage>
@@ -87,7 +92,11 @@ const Register: React.FC = () => {
                 onDidDismiss={() => setIserror(false)}
                 //header={}
                 message={message}
-                buttons={["OK"]}
+                buttons = {[
+                    {
+                        text: 'OK',
+                    }
+                ]}
               />
 
         <IonGrid>
@@ -118,10 +127,10 @@ const Register: React.FC = () => {
                     icon={maleFemaleOutline}
                 />
                     <IonSegment >
-                    <IonSegmentButton >
+                    <IonSegmentButton onClick = {() => setGender(false)} >
                         <IonLabel >Male</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton>
+                    <IonSegmentButton onClick = {() => setGender(true)} >
                         <IonLabel>Female</IonLabel>
                     </IonSegmentButton>
                     </IonSegment>
@@ -225,7 +234,7 @@ const Register: React.FC = () => {
                             onClick={handleRegister}><b>Sign up</b></IonButton>
                 <p style={{ fontSize: "medium" }}>
                     have an account?  <a  href="Login"  >Sign in!</a>
-                    <div id={"LoginMx"}></div>
+                    <div id={"Login"}></div>
             </p>
 
             </IonCol>
