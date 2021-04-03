@@ -260,6 +260,9 @@ const MakeAppointment: React.FC = () => {
                   onIonChange={(e) => setAvailableTime(e.detail.value)}
                 >
                   {item.availableSlots.map((item: any, index: any) => {
+                    console.log(item)
+                    if(item.available == true){
+                      
                     var start = new Date(item.startTime);
                     var end = new Date(item.endTime);
 
@@ -274,6 +277,8 @@ const MakeAppointment: React.FC = () => {
                         {startTime + " - " + endTime}
                       </IonSelectOption>
                     );
+                    
+                  }
                   })}
                 </IonSelect>
               </IonItem>
@@ -309,6 +314,7 @@ const MakeAppointment: React.FC = () => {
                           </IonLabel>
 
                           <IonLabel>
+                            
                             {resultlist.selectedVet.vetAddress}
                           </IonLabel>
                         </IonItem>
@@ -414,6 +420,7 @@ const MakeAppointment: React.FC = () => {
           <IonAlert
             isOpen={iserror}
             header={message}
+            onDidDismiss={() =>  setIserror(false)}
             //message='<icon src = "assets/images/Icon.jpg" width="35px" height="35px"> Delete this file?'
             buttons={["OK"]}
           />

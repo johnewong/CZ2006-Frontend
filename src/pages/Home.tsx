@@ -117,7 +117,7 @@ export const Home: React.FC = ({}) => {
     let formatdate = formatDate(date);
     let locationID = location;
     let locationPair = locationItems.find(m => m["LocationID"]==locationID)! as LocationPair;
-    console.log("home formatdate", formatdate);
+    console.log("/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID);
     await api
       .get(
         "/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID
@@ -204,6 +204,7 @@ export const Home: React.FC = ({}) => {
                       </IonSelectOption>
                     );
                   })}
+                  
               </IonSelect>
             </IonItem>
             <IonRow></IonRow>
