@@ -44,6 +44,7 @@ const Register: React.FC = () => {
         let formatDate = moment(birthDate).format("YYYY-MM-DD");
         const RegisterData = {
             "userName" : userName,
+            "displayName" : userName,
             "birthDate": formatDate,
             "contactNumber": contactNumber,
             "emailAddress": emailAddress,
