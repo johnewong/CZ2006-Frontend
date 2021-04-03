@@ -32,7 +32,7 @@ const Register: React.FC = () => {
     const handleGender = () =>{
     }
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         const RegisterData = {
             "userName" : userName,
             "birthDate": birthDate,
@@ -50,26 +50,25 @@ const Register: React.FC = () => {
             setIserror(true);
         }else
         {
-            setMessage("Registered successfully!");
-            setIserror(true);
-            
-            //check database user details
-
-            //if XXX existed:
-
+             
             const api = axios.create({
                 //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
                 baseURL: `http://localhost:8080`
             })
-             api.post("/account/user", RegisterData)
+
+            try {
+                await api.post("/account/user", RegisterData)
                 .then(res => {
-                    //let str =JSON.stringify(res.data); 
+                    let str =JSON.stringify(res.data); 
                     console.log(res.data);
                    // console.log(str);
-                }).catch((error)=>{
-                    setMessage("Auth failure! Please create an account");
-                    setIserror(true)
-                 });
+                   setMessage("Registered successfully!");
+                   setIserror(true);
+                });
+              } catch(err){
+                setMessage("User Existed! Please make sure your User Name, Email, IC number, Contact Number ");
+                setIserror(true)
+              }
         }
     };
 
