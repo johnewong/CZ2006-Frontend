@@ -13,71 +13,53 @@ import {
 
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {IonRouteInner} from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
 import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle} from "ionicons/icons";
-import userEvent from "@testing-library/user-event";
 
-
-
-function validateEmail(email: string) {
-    const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
-    return re.test(String(email).toLowerCase());
-}
-
-const checkboxList = [
-    { val: 'Pepperoni', isChecked: true },
-    { val: 'Sausage', isChecked: false },
-
-]
 
 const Register: React.FC = () => {
     const [checked, setChecked] = useState(false);
     const history = useHistory();
-    const [email, setEmail] = useState<string>("eve.holt@reqres.in");
-    const [password, setPassword] = useState<string>("cityslicka");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [userName, setUsername] = useState<string>("");
+    const [birthDate, setBirthDate] = useState<string>("");
+    const [contactNumber, setContactNumber] = useState<string>("");
+    const [emailAddress, setEmailAddress] = useState<string>("");
+    const [gender, setGender] = useState<boolean>();
+    const [icNumber, setIcNumber] = useState<string>("");
+    const [userType, setUserType] = useState<string>("0");
+
     const [iserror, setIserror] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
 
-  const handleLogin = () => {
-    if (!email) {
-        setMessage("Please enter a valid email");
-        setIserror(true);
-        return;
-    }
-    if (validateEmail(email) === false) {
-        setMessage("Your email is invalid");
-        setIserror(true);
-        return;
-    }
-
-    if (!password || password.length < 6) {
-        setMessage("Please enter your password");
-        setIserror(true);
-        return;
-    }
+    const handleRegister = () => {
+        const RegisterData = {
+            "userName" : userName,
+            "birthDate": birthDate,
+            "contactNumber": contactNumber,
+            "emailAddress": emailAddress,
+            "gender": true,
+            "icNumber": icNumber,
+            "password": password,
+            "userType": userType,
 
 
-
-    const registerData = {
-        "email": email,
-        "password": password,
-
-    }
-
-
-
-    const api = axios.create({
-        baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-    })
-    api.post("/user", registerData)
-        .then(res => {             
-            history.push("/dashboard/" );
-         })
-         .catch(error=>{
-            setMessage("Auth failure! Please create an account");
-            setIserror(true)
-         })
-  };
+        };
+    
+        const api = axios.create({
+            //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+            baseURL: `http://192.168.0.108:8080`
+        })
+         api.post("/account/user", RegisterData)
+            .then(res => {
+                //let str =JSON.stringify(res.data); 
+                console.log(res.data);
+               // console.log(str);
+            }).catch((error)=>{
+                setMessage("Auth failure! Please create an account");
+                setIserror(true)
+             });
+    };
 
   // @ts-ignore
     return (
@@ -91,14 +73,6 @@ const Register: React.FC = () => {
         <IonGrid>
         <IonRow>
           <IonCol>
-            <IonAlert
-                isOpen={iserror}
-                onDidDismiss={() => setIserror(false)}
-                cssClass="my-custom-class"
-                header={"Error!"}
-                message={message}
-                buttons={["Dismiss"]}
-            />
           </IonCol>
         </IonRow>
 
@@ -117,7 +91,8 @@ const Register: React.FC = () => {
                             icon={personAddOutline}
                         />
                         <IonLabel position="floating"> User Name</IonLabel>
-                        <IonInput>
+                        <IonInput onIonChange={(e) => setUsername(e.detail.value!)} 
+                        >
 
                         </IonInput>
                     </IonItem>
@@ -146,10 +121,9 @@ const Register: React.FC = () => {
                             icon={calendarNumberOutline}
                         />
                         <IonLabel position="floating">Birth Date</IonLabel>
-                        <IonInput>
-
-
+                        <IonInput onIonChange={(e) => setBirthDate(e.detail.value!)} >
                         </IonInput>
+
                     </IonItem>
                 </IonCol>
 
@@ -222,7 +196,7 @@ const Register: React.FC = () => {
 
             <IonCol>
             
-              <IonButton expand="block" onClick={handleLogin}>Sign up</IonButton>
+              <IonButton expand="block" onClick={handleRegister}>Sign up</IonButton>
                 <p style={{ fontSize: "medium" }}>
                  have an account?  <a  href="LoginMX"  >Sign in!</a>
                     <div id={"LoginMx"}></div>
@@ -237,3 +211,4 @@ const Register: React.FC = () => {
 };
 
 export default Register;
+
