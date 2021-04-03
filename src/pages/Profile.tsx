@@ -53,12 +53,49 @@ const GetProfile = async () => {
 const Profile: React.FC = () => {
   const history = useHistory();
   const storage = window.localStorage;
+  const [userName, setUsername] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [profileItems, setItems] = useState([]);
+  const [contactNumber, setContactNumber] = useState<string>("");
+  const [emailAddress, setEmailAddress] = useState<string>("");
+  const [gender, setGender] = useState<boolean>();
+  const [iserror, setIserror] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
 
-  
+  const handleEdit = async () => {
+    const EditData = {
+      "userName": userName,
+      "birthdate": birthday,
+      "contactNumber": contactNumber,
+      "emailAddress": emailAddress,
+      "gender": gender,
+
+
+    };
+    const api = axios.create({
+      //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+      baseURL: `http://localhost:8080`
+    })
+
+    try {
+      await api.post("/account/user", EditData)
+          .then(res => {
+            let str = JSON.stringify(res.data);
+            console.log(res.data);
+            // console.log(str);
+            setMessage("update successfully!");
+            setIserror(true);
+
+          });
+    } catch (err) {
+      setMessage("Information missing!");
+      setIserror(true)
+    }
+  }
+
+
 
   useEffect(() => {
     const userInfo = storage.getItem("userInfo");
@@ -80,12 +117,11 @@ const Profile: React.FC = () => {
   const currentBirthDate = obj.birthDate;
   const ContactNumber = obj.contactNumber;
   const CurrentEmail = obj.emailAddress;
+
   //return currentUser;
     //console.log("username is " +obj.userName);
 
-  const handleEdit = () => {
-    return;
-  };
+
 
   // @ts-ignore
   return (
@@ -120,7 +156,7 @@ const Profile: React.FC = () => {
               icon={maleFemaleOutline}
             />
             <IonSegment >
-              <IonSegmentButton >
+              <IonSegmentButton  >
                 <IonLabel >Male</IonLabel>
               </IonSegmentButton>
               <IonSegmentButton>
@@ -167,9 +203,11 @@ const Profile: React.FC = () => {
           </IonCol>
 
           <IonCol>
-            <IonButton expand="block" size="default"
-                       color="warning"
-                        onClick={handleEdit}>
+            <IonButton
+                //disabled={!handleEdit}
+                expand="block" size="default"
+                color="warning"
+                onClick={handleEdit}>
              <b>Edit</b>
             </IonButton>
           </IonCol>
