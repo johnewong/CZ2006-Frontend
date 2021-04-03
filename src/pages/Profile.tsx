@@ -50,73 +50,87 @@ const GetProfile = async () => {
   
 };
 
+interface UserInfo {
+  userID: number;
+  contactNumber:string;
+  customerName: string;
+  emailAddress:string;
+}
+
 const Profile: React.FC = () => {
   const history = useHistory();
   const storage = window.localStorage;
+  const [userInfo, setUserInfo] = useState<UserInfo>({customerName: "123", emailAddress: "", userID: 0,contactNumber:""});
   const [userName, setUsername] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail=()=>{
+    console.log(this);
+  }] = useState<string>("");
   const [profileItems, setItems] = useState([]);
   const [contactNumber, setContactNumber] = useState<string>("");
-  const [emailAddress, setEmailAddress] = useState<string>("");
+  // const [emailAddress, setEmailAddress] = useState<string>("");
   const [gender, setGender] = useState<boolean>();
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [icNumber, setIcNumber] = useState<string>("");
+  const [userType, setUserType] = useState<string>("0");
 
   const handleEdit = async () => {
     const EditData = {
       "userName": userName,
       "birthdate": birthday,
       "contactNumber": contactNumber,
-      "emailAddress": emailAddress,
+      "emailAddress": email,
       "gender": gender,
+      "icNumber": icNumber,
+      "userType": userType,
 
 
     };
     const api = axios.create({
-      //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-      baseURL: `http://localhost:8080`
+      baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+      //baseURL: `http://localhost:8080`
     })
 
-    try {
-      await api.post("/account/user/profile", EditData)
-          .then(res => {
-            let str = JSON.stringify(res.data);
-            console.log(res.data);
-            // console.log(str);
-            setMessage("update successfully!");
-            setIserror(true);
-
-          });
-    } catch (err) {
-      setMessage("Information missing!");
-      setIserror(true)
-    }
+    // try {
+    //   await api.post("/account/user/profile", EditData)
+    //       .then(res => {
+    //         let str = JSON.stringify(res.data);
+    //         console.log(res.data);
+    //         // console.log(str);
+    //         setMessage("update successfully!");
+    //         setIserror(true);
+    //
+    //
+    //       });
+    // } catch (err) {
+    //   setMessage("Information missing!");
+    //   setIserror(true)
+    // }
   }
 
 
 
   useEffect(() => {
-    const userInfo = storage.getItem("userInfo");
+    const _userInfo = storage.getItem("userInfo");
+    const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
-    console.log(userInfo);
-    //console.log("current user: " + currentUser);
 
     if (!userInfo) {
       history.push("/Login");
     }
-
-    GetProfile().then(data => setItems(data));
-
+    else{
+      setUserInfo(obj);
+    }
   }, [history]);
 
-  const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
-  const currentUser = obj.userName;
-  const currentBirthDate = obj.birthDate;
-  const ContactNumber = obj.contactNumber;
-  const CurrentEmail = obj.emailAddress;
+
+  // const currentUser = obj.userName;
+  // const currentBirthDate = obj.birthDate;
+  // const ContactNumber = obj.contactNumber;
+  // const CurrentEmail = obj.emailAddress;
 
   //return currentUser;
     //console.log("username is " +obj.userName);
@@ -144,9 +158,10 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={personOutline}
               />
-              <IonLabel style={{ fontSize: "20px" }}  class="ion-username">{currentUser}</IonLabel>
+              <IonLabel style={{ fontSize: "20px" }}  class="ion-username">{}</IonLabel>
 
-              <IonInput></IonInput>
+              <IonInput value={userInfo.customerName}
+                        onIonChange={(e) => setEmail(e.detail.value!)}></IonInput>
             </IonItem>
           </IonCol>
 
@@ -171,7 +186,7 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={calendarNumberOutline}
               />
-              <IonLabel >{currentBirthDate}</IonLabel>
+              <IonLabel >{}</IonLabel>
               <IonInput></IonInput>
             </IonItem>
           </IonCol>
@@ -182,8 +197,14 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={callOutline}
               />
-              <IonLabel >{ContactNumber}</IonLabel>
-              <IonInput></IonInput>
+              <IonLabel >{}</IonLabel>
+              <IonInput
+
+                  value={userInfo.contactNumber}
+                  class = "ion-text-center"
+                          placeholder = "Contact Number"
+                          onIonChange={(e) => setContactNumber(e.detail.value!)} >
+              </IonInput>
             </IonItem>
           </IonCol>
 
@@ -193,10 +214,10 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={mailOutline}
               />
-              <IonLabel >{CurrentEmail}</IonLabel>
+              {/*<IonLabel >{CurrentEmail}</IonLabel>*/}
               <IonInput
                 type="email"
-                value={email}
+                value={userInfo.emailAddress}
                 onIonChange={(e) => setEmail(e.detail.value!)}
               ></IonInput>
             </IonItem>
