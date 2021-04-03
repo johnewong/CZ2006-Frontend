@@ -176,9 +176,9 @@ const Register: React.FC = () => {
                                 style={{ fontSize: "20px", color: "#ffd401" }}
                                 icon={calendarNumberOutline}
                             />
-                        <IonDatetime    className = "birthday" 
-                                        displayFormat="MM/DD/YYYY"
-                                        min="1990-01-01" max="2012-12-31" 
+                        <IonDatetime    className = "birthday"
+                                        displayFormat="DD-MMM-YYYY"
+                                        min="1900-01-01" max="2021-01-01"
                                         placeholder = "Birth Date"
                                         value={birthDate} 
                                         onIonChange={e => setBirthDate(e.detail.value!)}
@@ -271,7 +271,7 @@ const Register: React.FC = () => {
                             
                             onClick={() => {
                                 handleRegister();
-                                validateEmail(emailAddress);
+
                               }}>
                             <b>Sign up</b></IonButton>
                 <p style={{ fontSize: "medium" }}>
