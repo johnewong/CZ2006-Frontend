@@ -119,21 +119,21 @@ const Profile: React.FC = () => {
     })
     console.log(EditData)
 
-    // try {
-    //   await api.post("/account/user/profile", EditData)
-    //       .then(res => {
-    //         let str = JSON.stringify(res.data);
-    //         console.log(res.data);
-    //         // console.log(str);
-    //         setMessage("update successfully!");
-    //         setIserror(true);
-    //
-    //
-    //       });
-    // } catch (err) {
-    //   setMessage("Information missing!");
-    //   setIserror(true)
-    // }
+    try {
+      await api.post("/account/user/profile", EditData)
+          .then(res => {
+            let str = JSON.stringify(res.data);
+            console.log(res.data);
+            // console.log(str);
+            setMessage("update successfully!");
+            setIserror(true);
+
+
+          });
+    } catch (err) {
+      setMessage("Information missing!");
+      setIserror(true)
+    }
   }
 
 
