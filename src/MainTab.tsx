@@ -32,7 +32,6 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 import Login from "./pages/Login";
-<<<<<<< HEAD
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import ForgetPassword from "./pages/ForgetPassword";
@@ -43,58 +42,19 @@ import MakeAppointment from "./pages/MakeAppointment";
 import Home from "./pages/Home";
 import Setting from "./pages/Setting";
 import Account from "./pages/Account";
-=======
->>>>>>> aab6a9a7e83561bb2738fb5c9fc902cdba5b1f97
+import Language from "./pages/Language";
 import React, { useContext, useEffect, useState } from "react";
-import MainTab from "./MainTab";
-interface IUserManager {
-  setIsLoggedIn: Function;
-}
 
-const user: IUserManager = {
-  setIsLoggedIn: () => {}
-};
-export const UserContext = React.createContext<IUserManager>(user);
+const MainTab: React.FC = () => {
 
-const App: React.FC = () => {
-<<<<<<< HEAD
-  let isLogin = false;
-  // const history = useHistory();
-  const storage = window.localStorage;
-  useEffect(() => {
-    let userInfo = storage.getItem("userInfo");
-    if (userInfo) {
-      isLogin = true;
-    }
-  });
-=======
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const user = useContext(UserContext);
-
-  user.setIsLoggedIn = setIsLoggedIn;
-
-  const history = useHistory();
-  const storage = window.localStorage;
-  console.log(storage.getItem("userInfo"))
-  // useEffect(()=>{
-  //   let userInfo = storage.getItem("userInfo");
-  //     console.log("userInfo",userInfo);
-  //     if(!userInfo)
-  //     {
-  //       history.push('/Login');
-  //     }
-  // },[history]);
-
->>>>>>> aab6a9a7e83561bb2738fb5c9fc902cdba5b1f97
 
   return (
-    <IonApp>
-      <IonReactRouter>
-<<<<<<< HEAD
+   
         <IonTabs>
           <IonRouterOutlet>
             <Route path="/Setting" component={Setting} exact={true} />
             <Route path="/account" component={Account} exact={true} />
+            <Route path="/language" component={Language} exact={true} />        
             <Route path="/profile" component={Profile} exact={true} />
             <Route path="/register" component={Register} exact={true} />
             <Route path="/login" component={Login} exact={true} />
@@ -109,9 +69,13 @@ const App: React.FC = () => {
               component={ResetPassword}
               exact={true}
             />
-            <Route path="/SearchResult" component={SearchResult} exact={true} />
             <Route
-              path="/MakeAppointment"
+              path="/SearchResult"
+              component={SearchResult}
+              exact={true}
+            />
+            <Route
+              path="/SearchResult/MakeAppointment"
               component={MakeAppointment}
               exact={true}
             />
@@ -131,34 +95,25 @@ const App: React.FC = () => {
             <Route exact path="/">
               <Redirect to="/login" />
             </Route>
-            
           </IonRouterOutlet>
-          
-            <IonTabBar slot="bottom">             
-              <IonTabButton tab="Home" href="/Home">
-                <IonIcon icon={home} />
-              </IonTabButton>
-              <IonTabButton tab="EventList" href="/EventList">
-                <IonIcon icon={list} />
-              </IonTabButton>
-              <IonTabButton tab="Profile" href="/profile">
-                <IonIcon icon={person} />
-              </IonTabButton>
-              <IonTabButton tab="Setting" href="/Setting">
-                <IonIcon icon={settings} />
-              </IonTabButton>
-            </IonTabBar>
-          
+          <IonTabBar slot="bottom">
+          <IonTabButton tab="Home" href="/Home">
+            <IonIcon icon={home} />
+          </IonTabButton>
+          <IonTabButton tab="EventList" href="/EventList">
+            <IonIcon icon={list} />
+          </IonTabButton>
+          <IonTabButton tab="Profile" href="/profile">
+            <IonIcon icon={person} />
+          </IonTabButton>
+          <IonTabButton tab="Setting" href="/Setting">
+            <IonIcon icon={settings} />
+          </IonTabButton>
+          </IonTabBar>
         </IonTabs>
-=======
-        
-      <Route path="/Login" component={Login} exact={true} />
-      <Route path="/*" component={isLoggedIn?  MainTab : Login} />
->>>>>>> aab6a9a7e83561bb2738fb5c9fc902cdba5b1f97
-      </IonReactRouter>
-    </IonApp>
+    
   );
   
 };
 
-export default App;
+export default MainTab;
