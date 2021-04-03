@@ -95,6 +95,7 @@ const MakeAppointment: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
   const [avaiTime, setAvailableTime] = useState<string>("");
+  const [veterID, setVeterID] = useState<number>(0);
   const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
   const [confirmAppoint, setconfirmAppoint] = useState<boolean>(false);
   const storage = window.localStorage;
@@ -112,9 +113,11 @@ const MakeAppointment: React.FC = () => {
     }
   }, [history]);
 
-  const onClickMakeAppoint = () => {
+  function onClickMakeAppoint (id: number) {
+    console.log(id)
     let time = avaiTime;
-    if (!time.trim()) {
+    let veterid = veterID;
+    if (!time.trim() || id != veterid) {
       setMessage("Please choose time slot!");
       setMakeAppoint(true);
     } else {
@@ -122,16 +125,26 @@ const MakeAppointment: React.FC = () => {
     }
   };
 
+
+  function chooseSlots(e: any,time: string,id: number){
+    console.log(e)
+    console.log(id)
+    setAvailableTime(time);
+    setVeterID(id);
+
+  }
+
   function redirectEventlist() {
     setconfirmAppoint(false);
     history.push("/EventList");
   }
   const api = axios.create({
-    baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-    //baseURL: `http://localhost:8080`,
+    //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+    baseURL: `http://localhost:8080`,
   });
 
   const handleMakeAppoint = async (veterid: number, vetid: number) => {
+    console.log("handle " + veterid)
     let userinfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
 
     let time = avaiTime.split("-");
@@ -139,9 +152,9 @@ const MakeAppointment: React.FC = () => {
     let date = moment(resultlist.appointmentDate).format("YYYY-MM-DD");
     let startDateTime = moment(date + " " + time[0], "YYYY-MM-DD hh:mm");
     let endDateTime = moment(date + " " + time[1], "YYYY-MM-DD hh:mm");
-
+    
     const appointmentData = {
-      appointmentDate: resultlist.appointmentDate,
+      appointmentDate: moment(resultlist.appointmentDate).format("YYYY-MM-DDThh:mm:ss+00:00"),
       appointmentStartTime: startDateTime,
       appointmentEndTime: endDateTime,
       customerID: userinfo.userID,
@@ -154,15 +167,13 @@ const MakeAppointment: React.FC = () => {
     };
     try {
       await api.post("/appointment/add", appointmentData).then((res) => {
-        console.log("data", res);
-
+     
         let str = JSON.stringify(res.data);
 
         setMessage("The appointment has been confirmed!");
         setconfirmAppoint(true);
       });
     } catch (err) {
-      console.error(err.response);
       setMessage("Add appointment fail! Please try again!");
       setIserror(true);
     }
@@ -170,7 +181,7 @@ const MakeAppointment: React.FC = () => {
 
   function Back() {
     history.push({
-      pathname: "/Home/SearchResult",
+      pathname: "/SearchResult",
       state: {
         vetdetail: resultlist.vetdetail,
       },
@@ -249,44 +260,41 @@ const MakeAppointment: React.FC = () => {
               {/* {showDetail(item)} */}
             </IonGrid>
             <IonToolbar>
-              <IonItem >
+              <IonItem>
                 <IonLabel class="ion-text-left">
                   {" "}
                   <b>Available Slot</b>
                 </IonLabel>
-                <IonSelect 
-                  style={{innerWidth: "10px"}}
-                  value={avaiTime}
+                <IonSelect
                   interface="action-sheet"
-                  onIonChange={(e) => setAvailableTime(e.detail.value)}
+                  onIonChange={(e) => chooseSlots(e,e.detail.value,item.veter.veterID)}
                 >
                   {item.availableSlots.map((item: any, index: any) => {
-                    console.log(item)
                     if(item.available == true){
-                      
-                    var start = new Date(item.startTime);
-                    var end = new Date(item.endTime);
+                        
+                      var start = new Date(item.startTime);
+                      var end = new Date(item.endTime);
 
-                    var startTime = formatTime(start);
-                    var endTime = formatTime(end);
+                      var startTime = formatTime(start);
+                      var endTime = formatTime(end);
 
-                    return (
-                      <IonSelectOption 
-                        key={index}
-                        value={startTime + "-" + endTime}
-                      >
-                        {startTime + " - " + endTime}
-                      </IonSelectOption>
-                    );
+                      return (
+                        <IonSelectOption
+                          key={index}
+                          value={startTime + "-" + endTime}
+                        >
+                          {startTime + " - " + endTime}
+                        </IonSelectOption>
+                      );
                     
-                  }
+                    }
                   })}
                 </IonSelect>
               </IonItem>
             </IonToolbar>
             <IonToolbar>
               <IonButton
-                onClick={onClickMakeAppoint}
+                onClick={() => onClickMakeAppoint(item.veter.veterID)}
                 class="button button-outline button-block"
                 color="secondary"
               >

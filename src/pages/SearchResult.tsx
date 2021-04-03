@@ -82,7 +82,7 @@ function ClinicDetail(item: any) {
 
 function displayEvent(item: any, index: any) {
   return (
-    <IonCard routerLink="/Home/SearchResult/MakeAppointment">
+    <IonCard routerLink="/SearchResult/MakeAppointment">
       <IonCardContent class="ion-text-left">
         <IonToolbar>
           <IonItem>
@@ -237,7 +237,7 @@ const SearchResult: React.FC = () => {
   function viewVet(item: any) {
     console.log(item);
     history.push({
-      pathname: "/Home/SearchResult/MakeAppointment",
+      pathname: "/SearchResult/MakeAppointment",
       state: {
         veterdetail: item.veterSlot, 
         vetdetail: resultlist.vetdetail, 

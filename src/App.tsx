@@ -79,12 +79,12 @@ const App: React.FC = () => {
               exact={true}
             />
             <Route
-              path="/Home/SearchResult"
+              path="/SearchResult"
               component={SearchResult}
               exact={true}
             />
             <Route
-              path="/Home/SearchResult/MakeAppointment"
+              path="/SearchResult/MakeAppointment"
               component={MakeAppointment}
               exact={true}
             />

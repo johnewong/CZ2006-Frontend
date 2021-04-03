@@ -31,42 +31,6 @@ import { userInfo } from "node:os";
 import moment from "moment";
 
 let dataString = "";
-const appointment_data = [
-  {
-    isActive: false,
-    appointmentDate: "4 Feb 2020",
-    appointmentStartTime: "10:30 AM",
-    appointmentEndTime: "11:00 AM",
-    vet: {
-      vetName: "Hougang Vet Center",
-      vetAddress: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-    veter: {
-      veterName: "Dr.Lee",
-    },
-    treatment: {
-      treatmentName: "Dental Scaling",
-    },
-  },
-  {
-    isActive: false,
-    appointmentDate: "5 Feb 2020",
-    appointmentStartTime: "10:30 AM",
-    appointmentEndTime: "11:00 AM",
-    vet: {
-      vetName: "Hougang Vet Center",
-      vetAddress: "681 Hougang Ave 8, Singapore 530681",
-      tel: "62468681",
-    },
-    veter: {
-      veterName: "Dr.Lee",
-    },
-    treatment: {
-      treatmentName: "Dental Scaling",
-    },
-  },
-];
 
 interface UserInfo {
   userID: number;
@@ -157,7 +121,7 @@ const EventList: React.FC = () => {
           let appointmentDate = moment(item.appointment.appointmentStartTime).format("DD-MMMM");
           let appointmentStartTime = moment(item.appointment.appointmentStartTime).format("hh:mm");
           return (
-            <IonCard>
+            <IonCard key={index}>
               <IonCardContent class="ion-text-left">
                 <IonGrid>
                   <IonRow>
