@@ -41,8 +41,8 @@ function formatDate(d: Date) {
 
 var treatment_data: any[] = [];
 const api = axios.create({
-  //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-  baseURL: `http://localhost:8080`,
+  baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+  //baseURL: `http://localhost:8080`,
 });
 
 const getTreatments = async () => {
@@ -117,7 +117,7 @@ export const Home: React.FC = ({}) => {
     let formatdate = formatDate(date);
     let locationID = location;
     let locationPair = locationItems.find(m => m["LocationID"]==locationID)! as LocationPair;
-    console.log("home formatdate", formatdate);
+    console.log("/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID);
     await api
       .get(
         "/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID
@@ -204,6 +204,7 @@ export const Home: React.FC = ({}) => {
                       </IonSelectOption>
                     );
                   })}
+                  
               </IonSelect>
             </IonItem>
             <IonRow></IonRow>
