@@ -8,19 +8,16 @@ import {
     IonTabBar,
     IonTitle,
     IonToolbar,
-    IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonCheckbox,IonText,IonGrid, IonRow, IonCol
+    IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonSegment,IonSegmentButton,IonGrid, IonRow, IonCol
 } from '@ionic/react';
 
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle} from "ionicons/icons";
+import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle, cardOutline} from "ionicons/icons";
 
 
 const Register: React.FC = () => {
-    const [checked, setChecked] = useState(false);
-    const history = useHistory();
-    const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [confirmedPassword, setConfirmedPassword] = useState<string>("");
     const [userName, setUsername] = useState<string>("");
     const [birthDate, setBirthDate] = useState<string>("");
     const [contactNumber, setContactNumber] = useState<string>("");
@@ -32,33 +29,48 @@ const Register: React.FC = () => {
     const [iserror, setIserror] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
 
+    const handleGender = () =>{
+    }
+
     const handleRegister = () => {
         const RegisterData = {
             "userName" : userName,
             "birthDate": birthDate,
             "contactNumber": contactNumber,
             "emailAddress": emailAddress,
-            "gender": true,
+            "gender": gender,
             "icNumber": icNumber,
             "password": password,
             "userType": userType,
-
-
         };
-    
-        const api = axios.create({
-            //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-            baseURL: `http://192.168.0.108:8080`
-        })
-         api.post("/account/user", RegisterData)
-            .then(res => {
-                //let str =JSON.stringify(res.data); 
-                console.log(res.data);
-               // console.log(str);
-            }).catch((error)=>{
-                setMessage("Auth failure! Please create an account");
-                setIserror(true)
-             });
+        //is password matches
+        if(password != confirmedPassword)
+        {
+            setMessage("Please make sure your passwords match.");
+            setIserror(true);
+        }else
+        {
+            setMessage("Registered successfully!");
+            setIserror(true);
+            
+            //check database user details
+
+            //if XXX existed:
+
+            const api = axios.create({
+                //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+                baseURL: `http://localhost:8080`
+            })
+             api.post("/account/user", RegisterData)
+                .then(res => {
+                    //let str =JSON.stringify(res.data); 
+                    console.log(res.data);
+                   // console.log(str);
+                }).catch((error)=>{
+                    setMessage("Auth failure! Please create an account");
+                    setIserror(true)
+                 });
+        }
     };
 
   // @ts-ignore
@@ -70,91 +82,103 @@ const Register: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding ion-text-center">
+        {/*Confirm password alert*/}
+        <IonAlert
+                isOpen={iserror}
+                onDidDismiss={() => setIserror(false)}
+                //header={}
+                message={message}
+                buttons={["OK"]}
+              />
+
         <IonGrid>
-        <IonRow>
           <IonCol>
+          <IonRow>
+            <IonCol>
+              <img src="assets/images/Logo.png" width="200px" />
+            </IonCol>
+          </IonRow>
           </IonCol>
-        </IonRow>
-
-          <IonCol>
-            <IonIcon
-                style={{ fontSize: "70px", color: "#0040ff" }}
-                icon={personCircle}
-            />
-          </IonCol>
-
-
                 <IonCol>
                     <IonItem>
                         <IonIcon
-                            style={{ fontSize: "20px", color: "#0040ff" }}
+                            style={{ fontSize: "20px", color: "#ffd401" }}
                             icon={personAddOutline}
                         />
-                        <IonLabel position="floating"> User Name</IonLabel>
-                        <IonInput onIonChange={(e) => setUsername(e.detail.value!)} 
+                        <IonInput   class = "ion-text-center" 
+                                    onIonChange={(e) => setUsername(e.detail.value!)} 
+                                    placeholder = "User Name"
                         >
-
                         </IonInput>
                     </IonItem>
                 </IonCol>
 
             <IonItem>
                 <IonIcon
-                    style={{ fontSize: "20px", color: "#0040ff" }}
+                    style={{ fontSize: "20px", color: "#ffd401" }}
                     icon={maleFemaleOutline}
                 />
-
-                <IonItem>
-                    <IonLabel>Male</IonLabel>
-                    <IonCheckbox name={male}/>
-                </IonItem>
-                <IonItem>
-                    <IonLabel>female</IonLabel>
-                    <IonCheckbox name={female}/>
-                </IonItem>
+                    <IonSegment >
+                    <IonSegmentButton >
+                        <IonLabel >Male</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton>
+                        <IonLabel>Female</IonLabel>
+                    </IonSegmentButton>
+                    </IonSegment>
             </IonItem>
 
                 <IonCol>
                     <IonItem>
                         <IonIcon
-                            style={{ fontSize: "20px", color: "#0040ff" }}
+                            style={{ fontSize: "20px", color: "#ffd401" }}
                             icon={calendarNumberOutline}
                         />
-                        <IonLabel position="floating">Birth Date</IonLabel>
-                        <IonInput onIonChange={(e) => setBirthDate(e.detail.value!)} >
+                        <IonInput   class = "ion-text-center"  
+                                    onIonChange={(e) => setBirthDate(e.detail.value!)}
+                                    placeholder = "Birth Date" 
+                        >
                         </IonInput>
 
                     </IonItem>
                 </IonCol>
-
-
-
                 <IonCol>
                     <IonItem>
                         <IonIcon
-                            style={{ fontSize: "20px", color: "#0040ff" }}
+                            style={{ fontSize: "20px", color: "#ffd401" }}
+                            icon={cardOutline}
+                        />
+                        <IonInput   class = "ion-text-center"  
+                                    onIonChange={(e) => setIcNumber(e.detail.value!)}
+                                    placeholder = "IC Number" 
+                        >
+                        </IonInput>
+
+                    </IonItem>
+                </IonCol>
+                <IonCol>
+                    <IonItem>
+                        <IonIcon
+                            style={{ fontSize: "20px", color: "#ffd401" }}
                             icon={callOutline}
                         />
-                        <IonLabel position="floating">Mobile number</IonLabel>
-                        <IonInput>
-
-
+                        <IonInput   class = "ion-text-center"  
+                                    placeholder = "Contact Number"
+                                    onIonChange={(e) => setContactNumber(e.detail.value!)} >
                         </IonInput>
                     </IonItem>
                 </IonCol>
-
-
             <IonCol>
             <IonItem>
                 <IonIcon
-                    style={{ fontSize: "20px", color: "#0040ff" }}
+                    style={{ fontSize: "20px", color: "#ffd401" }}
                     icon={mailOutline}
                 />
-            <IonLabel position="floating"> Email</IonLabel>
             <IonInput
-                type="email"
-                value={email}
-                onIonChange={(e) => setEmail(e.detail.value!)}
+                class = "ion-text-center"  
+                placeholder = "Email Address"
+                value={emailAddress}
+                onIonChange={(e) => setEmailAddress(e.detail.value!)}
                 >
             </IonInput>
             </IonItem>
@@ -164,12 +188,12 @@ const Register: React.FC = () => {
             <IonCol>
             <IonItem>
                 <IonIcon
-                    style={{ fontSize: "20px", color: "#0040ff" }}
+                    style={{ fontSize: "20px", color: "#ffd401" }}
                     icon={lockClosedOutline}
                 />
-              <IonLabel position="floating"> Password</IonLabel>
               <IonInput
-                type="password"
+                class = "ion-text-center"  
+                placeholder = "Passsword"
                 value={password}
                 onIonChange={(e) => setPassword(e.detail.value!)}
                 >
@@ -180,14 +204,14 @@ const Register: React.FC = () => {
                 <IonCol>
                     <IonItem>
                         <IonIcon
-                            style={{ fontSize: "20px", color: "#0040ff" }}
+                            style={{ fontSize: "20px", color: "#ffd401" }}
                             icon={lockClosedOutline}
                         />
-                        <IonLabel position="floating"> Confirm Password</IonLabel>
                         <IonInput
-                            type="password"
-                            value={password}
-                            onIonChange={(e) => setPassword(e.detail.value!)}
+                            class = "ion-text-center"  
+                            placeholder = "Confirm Password"
+                            value={confirmedPassword}
+                            onIonChange={(e) => setConfirmedPassword(e.detail.value!)}
                         >
                         </IonInput>
                     </IonItem>
@@ -196,9 +220,12 @@ const Register: React.FC = () => {
 
             <IonCol>
             
-              <IonButton expand="block" onClick={handleRegister}>Sign up</IonButton>
+              <IonButton    size="default"
+                            color="warning"
+                            expand="block"
+                            onClick={handleRegister}><b>Sign up</b></IonButton>
                 <p style={{ fontSize: "medium" }}>
-                 have an account?  <a  href="LoginMX"  >Sign in!</a>
+                    have an account?  <a  href="Login"  >Sign in!</a>
                     <div id={"LoginMx"}></div>
             </p>
 
