@@ -167,8 +167,10 @@ const Profile: React.FC = () => {
           </IonCol>
 
           <IonCol>
-            <IonButton expand="block" onClick={handleEdit}>
-              Edit
+            <IonButton expand="block" size="default"
+                       color="warning"
+                        onClick={handleEdit}>
+             <b>Edit</b>
             </IonButton>
           </IonCol>
         </IonGrid>
