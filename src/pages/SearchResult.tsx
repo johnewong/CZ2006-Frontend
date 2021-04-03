@@ -1,121 +1,275 @@
-import { IonCard, IonContent, IonHeader, IonModal, IonPage, IonSelectPopover, IonTitle, IonToolbar } from '@ionic/react';
-import React, { useState } from 'react';
+import {
+  IonCard,
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonHeader,
+  IonModal,
+  IonPage,
+  IonSelectPopover,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { IonGrid, IonRow, IonCol } from '@ionic/react';
-import { arrowBack, arrowForward, caretBack, caretForward } from "ionicons/icons";
-import { useHistory, useLocation } from "react-router-dom"
-import { IonItem, IonLabel, IonInput, IonButton, IonButtons, IonIcon, IonAlert,IonImg, IonSegment, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/react';
+import { IonGrid, IonRow, IonCol } from "@ionic/react";
+import {
+  arrowBack,
+  arrowForward,
+  caretBack,
+  caretForward,
+  map,
+} from "ionicons/icons";
+import { useHistory, useLocation } from "react-router-dom";
+import {
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonButtons,
+  IonIcon,
+  IonAlert,
+  IonImg,
+  IonSegment,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCardContent,
+} from "@ionic/react";
+import "../components/GoogleMapPlugin";
+import "moment-timezone";
+import moment from "moment";
+import MapContainer from "../components/GoogleMapPlugin";
 
-let dataString = "";
+function ClinicDetail(item: any) {
+  return (
+    <div>
+      <IonRow>
+        <IonCol>
+          <IonLabel>
+            <b>Name: </b>
+          </IonLabel>
+          <IonLabel>{item.clinic.name}</IonLabel>
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <IonCol>
+          <IonLabel>
+            <b>Treatment/Service: </b>
+          </IonLabel>
+          <IonLabel>{item.treatmentAvailable.treatmentName}</IonLabel>
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <IonCol>
+          <IonLabel>
+            <b>Address: </b>
+          </IonLabel>
+          <IonLabel>{item.clinic.address}</IonLabel>
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <IonCol>
+          <IonLabel>
+            <b>Tel: </b>
+          </IonLabel>
+          <IonLabel>{item.clinic.tel}</IonLabel>
+        </IonCol>
+      </IonRow>
+    </div>
+  );
+}
 
-// let clinic_data = [
-//   {
-//     isActive:false,
-//     clinic: {
-//       name: "Hougang Vet Center",
-//       address: "681 Hougang Ave 8, Singapore 530681",
-//       tel: "62468681",
-//     },
-//     treatmentAvailable: {
-//       treatmentName: "Dental Scaling",
-//     },
-//   },
+function displayEvent(item: any, index: any) {
+  return (
+    <IonCard routerLink="/Home/SearchResult/MakeAppointment">
+      <IonCardContent class="ion-text-left">
+        <IonToolbar>
+          <IonItem>
+            <IonLabel>
+              <div className="card-title">
+                {" "}
+                <b>Clinic 1</b>
+              </div>
+            </IonLabel>
+            <img src="assets/images/Clinic.png" width="130px" />
+          </IonItem>
+        </IonToolbar>
+        <IonGrid>
+          <IonRow>
+            <IonCol size="5">
+              <IonLabel> </IonLabel>
+              <IonLabel>{item.clinicDate}</IonLabel>
+            </IonCol>
+          </IonRow>
+          {ClinicDetail(item)}
+        </IonGrid>
+      </IonCardContent>
+    </IonCard>
+  );
+}
 
-//   {
-//     isActive:false,
-//     clinic: {
-//       name: "Hougang Vet Center",
-//       address: "681 Hougang Ave 8, Singapore 530681",
-//       tel: "62468681",
-//     },
-//     treatmentAvailable: {
-//       treatmentName: "Dental Scaling",
-//     },
-//   },
-
-//   {
-//     isActive:false,
-//     clinic: {
-//       name: "Hougang Vet Center",
-//       address: "681 Hougang Ave 8, Singapore 530681",
-//       tel: "62468681",
-//     },
-//     treatmentAvailable: {
-//       treatmentName: "Dental Scaling",
-//     },
-//   },
-
-// ];
-//const [activeItem, setActiveItem] = React.useState(1);
-
-
+interface ResultList {
+  date: Date;
+  location: Number;
+  locationName:string;
+  treatmentID: Number;
+  appointmentDate:Date;
+  vetdetail: [];
+}
 
 const SearchResult: React.FC = () => {
-const history = useHistory();
+  const storage = window.localStorage;
+  const history = useHistory();
+  const location = useLocation();
 
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [iserror, setIserror] = useState<boolean>(false);
+  const [resultlist, setResultlist] = useState<ResultList>(
+    location.state as ResultList
+  );
+  const [searchDate, setSearchDate] = useState<Date>();
+  const [hasRender, setHasRender] = useState<boolean>(false);
 
-const location = useLocation();
-const resultlist = location.state as any;
+  useEffect(() => {
+    let userInfo = storage.getItem("userInfo");
 
-  function ClinicDetail(item:any){
-    //alert("displayDetail"+item.isActive);
+    if (!userInfo) {
+      history.push("/Login");
+    }
+
+    if (location.state) {
+      let a = location.state as ResultList;
+      setResultlist(a);
+      setSearchDate(a.date as Date);
+    }
+  }, [location]);
+
+  function ClinicDetail(item: any) {
     return (
       <div>
         <IonRow>
-              <IonCol>
-                <IonLabel><b>Description: </b></IonLabel>
-                <IonLabel>{item.vetDescription}</IonLabel>
-              </IonCol>
-            </IonRow>
-          
-            <IonRow>
-              <IonCol>
-                <IonLabel><b>Address: </b></IonLabel>
-                <IonLabel>{item.vetAddress}</IonLabel>
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <IonLabel><b>Tel: </b></IonLabel>
-                <IonLabel>{item.tel_office_1}</IonLabel>
-              </IonCol>
-            </IonRow>
+          <IonCol>
+            <IonLabel>
+              <b>Description: </b>
+            </IonLabel>
+            <IonLabel>{item.vetDescription}</IonLabel>
+          </IonCol>
+        </IonRow>
+
+        <IonRow>
+          <IonCol>
+            <IonLabel>
+              <b>Address: </b>
+            </IonLabel>
+            <IonLabel>{item.vetAddress}</IonLabel>
+          </IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol>
+            <IonLabel>
+              <b>Tel: </b>
+            </IonLabel>
+            <IonLabel>{item.tel_office_1}</IonLabel>
+          </IonCol>
+        </IonRow>
       </div>
     );
   }
 
-  function Redirect (item: any) {
-    console.log(item)
+  const handleSearch = async (type: boolean) => {
+    const api = axios.create({
+      //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+      baseURL: `http://localhost:8080`,
+    });
+
+    console.log("resultlist", resultlist);
+    console.log("type", type);
+    let _date: moment.Moment;
+    if (!type) {
+      _date = moment(searchDate).add(-1, "day");
+    } else {
+      _date = moment(searchDate).add(1, "day");
+    }
+    console.log("prev date", _date);
+    let formatdate = _date.format("YYYY-MM-DD");
+    console.log("formatdate", formatdate);
+    setSearchDate(_date.toDate());
+    await api
+      .get(
+        "/appointment/search/" +
+          resultlist.location +
+          "/" +
+          formatdate +
+          "/" +
+          resultlist.treatmentID
+      )
+      .then((res) => {
+        console.log("search data", res.data);
+        setResultlist({
+          vetdetail: res.data,
+          location: resultlist.location,
+          locationName:resultlist.locationName,
+          date: _date.toDate(),
+          treatmentID: resultlist.treatmentID,
+          appointmentDate:_date.toDate()
+        });
+
+        // history.push({
+        //   pathname: "/Home/SearchResult",
+        //   state: {
+        //     vetdetail: res.data,
+        //     location: resultlist.location,
+        //     date: _date.toDate(),
+        //     treatmentID: resultlist.treatmentID,
+        //   },
+        // });
+      })
+      .catch((error) => {
+        setMessage("Failed to search please try again!");
+        setIserror(true);
+      });
+
+    return;
+  };
+
+  function viewVet(item: any) {
+    console.log(item);
     history.push({
-      pathname: '/Home/SearchResult/MakeAppointment',
+      pathname: "/Home/SearchResult/MakeAppointment",
       state: {
-        veterdetail: item.veterSlot, vetdetail: resultlist.vetdetail, selectedVet: item["vet"]
+        veterdetail: item.veterSlot, 
+        vetdetail: resultlist.vetdetail, 
+        selectedVet: item.vet,
+        treatmentID : resultlist.treatmentID,
+        appointmentDate: resultlist.date
       }
     });
     return;
   }
 
-  function Back(){
-    
-      history.push({
-        pathname: '/Home',
-      
-      });
+  function Back() {
+    history.push({
+      pathname: "/Home",
+    });
     return;
   }
 
   function displayEvent(item: any, index: any) {
     return (
-      
-    <IonCard key={index} onClick={() => Redirect(item)}>
+      <IonCard key={index} onClick={() => viewVet(item)}>
         <IonCardContent class="ion-text-left">
           <IonToolbar>
             <IonItem>
-            <IonLabel>
-              <div className="card-title"> <b>{item["vet"].vetName}</b></div>
-            </IonLabel>
-            <img src= "assets/images/Logo.png" width = "150px" />
-            </IonItem>       
+              <IonLabel>
+                <div className="card-title">
+                  {" "}
+                  <b>{item["vet"].vetName}</b>
+                </div>
+              </IonLabel>
+              <img src="assets/images/Logo.png" width="150px" />
+            </IonItem>
           </IonToolbar>
           <IonGrid>
             <IonRow>
@@ -123,7 +277,7 @@ const resultlist = location.state as any;
                 <IonLabel> </IonLabel>
                 <IonLabel>{}</IonLabel>
               </IonCol>
-            </IonRow>       
+            </IonRow>
             {ClinicDetail(item["vet"])}
           </IonGrid>
         </IonCardContent>
@@ -131,38 +285,73 @@ const resultlist = location.state as any;
     );
   }
 
-
-  //getData();
   return (
     <IonPage>
       <IonHeader>
-          <IonToolbar>
-            <IonButtons  slot="secondary" >
-              <IonButton fill="default" onClick = {Back}>
-                <IonIcon  icon={arrowBack}/>
-              </IonButton>
-            </IonButtons>
-            <IonLabel class = "ion-text-left" color = "#000000"><b>Jurong West</b></IonLabel>
-          </IonToolbar>
-          </IonHeader>
-          <IonHeader>   
-            <IonToolbar>
-            <IonButtons slot="secondary">
-              <IonButton fill="clear" color="#000000" >
-                <IonIcon  icon={caretBack} />
-                Previous
-              </IonButton>
-            </IonButtons>
-            <IonTitle style={{fontSize: "22px"}} color = "#000000"><b> 1 Feb 2021</b></IonTitle>
-            <IonButtons slot="primary" >
-              <IonButton fill="clear" color="#000000">Next
-                <IonIcon icon={caretForward} />
-              </IonButton>
-            </IonButtons>      
-          </IonToolbar>
+        <IonToolbar>
+          <IonButtons slot="secondary">
+            <IonButton fill="default" onClick={Back}>
+              <IonIcon icon={arrowBack} />
+            </IonButton>
+          </IonButtons>
+          <IonLabel class="ion-text-left" color="#000000">
+          <b>{typeof resultlist !== "undefined" && typeof resultlist.locationName !== "undefined" && resultlist.locationName}</b>
+          </IonLabel>
+        </IonToolbar>
+      </IonHeader>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="secondary">
+            <IonButton
+              fill="clear"
+              color="#000000"
+              onClick={() => handleSearch(false)}
+            >
+              <IonIcon icon={caretBack} />
+              Previous
+            </IonButton>
+          </IonButtons>
+          <IonTitle style={{ fontSize: "22px" }} color="#000000">
+            <b> {moment(searchDate).format("YYYY-MM-DD")}</b>
+          </IonTitle>
+          <IonButtons slot="primary">
+            <IonButton
+              fill="clear"
+              color="#000000"
+              onClick={() => handleSearch(true)}
+            >
+              Next
+              <IonIcon icon={caretForward} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
       </IonHeader>
       <IonContent>
-        {typeof resultlist !== 'undefined' && resultlist.hasOwnProperty('vetdetail') !==  false ? resultlist.vetdetail.map((item: any, index: any) => displayEvent(item, index)) : null}
+        {typeof resultlist !== "undefined" &&
+        resultlist.hasOwnProperty("vetdetail") !== false
+          ? resultlist.vetdetail.map((item: any, index: any) =>
+              displayEvent(item, index)
+            )
+          : null}
+
+        <IonModal
+          isOpen={showModal}
+          swipeToClose={true}
+          onDidDismiss={() => setShowModal(false)}
+        >
+          {typeof resultlist !== "undefined" && !hasRender && (
+            <MapContainer mapList={resultlist.vetdetail} />            
+          )}
+          <IonButton onClick={() => setShowModal(false)}>Close</IonButton>
+        </IonModal>
+
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => {
+            setShowModal(true);           
+            }}>
+            <IonIcon icon={map} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
