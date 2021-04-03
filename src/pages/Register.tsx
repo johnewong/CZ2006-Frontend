@@ -31,23 +31,12 @@ const Register: React.FC = () => {
     const [birthDate, setBirthDate] = useState<string>("");
     const [contactNumber, setContactNumber] = useState<string>("");
     const [emailAddress, setEmailAddress] = useState<string>("");
-    const [gender, setGender] = useState<boolean>();
+    const [gender, setGender] = useState<boolean>(true);
     const [icNumber, setIcNumber] = useState<string>("");
     const [userType, setUserType] = useState<string>("0");
 
     const [iserror, setIserror] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
-    const [redirect, setRedirect] = useState<string>("");
-
-    const customDayShortNames = [
-        's\u00f8n',
-        'man',
-        'tir',
-        'ons',
-        'tor',
-        'fre',
-        'l\u00f8r'
-      ];
       
     const handleRegister = async () => {
 
@@ -146,12 +135,23 @@ const Register: React.FC = () => {
                     style={{ fontSize: "20px", color: "#ffd401" }}
                     icon={maleFemaleOutline}
                 />
-                    <IonSegment >
-                    <IonSegmentButton onClick = {() => setGender(false)} >
+                    <IonSegment>
+                    <IonSegmentButton 
+                        defaultChecked
+                        onClick = {() => setGender(false)} >
                         <IonLabel >Male</IonLabel>
                     </IonSegmentButton>
                     <IonSegmentButton onClick = {() => setGender(true)} >
                         <IonLabel>Female</IonLabel>
+                    </IonSegmentButton>
+                    </IonSegment>
+                    
+                    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} value="javascript">
+                    <IonSegmentButton value="python">
+                        <IonLabel>Python</IonLabel>
+                    </IonSegmentButton>
+                    <IonSegmentButton value="javascript">
+                        <IonLabel>Javascript</IonLabel>
                     </IonSegmentButton>
                     </IonSegment>
             </IonItem>
