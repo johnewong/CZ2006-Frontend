@@ -20,6 +20,14 @@
   min-height:800px;
 }
 
+ .button-label{
+     width: 100%;
+
+     text-align: center;
+     color: black;
+
+ }
+
 
 #calendarConfirm{
   
