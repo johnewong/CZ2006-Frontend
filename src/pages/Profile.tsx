@@ -3,11 +3,12 @@ import {
   IonHeader,
   IonLifeCycleContext,
   IonPage,
-  IonRoute,
+  IonRoute, IonSegment, IonSegmentButton,
   IonTabBar,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import"./Profile.css"
 import React, {useEffect, useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
@@ -96,53 +97,45 @@ const Profile: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding ion-text-center">
         <IonGrid>
-          <IonRow>
-            <IonCol>
-            </IonCol>
-          </IonRow>
 
           <IonCol>
-            <IonIcon
-              style={{ fontSize: "70px", color: "#0040ff" }}
-              icon={peopleOutline}
-            />
+            <img src="assets/images/Logo.png" width="200px" />
           </IonCol>
 
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={personOutline}
               />
-              <IonLabel position="floating">{currentUser}</IonLabel>
-            
+              <IonLabel style={{ fontSize: "20px" }}  class="ion-username">{currentUser}</IonLabel>
+
               <IonInput></IonInput>
             </IonItem>
           </IonCol>
 
           <IonItem>
             <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
+              style={{ fontSize: "20px", color: "#ffd401" }}
               icon={maleFemaleOutline}
             />
-
-            <IonItem>
-              <IonLabel>Male</IonLabel>
-              <IonCheckbox name={male} />
-            </IonItem>
-            <IonItem>
-              <IonLabel>female</IonLabel>
-              <IonCheckbox name={female} />
-            </IonItem>
+            <IonSegment >
+              <IonSegmentButton >
+                <IonLabel >Male</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton>
+                <IonLabel>Female</IonLabel>
+              </IonSegmentButton>
+            </IonSegment>
           </IonItem>
 
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={calendarNumberOutline}
               />
-              <IonLabel position="floating">{currentBirthDate}</IonLabel>
+              <IonLabel >{currentBirthDate}</IonLabel>
               <IonInput></IonInput>
             </IonItem>
           </IonCol>
@@ -150,10 +143,10 @@ const Profile: React.FC = () => {
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={callOutline}
               />
-              <IonLabel position="floating">{ContactNumber}</IonLabel>
+              <IonLabel >{ContactNumber}</IonLabel>
               <IonInput></IonInput>
             </IonItem>
           </IonCol>
@@ -161,10 +154,10 @@ const Profile: React.FC = () => {
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={mailOutline}
               />
-              <IonLabel position="floating">{CurrentEmail}</IonLabel>
+              <IonLabel >{CurrentEmail}</IonLabel>
               <IonInput
                 type="email"
                 value={email}
