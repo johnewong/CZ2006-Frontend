@@ -43,7 +43,7 @@ import Home from "./pages/Home";
 import Setting from "./pages/Setting";
 import Account from "./pages/Account";
 import Language from "./pages/Language";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const App: React.FC = () => {
 
@@ -61,7 +61,7 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/Setting" component={Setting} exact={true} />
+            <Route path="/setting" component={Setting} exact={true} />
             <Route path="/account" component={Account} exact={true} />
             <Route path="/language" component={Language} exact={true} />        
             <Route path="/profile" component={Profile} exact={true} />

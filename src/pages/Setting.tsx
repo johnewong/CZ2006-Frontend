@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import {
     IonContent,
     IonHeader,
@@ -10,17 +12,12 @@ import {
     IonIcon,
     IonItem,
     IonLabel,
-    IonRadio,
-    IonCheckbox,
-    IonCardTitle,
-    IonCardContent,
-    IonButton,
-    IonToolbar,
+
     IonTitle,
     IonPage
 
 } from "@ionic/react";
-import React, { useState } from "react";
+
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import {
@@ -28,6 +25,7 @@ import {
 } from "ionicons/icons";
 
 const Setting: React.FC = () => {
+    const [account, setaccount] = useState(false);
 
 
     return (
@@ -38,7 +36,7 @@ const Setting: React.FC = () => {
                     </IonItem>
 
             </IonHeader>
-            
+
 
             <IonList>
 
