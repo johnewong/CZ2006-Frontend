@@ -1,5 +1,5 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
 import "./Login.css"
 import { IonGrid, IonRow, IonCol } from '@ionic/react';
@@ -7,6 +7,7 @@ import { personCircleOutline } from "ionicons/icons";
 import { lockClosedOutline } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 import { IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonImg } from '@ionic/react';
+import { UserContext } from '../App';
 
 
 function validateEmail(email: string) {
@@ -15,6 +16,8 @@ function validateEmail(email: string) {
 }
 
 const LoginMX: React.FC = () => {
+  const user = useContext(UserContext);
+
   const storage = window.localStorage;
   const history = useHistory();
   const [username, setUsername] = useState<string>("");
@@ -27,7 +30,7 @@ const LoginMX: React.FC = () => {
     //if(userInfo) history.push('/home');
   },[history]);
 
-  const handleLogin =  () => {
+  const handleLogin = async () => {
     if(username == "" || password == "")
     {
       setMessage("Please enter username or password!");
@@ -42,13 +45,17 @@ const LoginMX: React.FC = () => {
       const api = axios.create({
         baseURL: `http://localhost:8080`
       })
-      api.post("/account/user/login", loginData)
+      await api.post("/account/user/login", loginData)
           .then(res => {       
               console.log("data",res);       
 
               let str =JSON.stringify(res.data); 
               storage.setItem("userInfo", str);
-              history.push("/Home/");
+              user.setIsLoggedIn(true);
+              history.push({
+                pathname: "/Home",
+               
+              });
           })
           .catch((error)=>{
               setMessage("Auth failure! Please create an account");

@@ -24,20 +24,21 @@ const ForgetPassword: React.FC = () => {
       };
 
       if(validateEmail(registeredEmail)){
+        
+        setMessage("New password is sending, please check your email!");
+        setIserror(true)
+
         const api = axios.create({
           //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
           baseURL: `http://localhost:8080`
         })
-  
-        
         try {
-            await api.post("/account/user/forgetpassword", EmailData)
+             api.post("/account/user/forgetpassword", EmailData)
             .then(res => {
                 let str =JSON.stringify(res.data); 
                 console.log(res.data);
                 //console.log(str);
-                setMessage("New password has already sent to the email!");
-                setIserror(true)
+                
             });
           } catch(err){
             setMessage("User Not Existed!");

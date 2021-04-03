@@ -153,13 +153,11 @@ const Profile: React.FC = () => {
             // console.log(str);
             setMessage("update successfully!");
             setIserror(true);
-
-
           });
-    } catch (err) {
-      setMessage("Information missing!");
-      setIserror(true)
-    }
+      } catch (err) {
+        setMessage("Information missing!");
+        setIserror(true)
+      }
   }
 
 
