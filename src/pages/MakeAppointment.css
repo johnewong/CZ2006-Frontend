@@ -25,3 +25,12 @@
  .ion-select{
      max-width: 100% !important;
  }
+
+ .avalialeLabel{
+     margin-left: 0%; 
+ }
+
+ .slot{
+     margin-right: 0%;
+     width: 500px;
+ }

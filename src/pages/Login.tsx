@@ -17,8 +17,8 @@ function validateEmail(email: string) {
 const LoginMX: React.FC = () => {
   const storage = window.localStorage;
   const history = useHistory();
-  const [username, setUsername] = useState<string>("user02");
-  const [password, setPassword] = useState<string>("user02");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
@@ -52,9 +52,9 @@ const LoginMX: React.FC = () => {
 
     console.log("loginData", loginData);
     const api = axios.create({
-        baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com/account/user`
+      baseURL: `http://localhost:8080`
     })
-     api.post("/login", loginData)
+     api.post("/account/user/login", loginData)
         .then(res => {       
             console.log("data",res);       
 
@@ -95,6 +95,7 @@ const LoginMX: React.FC = () => {
                       type="email"
                       class = "ion-text-center"
                       value={username}
+                      placeholder = "Username"
                       onIonChange={(e) => setUsername(e.detail.value!)}>
                   </IonInput>
               </IonItem>
@@ -113,6 +114,7 @@ const LoginMX: React.FC = () => {
                     type="password"
                     class = "ion-text-center"
                     value={password}
+                    placeholder = "Password"
                     onIonChange={(e) => setPassword(e.detail.value!)}>
                   </IonInput>
               </IonItem>
