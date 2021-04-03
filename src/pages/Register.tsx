@@ -135,23 +135,16 @@ const Register: React.FC = () => {
                     style={{ fontSize: "20px", color: "#ffd401" }}
                     icon={maleFemaleOutline}
                 />
-                    <IonSegment>
+                    <IonSegment  value="Male">
                     <IonSegmentButton 
-                        defaultChecked
+                        value = "Male"
                         onClick = {() => setGender(false)} >
                         <IonLabel >Male</IonLabel>
                     </IonSegmentButton>
-                    <IonSegmentButton onClick = {() => setGender(true)} >
+                    <IonSegmentButton 
+                        value = "Female"
+                        onClick = {() => setGender(true)} >
                         <IonLabel>Female</IonLabel>
-                    </IonSegmentButton>
-                    </IonSegment>
-                    
-                    <IonSegment onIonChange={e => console.log('Segment selected', e.detail.value)} value="javascript">
-                    <IonSegmentButton value="python">
-                        <IonLabel>Python</IonLabel>
-                    </IonSegmentButton>
-                    <IonSegmentButton value="javascript">
-                        <IonLabel>Javascript</IonLabel>
                     </IonSegmentButton>
                     </IonSegment>
             </IonItem>
