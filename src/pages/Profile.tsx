@@ -67,7 +67,8 @@ const Profile: React.FC = () => {
   const [userName, setUsername] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
-  const [email, setemail]=useState<string>("");
+  const [emailAddress, setemailAddress]=useState<string>("");
+
   const [profileItems, setItems] = useState([]);
   const [contactNumber, setContactNumber] = useState<string>("");
   // const [emailAddress, setEmailAddress] = useState<string>("");
@@ -83,10 +84,12 @@ const Profile: React.FC = () => {
     const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
     setContactNumber(obj["contactNumber"])
     console.log(obj["contactNumber"])
-    setBirthday(obj["birthdate"])
-    console.log(obj["birthday"])
+    setBirthday(obj["birthDate"])
+    console.log(obj["birthDate"])
     setUsername(obj["userName"])
     console.log(obj["userName"])
+    setemailAddress(obj["emailAddress"])
+    console.log(obj["emailAddress"])
 
 
     if (!userInfo) {
@@ -103,7 +106,7 @@ const Profile: React.FC = () => {
       "userName": userName,
       "birthdate": birthday,
       "contactNumber": contactNumber,
-      "emailAddress": email,
+      "emailAddress": emailAddress,
       "gender": gender,
       "icNumber": icNumber,
       "userType": userType,
@@ -199,7 +202,7 @@ const Profile: React.FC = () => {
               <IonLabel >{}</IonLabel>
               <IonInput value={birthday}
                         class = "ion-text-center"
-                        placeholder = "birthday"
+                        placeholder = "birthDay"
                         onIonChange={(e) => setBirthday(e.detail.value!)} ></IonInput>
             </IonItem>
           </IonCol>
@@ -230,9 +233,9 @@ const Profile: React.FC = () => {
               <IonInput
                 type="email"
                 class="ion-text-center"
-                value={email}
+                value={emailAddress}
                 placeholder = "Email address"
-                onIonChange={(e) => setemail(e.detail.value!)}
+                onIonChange={(e) => setemailAddress(e.detail.value!)}
               ></IonInput>
             </IonItem>
           </IonCol>
