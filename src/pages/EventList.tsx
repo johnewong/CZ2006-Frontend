@@ -18,7 +18,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import { pin, idCardOutline } from "ionicons/icons";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { IonRouteInner } from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
 import {
   calendarNumberOutline,
@@ -28,6 +28,7 @@ import {
 } from "ionicons/icons";
 import "./EventList.css";
 import { userInfo } from "node:os";
+import moment from "moment";
 
 let dataString = "";
 const appointment_data = [
@@ -71,10 +72,37 @@ interface UserInfo {
   userID: number;
   customerName: string;
 }
+interface Vet {
+  vetName: string;
+  tel_office_1: string;
+  tel_office_2: string;
+  vetAddress: string;
+  postal_code: string;
+}
+interface Vetter {
+  veterName: string;
+}
+interface Treatment {
+  treatmentName: string;
+}
+interface Appointment {
+  appointmentNumber: string;
+  appointmentDate: Date;
+  appointmentStartTime: Date;
+  appointmentEndTime: Date;
+}
+
+interface Item{
+  appointment: Appointment;
+  treatment: Treatment;
+  vet: Vet;
+  vetter: Vetter;
+}
+
 const EventList: React.FC = () => {
   const history = useHistory();
   const storage = window.localStorage;
-  const [appointment, setAppointment] = useState([]);
+  const [appointmentList, setAppointment] = useState<Array<Item>>([]);
   const [userInfo, setUserInfo] = useState<UserInfo>();
 
   useEffect(() => {
@@ -123,9 +151,11 @@ const EventList: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {appointment_data.map((item, index) => {
+        {appointmentList.length>0 && appointmentList.map((item, index) => {
           // console.log("collapseNumber", collapseNumber);
           // console.log("index date", index, item.appointmentDate);
+          let appointmentDate = moment(item.appointment.appointmentDate).format("DD-MMMM");
+          let appointmentStartTime = moment(item.appointment.appointmentStartTime).format("hh:mm");
           return (
             <IonCard>
               <IonCardContent class="ion-text-left">
@@ -133,7 +163,7 @@ const EventList: React.FC = () => {
                   <IonRow>
                     <IonCol>
                       <IonLabel>
-                        <div className="card-title">Appointment</div>
+                        <div className="card-title">{item.appointment.appointmentNumber}</div>
                       </IonLabel>
                     </IonCol>
                   </IonRow>
@@ -144,7 +174,7 @@ const EventList: React.FC = () => {
                         icon={calendarNumberOutline}
                       />
                       <IonLabel> </IonLabel>
-                      <IonLabel>{item.appointmentDate}</IonLabel>
+                      <IonLabel>{appointmentDate}</IonLabel>
                     </IonCol>
                     <IonCol size="5">
                       <IonIcon
@@ -152,7 +182,7 @@ const EventList: React.FC = () => {
                         icon={timerOutline}
                       />
                       <IonLabel> </IonLabel>
-                      <IonLabel>{item.appointmentStartTime}</IonLabel>
+                      <IonLabel>{appointmentStartTime}</IonLabel>
                     </IonCol>
                     <IonCol>
                       <IonIcon
@@ -167,7 +197,7 @@ const EventList: React.FC = () => {
                     <IonRow>
                       <IonCol>
                         <IonLabel>Vet: </IonLabel>
-                        <IonLabel>{item.veter.veterName}</IonLabel>
+                        <IonLabel>{item.vet.vetName}</IonLabel>
                       </IonCol>
                     </IonRow>
                     <IonRow>
@@ -185,7 +215,7 @@ const EventList: React.FC = () => {
                     <IonRow>
                       <IonCol>
                         <IonLabel>Tel: </IonLabel>
-                        <IonLabel>{item.vet.tel}</IonLabel>
+                        <IonLabel>{item.vet.tel_office_1}</IonLabel>
                       </IonCol>
                     </IonRow>
                   </Collapse>
@@ -194,6 +224,8 @@ const EventList: React.FC = () => {
             </IonCard>
           );
         })}
+
+      
       </IonContent>
     </IonPage>
   );
