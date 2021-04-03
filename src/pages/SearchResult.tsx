@@ -37,7 +37,6 @@ import {
   IonCardContent,
 } from "@ionic/react";
 import "../components/GoogleMapPlugin";
-import "./SearchResult.css";
 import "moment-timezone";
 import moment from "moment";
 import MapContainer from "../components/GoogleMapPlugin";
