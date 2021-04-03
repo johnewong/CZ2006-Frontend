@@ -68,7 +68,8 @@ const Profile: React.FC = () => {
   const [birthday, setBirthday] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
   const [emailAddress, setemailAddress]=useState<string>("");
-
+  const [password, setPassword] = useState<string>("");
+  const [userID, setuserID] = useState<string>("");
   const [profileItems, setItems] = useState([]);
   const [contactNumber, setContactNumber] = useState<string>("");
   // const [emailAddress, setEmailAddress] = useState<string>("");
@@ -90,6 +91,11 @@ const Profile: React.FC = () => {
     console.log(obj["userName"])
     setemailAddress(obj["emailAddress"])
     console.log(obj["emailAddress"])
+    setPassword(obj["password"])
+    console.log(obj["password"])
+    setuserID(obj["userID"])
+    console.log(obj["userID"])
+
 
 
     if (!userInfo) {
@@ -104,12 +110,14 @@ const Profile: React.FC = () => {
   const handleEdit = async () => {
     const EditData = {
       "userName": userName,
-      "birthdate": birthday,
+      "birthDate": birthday,
       "contactNumber": contactNumber,
       "emailAddress": emailAddress,
       "gender": gender,
       "icNumber": icNumber,
       "userType": userType,
+      "password": password,
+      "userID":userID
 
 
     };
@@ -138,17 +146,7 @@ const Profile: React.FC = () => {
 
 
 
-  // const currentUser = obj.userName;
-  // const currentBirthDate = obj.birthDate;
-  // const ContactNumber = obj.contactNumber;
-  // const CurrentEmail = obj.emailAddress;
 
-  //return currentUser;
-    //console.log("username is " +obj.userName);
-
-
-
-  // @ts-ignore
   return (
     <IonPage>
       <IonHeader>
@@ -184,10 +182,10 @@ const Profile: React.FC = () => {
               icon={maleFemaleOutline}
             />
             <IonSegment >
-              <IonSegmentButton  >
+              <IonSegmentButton defaultChecked={true} onClick = {() => setGender(false)} >
                 <IonLabel >Male</IonLabel>
               </IonSegmentButton>
-              <IonSegmentButton>
+              <IonSegmentButton onClick = {() => setGender(true)} >
                 <IonLabel>Female</IonLabel>
               </IonSegmentButton>
             </IonSegment>
@@ -237,6 +235,23 @@ const Profile: React.FC = () => {
                 placeholder = "Email address"
                 onIonChange={(e) => setemailAddress(e.detail.value!)}
               ></IonInput>
+            </IonItem>
+          </IonCol>
+
+          <IonCol>
+            <IonItem>
+              <IonIcon
+                  style={{ fontSize: "20px", color: "#ffd401" }}
+                  icon={lockClosedOutline}
+              />
+              <IonInput
+                  type="password"
+                  class = "ion-text-center"
+                  placeholder = "Passsword"
+                  value={password}
+                  onIonChange={(e) => setPassword(e.detail.value!)}
+              >
+              </IonInput>
             </IonItem>
           </IonCol>
 
