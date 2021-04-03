@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import {
     IonContent,
@@ -23,6 +23,7 @@ import { IonGrid, IonRow, IonCol } from "@ionic/react";
 
 import"./Setting.css";
 import {useHistory} from "react-router-dom";
+import { UserContext } from "../App";
 
 const Setting: React.FC = () => {
     const history = useHistory();
@@ -30,7 +31,11 @@ const Setting: React.FC = () => {
     const [checked, setChecked] = useState(false);
     const [iserror, setIserror] = useState<boolean>(false);
 
+    const user = useContext(UserContext);
+    
     const handleLogout =  () => {
+        
+    user.setIsLoggedIn(false);
         storage.removeItem("userInfo")
         history.push("/Login/");
 
