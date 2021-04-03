@@ -41,8 +41,8 @@ function formatDate(d: Date) {
 
 var treatment_data: any[] = [];
 const api = axios.create({
-  //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-  baseURL: `http://localhost:8080`,
+  baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+  //baseURL: `http://localhost:8080`,
 });
 
 const getTreatments = async () => {
@@ -156,8 +156,11 @@ export const Home: React.FC = ({}) => {
           <Calendar onChange={onChange} value={date} />
 
           <IonGrid>
-            <IonButton id="calendarConfirm" onClick={() => setShowModal(false)}>
-              Confirm
+            <IonButton id="calendarConfirm" onClick={() => setShowModal(false)} 
+                          size = "default"
+                          color="warning"
+                          expand="block">
+              <b>Confirm</b>
             </IonButton>
           </IonGrid>
         </IonModal>
@@ -217,15 +220,10 @@ export const Home: React.FC = ({}) => {
                 icon={calendarOutline}
               />
               <IonLabel
-
-
-                className="button-label  calendar "
-                placeholder="Select date"
+                class="ion-text-center "
                 onClick={() => setShowModal(true)}
               >
                 {date.toDateString()}
-
-
               </IonLabel>
             </IonItem>
             <IonRow></IonRow>
