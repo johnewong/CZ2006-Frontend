@@ -30,8 +30,6 @@ import "./EventList.css";
 import { userInfo } from "node:os";
 import moment from "moment";
 
-let dataString = "";
-
 interface UserInfo {
   userID: number;
   customerName: string;
@@ -43,7 +41,7 @@ interface Vet {
   vetAddress: string;
   postal_code: string;
 }
-interface Vetter {
+interface Veter {
   veterName: string;
 }
 interface Treatment {
@@ -56,11 +54,11 @@ interface Appointment {
   appointmentEndTime: Date;
 }
 
-interface Item{
+interface Item {
   appointment: Appointment;
   treatment: Treatment;
   vet: Vet;
-  vetter: Vetter;
+  veter: Veter;
 }
 
 const EventList: React.FC = () => {
@@ -82,8 +80,8 @@ const EventList: React.FC = () => {
   }, []);
 
   const api = axios.create({
-    //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-    baseURL: `http://localhost:8080`,
+    baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`,
+    //baseURL: `http://localhost:8080`,
   });
 
   const getAppointments = async (_userInfoObj: UserInfo) => {
@@ -115,81 +113,116 @@ const EventList: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {appointmentList.length>0 && appointmentList.map((item, index) => {
-          // console.log("collapseNumber", collapseNumber);
-          // console.log("index date", index, item.appointmentDate);
-          let appointmentDate = moment(item.appointment.appointmentStartTime).format("DD-MMMM");
-          let appointmentStartTime = moment(item.appointment.appointmentStartTime).format("hh:mm");
-          return (
-            <IonCard key={index}>
-              <IonCardContent class="ion-text-left">
-                <IonGrid>
-                  <IonRow>
-                    <IonCol>
-                      <IonLabel>
-                        <div className="card-title">{item.appointment.appointmentNumber}</div>
-                      </IonLabel>
-                    </IonCol>
-                  </IonRow>
-                  <IonRow>
-                    <IonCol size="5">
-                      <IonIcon
-                        style={{ fontSize: "25px", color: "#0040ff" }}
-                        icon={calendarNumberOutline}
-                      />
-                      <IonLabel> </IonLabel>
-                      <IonLabel>{appointmentDate}</IonLabel>
-                    </IonCol>
-                    <IonCol size="5">
-                      <IonIcon
-                        style={{ fontSize: "25px", color: "#0040ff" }}
-                        icon={timerOutline}
-                      />
-                      <IonLabel> </IonLabel>
-                      <IonLabel>{appointmentStartTime}</IonLabel>
-                    </IonCol>
-                    <IonCol>
-                      <IonIcon
-                        style={{ fontSize: "25px", color: "#0040ff" }}
-                        icon={index == collapseNumber ? chevronDown : chevronUp}
-                        onClick={(e) => onClick(index)}
-                      />
-                    </IonCol>
-                  </IonRow>
-                  {/* <Collapse isOpened={isButtonCollapseOpen}> */}
-                  <Collapse isOpened={index == collapseNumber}>
-                    <IonRow>
-                      <IonCol>
-                        <IonLabel>Vet: </IonLabel>
-                        <IonLabel>{item.vet.vetName}</IonLabel>
-                      </IonCol>
-                    </IonRow>
-                    <IonRow>
-                      <IonCol>
-                        <IonLabel>Treatment/Service: </IonLabel>
-                        <IonLabel>{item.treatment.treatmentName}</IonLabel>
-                      </IonCol>
-                    </IonRow>
-                    <IonRow>
-                      <IonCol>
-                        <IonLabel>Address: </IonLabel>
-                        <IonLabel>{item.vet.vetAddress}</IonLabel>
-                      </IonCol>
-                    </IonRow>
-                    <IonRow>
-                      <IonCol>
-                        <IonLabel>Tel: </IonLabel>
-                        <IonLabel>{item.vet.tel_office_1}</IonLabel>
-                      </IonCol>
-                    </IonRow>
-                  </Collapse>
-                </IonGrid>
-              </IonCardContent>
-            </IonCard>
-          );
-        })}
+        {appointmentList.length == 0 && (
+          <IonRow>
+          <IonCol>
+            <img src= "assets/images/no-record-found.png" width = "100%" />
+          </IonCol>
+        </IonRow>
+        )}
 
-      
+        {appointmentList.length > 0 &&
+          appointmentList.map((item, index) => {
+            // console.log("collapseNumber", collapseNumber);
+            // console.log("index date", index, item.appointmentDate);
+            let appointmentDate = moment(
+              item.appointment.appointmentStartTime
+            ).format("DD-MMMM");
+            let appointmentStartTime = moment(
+              item.appointment.appointmentStartTime
+            ).format("hh:mm");
+            return (
+              <IonCard key={index}>
+                <IonCardContent class="ion-text-left">
+                  <IonGrid>
+                    <IonRow>
+                      <IonCol>
+                        <IonLabel>
+                          <div className="card-title">
+                            {item.appointment.appointmentNumber}
+                          </div>
+                        </IonLabel>
+                      </IonCol>
+                    </IonRow>
+                    <IonRow>
+                      <IonCol size="5">
+                        <IonIcon
+                          style={{ fontSize: "25px", color: "#0040ff" }}
+                          icon={calendarNumberOutline}
+                        />
+                        <IonLabel> </IonLabel>
+                        <IonLabel>
+                          <b>{appointmentDate}</b>
+                        </IonLabel>
+                      </IonCol>
+                      <IonCol size="5">
+                        <IonIcon
+                          style={{ fontSize: "25px", color: "#0040ff" }}
+                          icon={timerOutline}
+                        />
+                        <IonLabel> </IonLabel>
+                        <IonLabel>
+                          <b>{appointmentStartTime}</b>
+                        </IonLabel>
+                      </IonCol>
+                      <IonCol>
+                        <IonIcon
+                          style={{ fontSize: "25px", color: "#0040ff" }}
+                          icon={
+                            index == collapseNumber ? chevronDown : chevronUp
+                          }
+                          onClick={(e) => onClick(index)}
+                        />
+                      </IonCol>
+                    </IonRow>
+                    {/* <Collapse isOpened={isButtonCollapseOpen}> */}
+                    <Collapse isOpened={index == collapseNumber}>
+                      <IonRow>
+                        <IonCol>
+                          <IonLabel>
+                            <b>Appointment with:</b>
+                          </IonLabel>
+                          <IonLabel>{item.veter.veterName}</IonLabel>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>
+                          <IonLabel>
+                            <b>Vet:</b>
+                          </IonLabel>
+                          <IonLabel>{item.vet.vetName}</IonLabel>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>
+                          <IonLabel>
+                            <b>Treatment/Service:</b>
+                          </IonLabel>
+                          <IonLabel>{item.treatment.treatmentName}</IonLabel>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>
+                          <IonLabel>
+                            <b>Address:</b>
+                          </IonLabel>
+                          <IonLabel>{item.vet.vetAddress}</IonLabel>
+                        </IonCol>
+                      </IonRow>
+                      <IonRow>
+                        <IonCol>
+                          <IonLabel>
+                            <b>Tel:</b>
+                          </IonLabel>
+                          <IonLabel>{item.vet.tel_office_1}</IonLabel>
+                        </IonCol>
+                      </IonRow>
+                    </Collapse>
+                  </IonGrid>
+                </IonCardContent>
+              </IonCard>
+            );
+          })}
       </IonContent>
     </IonPage>
   );

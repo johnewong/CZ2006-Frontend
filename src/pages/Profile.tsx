@@ -140,8 +140,8 @@ const Profile: React.FC = () => {
 
     };
     const api = axios.create({
-      //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-      baseURL: `http://localhost:8080`
+      baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+      //baseURL: `http://localhost:8080`
     })
     console.log(EditData)
 
