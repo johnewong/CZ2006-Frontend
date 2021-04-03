@@ -48,7 +48,7 @@ const Register: React.FC = () => {
     
         const api = axios.create({
             //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-            baseURL: `http://192.168.0.108:8080`
+           // baseURL: `http://192.168.0.108:8080`
         })
          api.post("/account/user", RegisterData)
             .then(res => {
