@@ -45,38 +45,6 @@ import {
 import axios from "axios";
 import moment from "moment";
 
-// let veter_data = [
-//   {
-//     isActive:false,
-//     veter: {
-//       name: "Dr Goh",
-//       major: "Pet Surgery",
-//       address: "681 Hougang Ave 8, Singapore 530681",
-//       tel: "62468681",
-//     },
-//   },
-
-//   {
-//     isActive:false,
-//     veter: {
-//       name: "Dr Goh",
-//       major: "Pet Surgery",
-//       address: "681 Hougang Ave 8, Singapore 530681",
-//       tel: "62468681",
-//     },
-//   },
-
-//   {
-//     isActive:false,
-//     veter: {
-//       name: "Dr Goh",
-//       major: "Pet Surgery",
-//       address: "681 Hougang Ave 8, Singapore 530681",
-//       tel: "62468681",
-//     },
-//   },
-
-// ];
 
 function formatTime(d: Date) {
   var hour = "" + d.getHours(),
@@ -91,60 +59,80 @@ function formatTime(d: Date) {
   return [hour, min].join(":");
 }
 
+
+const avaiTimeArr: any [] = [];
 const MakeAppointment: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
   const [avaiTime, setAvailableTime] = useState<string>("");
-  const [veterID, setVeterID] = useState<number>(0);
   const [makeAppoint, setMakeAppoint] = useState<boolean>(false);
   const [confirmAppoint, setconfirmAppoint] = useState<boolean>(false);
+  const [veterName, setveterName] = useState<string>("");
+  const [veterID, setveterID] = useState<number>(0);
   const storage = window.localStorage;
-  const history = useHistory();
-
+  
   const [iserror, setIserror] = useState<boolean>(false);
+  const history = useHistory();
   const locationpara = useLocation();
+  
   const resultlist = locationpara.state as any;
+   
+  if(typeof resultlist !== "undefined" &&
+  resultlist.hasOwnProperty("veterdetail") !== false){
+   
+    if(avaiTimeArr.length == 0){
+      for(var i=0; i<resultlist.veterdetail.length; i++){
+        // if(avaiTimeArr[i] == null){
+        //   avaiTimeArr[i] = ""
+        // }
 
+          avaiTimeArr.push("")
+        
+      }
+      
+    }
+  }
+  
   useEffect(() => {
     let userInfo = storage.getItem("userInfo");
-
+   
     if (!userInfo) {
       history.push("/Login");
     }
   }, [history]);
 
-  function onClickMakeAppoint (id: number) {
-    console.log(id)
-    let time = avaiTime;
-    let veterid = veterID;
-    if (!time.trim() || id != veterid) {
-      setMessage("Please choose time slot!");
-      setMakeAppoint(true);
-    } else {
-      setShowModal(true);
-    }
-  };
 
-
-  function chooseSlots(e: any,time: string,id: number){
-    console.log(e)
-    console.log(id)
-    setAvailableTime(time);
-    setVeterID(id);
-
+  function chooseSlots(index: any,time: string,item: any){
+    avaiTimeArr[index] = time;
   }
 
   function redirectEventlist() {
     setconfirmAppoint(false);
     history.push("/EventList");
   }
+
+  
+  function onClickMakeAppoint (index: number,item: any) {
+
+    let time = avaiTimeArr[index];
+    if ( time == "" ) {
+      setMessage("Please choose time slot!");
+      setMakeAppoint(true);
+    } else {
+      
+      setveterID(item.veter.veterID);
+      setveterName(item.veter.veterName);
+      setAvailableTime(avaiTimeArr[index]);
+      setShowModal(true);
+    }
+  };
+
   const api = axios.create({
     //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
     baseURL: `http://localhost:8080`,
   });
 
-  const handleMakeAppoint = async (veterid: number, vetid: number) => {
-    console.log("handle " + veterid)
+  const handleMakeAppoint = async (veterID: number,vetid: number) => {
     let userinfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
 
     let time = avaiTime.split("-");
@@ -163,11 +151,11 @@ const MakeAppointment: React.FC = () => {
       treatmentID: resultlist.treatmentID,
       createdBy: userinfo.userID,
       vetID: vetid,
-      veterID: veterid,
+      veterID: veterID,
     };
     try {
       await api.post("/appointment/add", appointmentData).then((res) => {
-     
+        
         let str = JSON.stringify(res.data);
 
         setMessage("The appointment has been confirmed!");
@@ -184,6 +172,9 @@ const MakeAppointment: React.FC = () => {
       pathname: "/SearchResult",
       state: {
         vetdetail: resultlist.vetdetail,
+        
+        location: resultlist.location,
+        locationName: resultlist.locationName,
       },
     });
     return;
@@ -265,9 +256,9 @@ const MakeAppointment: React.FC = () => {
                   {" "}
                   <b>Available Slot</b>
                 </IonLabel>
-                <IonSelect
+                <IonSelect 
                   interface="action-sheet"
-                  onIonChange={(e) => chooseSlots(e,e.detail.value,item.veter.veterID)}
+                  onIonChange={(e) => chooseSlots(index,e.detail.value,item)}
                 >
                   {item.availableSlots.map((item: any, index: any) => {
                     if(item.available == true){
@@ -294,84 +285,13 @@ const MakeAppointment: React.FC = () => {
             </IonToolbar>
             <IonToolbar>
               <IonButton
-                onClick={() => onClickMakeAppoint(item.veter.veterID)}
+                onClick={(e) => onClickMakeAppoint(index,item)}
                 class="button button-outline button-block"
                 color="secondary"
               >
                 <b>Make Appointment</b>
               </IonButton>
-              <IonModal
-                isOpen={showModal}
-                swipeToClose={true}
-                onDidDismiss={() => setShowModal(false)}
-                cssClass="select-modal"
-              >
-                <IonContent>
-                  <IonGrid>
-                    <IonRow>
-                      <IonCol>
-                        <IonHeader>
-                          <IonLabel>
-                            <b>Appointment Summary</b>
-                          </IonLabel>
-                        </IonHeader>
-                        <p></p>
-                        <IonItem>
-                          <IonIcon icon={location}></IonIcon>
-                          <IonLabel>
-                            <b>Location:</b>
-                          </IonLabel>
-
-                          <IonLabel>
-                            
-                            {resultlist.selectedVet.vetAddress}
-                          </IonLabel>
-                        </IonItem>
-                        <IonItem>
-                          <IonIcon icon={person}></IonIcon>
-                          <IonLabel>
-                            <b>Veter Name:</b>
-                          </IonLabel>
-                          <IonLabel>{item.veter.veterName}</IonLabel>
-                        </IonItem>
-                        <IonItem>
-                          <IonIcon icon={time}></IonIcon>
-                          <IonLabel>
-                            <b>Time Slot:</b>
-                          </IonLabel>
-                          <IonLabel>{avaiTime}</IonLabel>
-                        </IonItem>
-                        <IonItem lines="none">
-                          <IonButton
-                            className="buttonCus button"
-                            expand="block"
-                            size="default"
-                            onClick={() => {
-                              setShowModal(false);
-                            }}
-                          >
-                            <b>Cancel</b>
-                          </IonButton>
-                          <IonButton
-                            className="buttonCus button"
-                            expand="block"
-                            size="default"
-                            onClick={() => {
-                              setShowModal(false);
-                              handleMakeAppoint(
-                                item.veter.veterID,
-                                resultlist.selectedVet.vetId
-                              );
-                            }}
-                          >
-                            <b>Confirm</b>
-                          </IonButton>
-                        </IonItem>
-                      </IonCol>
-                    </IonRow>
-                  </IonGrid>
-                </IonContent>
-              </IonModal>
+             
             </IonToolbar>
           </IonCardContent>
         </IonCard>
@@ -408,6 +328,79 @@ const MakeAppointment: React.FC = () => {
             )
           : null}
       </IonContent>
+
+      <IonModal
+                isOpen={showModal}
+                swipeToClose={true}
+                onDidDismiss={() => setShowModal(false)}
+                cssClass="select-modal"
+              >
+                <IonContent>
+                  <IonGrid>
+                    <IonRow>
+                      <IonCol>
+                        <IonHeader>
+                          <IonLabel>
+                            <b>Appointment Summary</b>
+                          </IonLabel>
+                        </IonHeader>
+                        <p></p>
+                        <IonItem>
+                          <IonIcon icon={location}></IonIcon>
+                          <IonLabel>
+                            <b>Location:</b>
+                          </IonLabel>
+
+                          <IonLabel>
+                          {typeof resultlist !== "undefined" && typeof resultlist.selectedVet !== "undefined" && resultlist.selectedVet.vetAddress}
+                          
+                          </IonLabel>
+                        </IonItem>
+                        <IonItem>
+                          <IonIcon icon={person}></IonIcon>
+                          <IonLabel>
+                            <b>Veter Name:</b>
+                          </IonLabel>
+                          <IonLabel>{veterName}</IonLabel>
+                        </IonItem>
+                        <IonItem>
+                          <IonIcon icon={time}></IonIcon>
+                          <IonLabel>
+                            <b>Time Slot:</b>
+                          </IonLabel>
+                          <IonLabel>{avaiTime}</IonLabel>
+                        </IonItem>
+                        <IonItem lines="none">
+                          <IonButton
+                            className="buttonCus button"
+                            expand="block"
+                            size="default"
+                            onClick={() => {
+                              setShowModal(false);
+                            }}
+                          >
+                            <b>Cancel</b>
+                          </IonButton>
+                          <IonButton
+                            className="buttonCus button"
+                            expand="block"
+                            size="default"
+                            onClick={() => {
+                              setShowModal(false);
+                              handleMakeAppoint(
+                                veterID,
+                                resultlist.selectedVet.vetId
+                              );
+                            }}
+                          >
+                            <b>Confirm</b>
+                          </IonButton>
+                        </IonItem>
+                      </IonCol>
+                    </IonRow>
+                  </IonGrid>
+                </IonContent>
+              </IonModal>
       <IonRow>
         <IonCol>
           <IonAlert
