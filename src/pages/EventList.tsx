@@ -154,7 +154,7 @@ const EventList: React.FC = () => {
         {appointmentList.length>0 && appointmentList.map((item, index) => {
           // console.log("collapseNumber", collapseNumber);
           // console.log("index date", index, item.appointmentDate);
-          let appointmentDate = moment(item.appointment.appointmentDate).format("DD-MMMM");
+          let appointmentDate = moment(item.appointment.appointmentStartTime).format("DD-MMMM");
           let appointmentStartTime = moment(item.appointment.appointmentStartTime).format("hh:mm");
           return (
             <IonCard>
