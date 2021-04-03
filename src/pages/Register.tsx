@@ -37,6 +37,7 @@ const Register: React.FC = () => {
 
     const [iserror, setIserror] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
+
       
     const handleRegister = async () => {
 
@@ -51,37 +52,44 @@ const Register: React.FC = () => {
             "password": password,
             "userType": userType,
         };
-
-        //is password matches
-        if(password != confirmedPassword)
+        if(validateEmail(emailAddress))
         {
-            setMessage("Please make sure your passwords match.");
-            setIserror(true);
+            //is password matches
+            if(password != confirmedPassword)
+            {
+                setMessage("Please make sure your passwords match.");
+                setIserror(true);
+            }else
+            {
+                
+                const api = axios.create({
+                    //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+                    baseURL: `http://localhost:8080`
+                })
+
+                try {
+                    await api.post("/account/user", RegisterData)
+                    .then(res => {
+                        let str =JSON.stringify(res.data); 
+                        console.log(res.data);
+                    // console.log(str);
+                    setMessage("Registered successfully!");
+                    setIserror(true);
+                    redirectEventlist();
+                    });
+                } catch(err){
+                    setMessage("User Existed!");
+                    setIserror(true)
+                }
+            }
         }else
         {
-             
-            const api = axios.create({
-                //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-                baseURL: `http://localhost:8080`
-            })
-
-            try {
-                await api.post("/account/user", RegisterData)
-                .then(res => {
-                    let str =JSON.stringify(res.data); 
-                    console.log(res.data);
-                   // console.log(str);
-                   setMessage("Registered successfully!");
-                   setIserror(true);
-                   redirectEventlist();
-                });
-              } catch(err){
-                setMessage("User Existed!");
-                setIserror(true)
-              }
+            setMessage("Please enter valid email address!");
+            setIserror(true)
         }
-    };
 
+    }
+        
     function redirectEventlist() {
         setIserror(false);
         history.push("/login");
@@ -136,16 +144,16 @@ const Register: React.FC = () => {
                     icon={maleFemaleOutline}
                 />
                     <IonSegment  value="Male">
-                    <IonSegmentButton 
-                        value = "Male"
-                        onClick = {() => setGender(false)} >
-                        <IonLabel >Male</IonLabel>
-                    </IonSegmentButton>
-                    <IonSegmentButton 
-                        value = "Female"
-                        onClick = {() => setGender(true)} >
-                        <IonLabel>Female</IonLabel>
-                    </IonSegmentButton>
+                        <IonSegmentButton 
+                            value = "Male"
+                            onClick = {() => setGender(false)} >
+                            <IonLabel >Male</IonLabel>
+                        </IonSegmentButton>
+                        <IonSegmentButton 
+                            value = "Female"
+                            onClick = {() => setGender(true)} >
+                            <IonLabel>Female</IonLabel>
+                        </IonSegmentButton>
                     </IonSegment>
             </IonItem>
 
@@ -226,6 +234,7 @@ const Register: React.FC = () => {
                     icon={lockClosedOutline}
                 />
               <IonInput
+                type="password"
                 class = "ion-text-center"  
                 placeholder = "Passsword"
                 value={password}
@@ -242,6 +251,7 @@ const Register: React.FC = () => {
                             icon={lockClosedOutline}
                         />
                         <IonInput
+                            type="password"
                             class = "ion-text-center"  
                             placeholder = "Confirm Password"
                             value={confirmedPassword}
@@ -257,8 +267,12 @@ const Register: React.FC = () => {
               <IonButton    size="default"
                             color="warning"
                             expand="block"
-                            onClick={handleRegister}
-                            ><b>Sign up</b></IonButton>
+                            
+                            onClick={() => {
+                                handleRegister();
+                                validateEmail(emailAddress);
+                              }}>
+                            <b>Sign up</b></IonButton>
                 <p style={{ fontSize: "medium" }}>
                     have an account?  <a  href="Login"  >Sign in!</a>
                     <div id={"Login"}></div>
