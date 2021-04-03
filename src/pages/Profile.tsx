@@ -87,6 +87,8 @@ const Profile: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [icNumber, setIcNumber] = useState<string>("");
   const [userType, setUserType] = useState<string>("0");
+  const [DisplayName, setDisplayName] = useState<string>("");
+
 
 
   useEffect(() => {
@@ -106,6 +108,8 @@ const Profile: React.FC = () => {
     console.log(obj["userID"]);
     setGender(obj["gender"]);
     console.log("gender:",obj["gender"]);
+    setDisplayName(obj["displayName"])
+    console.log(obj["displayName"])
 
 
 
@@ -135,13 +139,14 @@ const Profile: React.FC = () => {
       "icNumber": icNumber,
       "userType": userType,
       "password": password,
-      "userID":userID
+      "userID":userID,
+      "displayName":DisplayName
 
 
     };
     const api = axios.create({
-      //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-      baseURL: `http://localhost:8080`
+      baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+      //baseURL: `http://localhost:8080`
     })
     console.log(EditData)
 
@@ -199,10 +204,10 @@ const Profile: React.FC = () => {
               />
               <IonLabel style={{ fontSize: "20px" }}  class="ion-username">{}</IonLabel>
 
-              <IonInput value={userName}
+              <IonInput value={DisplayName}
                         class = "ion-text-center"
                         placeholder = "username"
-                        onIonChange={(e) => setUsername(e.detail.value!)}></IonInput>
+                        onIonChange={(e) => setDisplayName(e.detail.value!)}></IonInput>
             </IonItem>
           </IonCol>
 

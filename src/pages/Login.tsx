@@ -23,7 +23,8 @@ const LoginMX: React.FC = () => {
   const [message, setMessage] = useState<string>("");
 
   useEffect(()=>{
-    let userInfo = storage.getItem("userInfo");    
+    let userInfo = storage.getItem("userInfo");
+
     //if(userInfo) history.push('/home');
   },[history]);
 
@@ -40,7 +41,8 @@ const LoginMX: React.FC = () => {
 
       console.log("loginData", loginData);
       const api = axios.create({
-        baseURL: `http://localhost:8080`
+          baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+       //S baseURL: `http://localhost:8080`
       })
       api.post("/account/user/login", loginData)
           .then(res => {       
