@@ -43,7 +43,7 @@ import Home from "./pages/Home";
 import Setting from "./pages/Setting";
 import Account from "./pages/Account";
 import Language from "./pages/Language";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 const App: React.FC = () => {
 

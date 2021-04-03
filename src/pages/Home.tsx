@@ -216,12 +216,17 @@ export const Home: React.FC = ({}) => {
                 style={{ fontSize: "30px", color: "#ffd401" }}
                 icon={calendarOutline}
               />
-              <IonButton
-                class="button button-clear calendar "
+              <IonLabel
+
+
+                className="button-label  calendar "
+                placeholder="Select date"
                 onClick={() => setShowModal(true)}
               >
                 {date.toDateString()}
-              </IonButton>
+
+
+              </IonLabel>
             </IonItem>
             <IonRow></IonRow>
             <IonCol></IonCol>

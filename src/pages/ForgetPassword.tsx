@@ -41,7 +41,6 @@ const ForgetPassword: React.FC = () => {
               <IonAlert
                 isOpen={iserror}
                 onDidDismiss={() => setIserror(false)}
-                cssClass="my-custom-class"
                 header={"A reset email has been sent!"}
                 message={message}
                 buttons={["OK"]}
