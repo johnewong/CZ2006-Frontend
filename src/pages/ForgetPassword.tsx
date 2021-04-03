@@ -14,14 +14,33 @@ function validateEmail(email: string) {
 
 const ForgetPassword: React.FC = () => {
   const history = useHistory();
-  const [registeredEmail, setRegisteredEmail] = useState<string>("test@gmail.com");
-  const [password, setPassword] = useState<string>("cityslicka");
+  const [registeredEmail, setRegisteredEmail] = useState<string>();
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const handleLogin = () => {
+  const handleSendEmail = async () => {
       setMessage("");
       setIserror(true);
-      return;
+
+      const EmailData = {
+        "emailaddress": registeredEmail,
+      };
+
+      const api = axios.create({
+        //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+        baseURL: `http://localhost:8080`
+      })
+
+      try {
+          await api.post("/account/user/forgetpassword", EmailData)
+          .then(res => {
+              let str =JSON.stringify(res.data); 
+              console.log(res.data);
+              //console.log(str);
+          });
+        } catch(err){
+          setMessage("User Not Existed!");
+          setIserror(true)
+        }
   }
 
   return (
@@ -76,6 +95,7 @@ const ForgetPassword: React.FC = () => {
                     icon={mail}
                     />
                   <IonInput class = "ion-text-center"
+                      placeholder = "Enter Registered Email"
                       type="email"
                       value={registeredEmail}
                       onIonChange={(e) => setRegisteredEmail(e.detail.value!)}>
@@ -91,7 +111,7 @@ const ForgetPassword: React.FC = () => {
               <IonButton size = "default"
                           color="warning"
                           expand="block"
-                         onClick = {handleLogin}
+                         onClick = {handleSendEmail}
                          ><b>Send Request</b></IonButton>
             </IonCol>
           </IonRow>

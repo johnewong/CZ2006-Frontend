@@ -3,11 +3,12 @@ import {
   IonHeader,
   IonLifeCycleContext,
   IonPage,
-  IonRoute,
+  IonRoute, IonSegment, IonSegmentButton,
   IonTabBar,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import"./Profile.css"
 import React, {useEffect, useState } from "react";
 import axios from "axios";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
@@ -49,42 +50,100 @@ const GetProfile = async () => {
   
 };
 
+interface UserInfo {
+  userID: number;
+  contactNumber:string;
+  customerName: string;
+  emailAddress:string;
+}
+
 const Profile: React.FC = () => {
+
+  const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
+
   const history = useHistory();
   const storage = window.localStorage;
+  const [userInfo, setUserInfo] = useState<UserInfo>({customerName: "123", emailAddress: "", userID: 0,contactNumber:""});
+  const [userName, setUsername] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const [email, setemail]=useState<string>("");
   const [profileItems, setItems] = useState([]);
+  const [contactNumber, setContactNumber] = useState<string>("");
+  // const [emailAddress, setEmailAddress] = useState<string>("");
+  const [gender, setGender] = useState<boolean>();
+  const [iserror, setIserror] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [icNumber, setIcNumber] = useState<string>("");
+  const [userType, setUserType] = useState<string>("0");
 
-  
 
   useEffect(() => {
-    const userInfo = storage.getItem("userInfo");
 
-    console.log(userInfo);
-    //console.log("current user: " + currentUser);
+    const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    setContactNumber(obj["contactNumber"])
+    console.log(obj["contactNumber"])
+    setBirthday(obj["birthdate"])
+    console.log(obj["birthday"])
+    setUsername(obj["userName"])
+    console.log(obj["userName"])
+
 
     if (!userInfo) {
       history.push("/Login");
     }
-
-    GetProfile().then(data => setItems(data));
-
+    else{
+      setUserInfo(obj);
+    }
   }, [history]);
 
-  const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
-  const currentUser = obj.userName;
-  const currentBirthDate = obj.birthDate;
-  const ContactNumber = obj.contactNumber;
-  const CurrentEmail = obj.emailAddress;
+  const handleEdit = async () => {
+    const EditData = {
+      "userName": userName,
+      "birthdate": birthday,
+      "contactNumber": contactNumber,
+      "emailAddress": email,
+      "gender": gender,
+      "icNumber": icNumber,
+      "userType": userType,
+
+
+    };
+    const api = axios.create({
+      baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+      //baseURL: `http://localhost:8080`
+    })
+    console.log(EditData)
+
+    // try {
+    //   await api.post("/account/user/profile", EditData)
+    //       .then(res => {
+    //         let str = JSON.stringify(res.data);
+    //         console.log(res.data);
+    //         // console.log(str);
+    //         setMessage("update successfully!");
+    //         setIserror(true);
+    //
+    //
+    //       });
+    // } catch (err) {
+    //   setMessage("Information missing!");
+    //   setIserror(true)
+    // }
+  }
+
+
+
+  // const currentUser = obj.userName;
+  // const currentBirthDate = obj.birthDate;
+  // const ContactNumber = obj.contactNumber;
+  // const CurrentEmail = obj.emailAddress;
+
   //return currentUser;
     //console.log("username is " +obj.userName);
 
-  const handleEdit = () => {
-    return;
-  };
+
 
   // @ts-ignore
   return (
@@ -96,86 +155,95 @@ const Profile: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen className="ion-padding ion-text-center">
         <IonGrid>
-          <IonRow>
-            <IonCol>
-            </IonCol>
-          </IonRow>
 
           <IonCol>
-            <IonIcon
-              style={{ fontSize: "70px", color: "#0040ff" }}
-              icon={peopleOutline}
-            />
+            <img src="assets/images/Logo.png" width="200px" />
           </IonCol>
 
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={personOutline}
               />
-              <IonLabel position="floating">{currentUser}</IonLabel>
-            
-              <IonInput></IonInput>
+              <IonLabel style={{ fontSize: "20px" }}  class="ion-username">{}</IonLabel>
+
+              <IonInput value={userName}
+                        class = "ion-text-center"
+                        placeholder = "username"
+                        onIonChange={(e) => setUsername(e.detail.value!)}></IonInput>
             </IonItem>
           </IonCol>
 
           <IonItem>
             <IonIcon
-              style={{ fontSize: "20px", color: "#0040ff" }}
+              style={{ fontSize: "20px", color: "#ffd401" }}
               icon={maleFemaleOutline}
             />
-
-            <IonItem>
-              <IonLabel>Male</IonLabel>
-              <IonCheckbox name={male} />
-            </IonItem>
-            <IonItem>
-              <IonLabel>female</IonLabel>
-              <IonCheckbox name={female} />
-            </IonItem>
+            <IonSegment >
+              <IonSegmentButton  >
+                <IonLabel >Male</IonLabel>
+              </IonSegmentButton>
+              <IonSegmentButton>
+                <IonLabel>Female</IonLabel>
+              </IonSegmentButton>
+            </IonSegment>
           </IonItem>
 
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={calendarNumberOutline}
               />
-              <IonLabel position="floating">{currentBirthDate}</IonLabel>
-              <IonInput></IonInput>
+              <IonLabel >{}</IonLabel>
+              <IonInput value={birthday}
+                        class = "ion-text-center"
+                        placeholder = "birthday"
+                        onIonChange={(e) => setBirthday(e.detail.value!)} ></IonInput>
             </IonItem>
           </IonCol>
 
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={callOutline}
               />
-              <IonLabel position="floating">{ContactNumber}</IonLabel>
-              <IonInput></IonInput>
+              <IonLabel >{}</IonLabel>
+              <IonInput
+                  value={contactNumber}
+                  class = "ion-text-center"
+                          placeholder = "Contact Number"
+                          onIonChange={(e) => setContactNumber(e.detail.value!)} >
+              </IonInput>
             </IonItem>
           </IonCol>
 
           <IonCol>
             <IonItem>
               <IonIcon
-                style={{ fontSize: "20px", color: "#0040ff" }}
+                style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={mailOutline}
               />
-              <IonLabel position="floating">{CurrentEmail}</IonLabel>
+              {/*<IonLabel >{CurrentEmail}</IonLabel>*/}
               <IonInput
                 type="email"
+                class="ion-text-center"
                 value={email}
-                onIonChange={(e) => setEmail(e.detail.value!)}
+                placeholder = "Email address"
+                onIonChange={(e) => setemail(e.detail.value!)}
               ></IonInput>
             </IonItem>
           </IonCol>
 
           <IonCol>
-            <IonButton expand="block" onClick={handleEdit}>
-              Edit
+            <IonButton
+                //disabled={!handleEdit}
+                expand="block" size="default"
+                color="warning"
+                onClick={handleEdit}>
+             <b>Edit</b>
             </IonButton>
           </IonCol>
         </IonGrid>

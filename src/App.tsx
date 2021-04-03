@@ -102,7 +102,7 @@ const App: React.FC = () => {
               <Setting />
             </Route>
             <Route exact path="/">
-              <Redirect to="/Home" />
+              <Redirect to="/login" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">

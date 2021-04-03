@@ -153,11 +153,14 @@ export const Home: React.FC = ({}) => {
           cssClass="calendar-modal"
           onDidDismiss={() => setShowModal(false)}
         >
-          <Calendar onChange={onChange} value={date} />
+          <Calendar onChange={onChange} value={date} minDate={new Date()}/>
 
           <IonGrid>
-            <IonButton id="calendarConfirm" onClick={() => setShowModal(false)}>
-              Confirm
+            <IonButton id="calendarConfirm" onClick={() => setShowModal(false)} 
+                          size = "default"
+                          color="warning"
+                          expand="block">
+              <b>Confirm</b>
             </IonButton>
           </IonGrid>
         </IonModal>
@@ -217,15 +220,10 @@ export const Home: React.FC = ({}) => {
                 icon={calendarOutline}
               />
               <IonLabel
-
-
-                className="button-label  calendar "
-                placeholder="Select date"
+                class="ion-text-center "
                 onClick={() => setShowModal(true)}
               >
                 {date.toDateString()}
-
-
               </IonLabel>
             </IonItem>
             <IonRow></IonRow>
