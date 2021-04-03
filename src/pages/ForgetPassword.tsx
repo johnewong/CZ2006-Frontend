@@ -14,34 +14,43 @@ function validateEmail(email: string) {
 
 const ForgetPassword: React.FC = () => {
   const history = useHistory();
-  const [registeredEmail, setRegisteredEmail] = useState<string>();
+  const [registeredEmail, setRegisteredEmail] = useState<string>("");
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const handleSendEmail = async () => {
-      setMessage("");
-      setIserror(true);
 
       const EmailData = {
         "emailaddress": registeredEmail,
       };
 
-      const api = axios.create({
-        //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-        baseURL: `http://localhost:8080`
-      })
+      if(validateEmail(registeredEmail)){
+        const api = axios.create({
+          //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+          baseURL: `http://localhost:8080`
+        })
+  
+        
+        try {
+            await api.post("/account/user/forgetpassword", EmailData)
+            .then(res => {
+                let str =JSON.stringify(res.data); 
+                console.log(res.data);
+                //console.log(str);
+                setMessage("New password has already sent to the email!");
+                setIserror(true)
+            });
+          } catch(err){
+            setMessage("User Not Existed!");
+            setIserror(true)
+          }
+      }else
+      {
+        setMessage("Please enter valid email address!");
+        setIserror(true)
+      }
 
-      try {
-          await api.post("/account/user/forgetpassword", EmailData)
-          .then(res => {
-              let str =JSON.stringify(res.data); 
-              console.log(res.data);
-              //console.log(str);
-          });
-        } catch(err){
-          setMessage("User Not Existed!");
-          setIserror(true)
-        }
-  }
+      
+  };
 
   return (
     <IonPage>
@@ -60,7 +69,6 @@ const ForgetPassword: React.FC = () => {
               <IonAlert
                 isOpen={iserror}
                 onDidDismiss={() => setIserror(false)}
-                header={"A reset email has been sent!"}
                 message={message}
                 buttons={["OK"]}
               />
@@ -111,8 +119,11 @@ const ForgetPassword: React.FC = () => {
               <IonButton size = "default"
                           color="warning"
                           expand="block"
-                         onClick = {handleSendEmail}
-                         ><b>Send Request</b></IonButton>
+                         onClick={() => {
+                          handleSendEmail();
+                          validateEmail(registeredEmail);
+                        }}>
+                         <b>Send Request</b></IonButton>
             </IonCol>
           </IonRow>
           <IonRow>

@@ -255,10 +255,9 @@ const SearchResult: React.FC = () => {
       <IonCard key={index} onClick={() => viewVet(item)}>
         <IonCardContent class="ion-text-left">
           <IonToolbar>
-            <IonItem>
-              
-              <img src="assets/images/ClinicName.png" width="250px" />
-            </IonItem>
+              <img src="assets/images/ClinicName.png" width="400px" />
+            </IonToolbar>
+          <IonToolbar>
             <IonItem>
               <IonGrid>
                 <IonRow>

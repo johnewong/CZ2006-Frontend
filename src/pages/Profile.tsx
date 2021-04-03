@@ -1,5 +1,5 @@
 import {
-  IonContent,
+  IonContent, IonDatetime,
   IonHeader,
   IonLifeCycleContext,
   IonPage,
@@ -24,6 +24,7 @@ import {
   IonCheckbox,
   IonText,
 } from "@ionic/react";
+import "./Profile.css"
 
 import { IonRouteInner } from "@ionic/react-router/dist/types/ReactRouter/IonRouteInner";
 import {
@@ -36,6 +37,7 @@ import {
   mailOutline,
   lockClosedOutline,
 } from "ionicons/icons";
+import moment from "moment";
 
 const api = axios.create({
   baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
@@ -57,6 +59,13 @@ interface UserInfo {
   emailAddress:string;
 }
 
+
+function validateEmail(email: string) {
+  const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
+  return re.test(String(email).toLowerCase());
+}
+
+
 const Profile: React.FC = () => {
 
   const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
@@ -68,7 +77,8 @@ const Profile: React.FC = () => {
   const [birthday, setBirthday] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
   const [emailAddress, setemailAddress]=useState<string>("");
-
+  const [password, setPassword] = useState<string>("123123");
+  const [userID, setuserID] = useState<string>("");
   const [profileItems, setItems] = useState([]);
   const [contactNumber, setContactNumber] = useState<string>("");
   // const [emailAddress, setEmailAddress] = useState<string>("");
@@ -82,14 +92,21 @@ const Profile: React.FC = () => {
   useEffect(() => {
 
     const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
-    setContactNumber(obj["contactNumber"])
-    console.log(obj["contactNumber"])
-    setBirthday(obj["birthDate"])
-    console.log(obj["birthDate"])
-    setUsername(obj["userName"])
-    console.log(obj["userName"])
-    setemailAddress(obj["emailAddress"])
-    console.log(obj["emailAddress"])
+    setContactNumber(obj["contactNumber"]);
+    console.log(obj["contactNumber"]);
+    setBirthday(obj["birthDate"]);
+    console.log(obj["birthDate"]);
+    setUsername(obj["userName"]);
+    console.log(obj["userName"]);
+    setemailAddress(obj["emailAddress"]);
+    console.log(obj["emailAddress"]);
+    setPassword(obj["password"]);
+    console.log(obj["password"]);
+    setuserID(obj["userID"]);
+    console.log(obj["userID"]);
+    setGender(obj["gender"]);
+    console.log("gender:",obj["gender"]);
+
 
 
     if (!userInfo) {
@@ -102,14 +119,23 @@ const Profile: React.FC = () => {
 
 
   const handleEdit = async () => {
+    if(!validateEmail(emailAddress)){
+      setMessage("Please enter valid email address!");
+      setIserror(true)
+      return;
+    }
+
+
     const EditData = {
       "userName": userName,
-      "birthdate": birthday,
+      "birthDate": birthday,
       "contactNumber": contactNumber,
       "emailAddress": emailAddress,
       "gender": gender,
       "icNumber": icNumber,
       "userType": userType,
+      "password": password,
+      "userID":userID
 
 
     };
@@ -138,17 +164,7 @@ const Profile: React.FC = () => {
 
 
 
-  // const currentUser = obj.userName;
-  // const currentBirthDate = obj.birthDate;
-  // const ContactNumber = obj.contactNumber;
-  // const CurrentEmail = obj.emailAddress;
 
-  //return currentUser;
-    //console.log("username is " +obj.userName);
-
-
-
-  // @ts-ignore
   return (
     <IonPage>
       <IonHeader>
@@ -157,6 +173,18 @@ const Profile: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen className="ion-padding ion-text-center">
+        <IonAlert
+            isOpen={iserror}
+            onDidDismiss={() => setIserror(false)}
+            //header={}
+            message={message}
+            buttons = {[
+              {
+                text: 'OK',
+              }
+            ]}
+        />
+
         <IonGrid>
 
           <IonCol>
@@ -183,11 +211,15 @@ const Profile: React.FC = () => {
               style={{ fontSize: "20px", color: "#ffd401" }}
               icon={maleFemaleOutline}
             />
-            <IonSegment >
-              <IonSegmentButton  >
+            <IonSegment  value={gender+""}>
+              <IonSegmentButton
+                  value = "false"
+                  onClick = {() => setGender(false)} >
                 <IonLabel >Male</IonLabel>
               </IonSegmentButton>
-              <IonSegmentButton>
+              <IonSegmentButton
+                  value = "true"
+                  onClick = {() => setGender(true)} >
                 <IonLabel>Female</IonLabel>
               </IonSegmentButton>
             </IonSegment>
@@ -199,11 +231,14 @@ const Profile: React.FC = () => {
                 style={{ fontSize: "20px", color: "#ffd401" }}
                 icon={calendarNumberOutline}
               />
-              <IonLabel >{}</IonLabel>
-              <IonInput value={birthday}
+
+              <IonDatetime value={birthday}
+                        displayFormat="DD-MMM-YYYY"
+                        min="1900-01-01" max="2021-01-01"
+                        className="birthday"
                         class = "ion-text-center"
                         placeholder = "birthDay"
-                        onIonChange={(e) => setBirthday(e.detail.value!)} ></IonInput>
+                        onIonChange={(e) => setBirthday(e.detail.value!)} ></IonDatetime>
             </IonItem>
           </IonCol>
 
@@ -215,6 +250,7 @@ const Profile: React.FC = () => {
               />
               <IonLabel >{}</IonLabel>
               <IonInput
+                  type="number"
                   value={contactNumber}
                   class = "ion-text-center"
                           placeholder = "Contact Number"
@@ -237,6 +273,23 @@ const Profile: React.FC = () => {
                 placeholder = "Email address"
                 onIonChange={(e) => setemailAddress(e.detail.value!)}
               ></IonInput>
+            </IonItem>
+          </IonCol>
+
+          <IonCol>
+            <IonItem>
+              <IonIcon
+                  style={{ fontSize: "20px", color: "#ffd401" }}
+                  icon={lockClosedOutline}
+              />
+              <IonInput
+                  type="password"
+                  class = "ion-text-center"
+                  placeholder = "Passsword"
+                  value={password}
+                  onIonChange={(e) => setPassword(e.detail.value!)}
+              >
+              </IonInput>
             </IonItem>
           </IonCol>
 
