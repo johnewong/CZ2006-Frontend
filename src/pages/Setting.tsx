@@ -14,83 +14,68 @@ import {
     IonLabel,
 
     IonTitle,
-    IonPage
+    IonPage, IonToolbar, IonButton
 
 } from "@ionic/react";
 
 
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
-import {
-    settingsOutline,chevronForwardCircleOutline, saveOutline,informationCircleOutline, idCardOutline,peopleOutline,notificationsOutline,languageOutline
-} from "ionicons/icons";
+
 import"./Setting.css";
+import {useHistory} from "react-router-dom";
 
 const Setting: React.FC = () => {
+    const history = useHistory();
+    const storage = window.localStorage;
     const [checked, setChecked] = useState(false);
     const [iserror, setIserror] = useState<boolean>(false);
 
+    const handleLogout =  () => {
+        storage.removeItem("userInfo")
+        history.push("/Login/");
 
+    }
     return (
         <IonPage>
         <IonContent>
             <IonHeader>
-                    <IonItem>
-                    <IonTitle>Setting</IonTitle>
-                    </IonItem>
+                    <IonToolbar>
+                    <IonTitle>About</IonTitle>
+            </IonToolbar>
+
 
             </IonHeader>
+            <IonItem>
+                <p>
+                <p>Grooming appointments, boarding schedules, vet visits—our pets have busy lives.
+                    Manage it all with the free app for iOS or Android! With our apps,
+                    you can handle all your veterinary needs right from your phone.
+                    The comprehensive app allows you to make appointment requests,
+                    see your pet’s vaccine history, view our office hours and refill prescriptions whenever it’s most convenient for you!
+                </p></p>
 
 
-            <IonList>
-
-
-                <IonItem>
-                    <IonIcon class="ion-account" style={{ fontSize: "20px", color: "#ffd401" }} icon={peopleOutline}/>
-                    <IonGrid>
-                    <IonLabel>Account</IonLabel></IonGrid>
-                        <IonIcon style={{ fontSize: "20px" } } item-right icon={chevronForwardCircleOutline}/>
-
-
-                </IonItem>
-                <IonItem>
-                    <IonIcon class="ion-notification" style={{ fontSize: "20px", color: "#ffd401" }} item-right icon={notificationsOutline}/>
-                    <IonGrid>
-                    <IonLabel>Notification</IonLabel></IonGrid>
-
-                        <IonIcon style={{ fontSize: "20px" }} item-right icon={chevronForwardCircleOutline}/>
-
-                </IonItem>
-                <IonItem>
-                    <IonIcon class="ion-language" style={{ fontSize: "20px", color: "#ffd401" }} item-right icon={languageOutline}/>
-                    <IonGrid>
-                    <IonLabel>Language</IonLabel></IonGrid>
-
-                        <IonIcon style={{ fontSize: "20px" }} item-right icon={chevronForwardCircleOutline}/>
-
-                </IonItem>
-                <IonItem>
-                    <IonIcon class="ion-privacy" style={{ fontSize: "20px", color: "#ffd401" }} item-right icon={saveOutline}/>
-                    <IonGrid>
-                    <IonLabel>Privacy & Security</IonLabel></IonGrid>
-
-                        <IonIcon style={{ fontSize: "20px" }} item-right icon={chevronForwardCircleOutline}/>
-
-                </IonItem>
-                <IonItem>
-                    <IonIcon class="ion-about" style={{ fontSize: "20px", color: "#ffd401" }} item-right icon={informationCircleOutline}/>
-                    <IonGrid>
-                    <IonLabel>About</IonLabel></IonGrid>
-
-                        <IonIcon style={{ fontSize: "20px" }} item-right icon={chevronForwardCircleOutline}/>
-
-                </IonItem>
+            </IonItem>
 
 
 
-            </IonList>
+
+
+            <IonCol>
+                <IonButton
+                    //disabled={!handleEdit}
+                    expand="block" size="default"
+                    color="warning"
+                    className="ion-logout"
+                    onClick={handleLogout}>
 
 
 
+
+
+                    <b>logout</b>
+                </IonButton>
+            </IonCol>
 
         </IonContent>
         </IonPage>

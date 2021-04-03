@@ -82,7 +82,7 @@ function ClinicDetail(item: any) {
 
 function displayEvent(item: any, index: any) {
   return (
-    <IonCard routerLink="/SearchResult/MakeAppointment">
+    <IonCard>
       <IonCardContent class="ion-text-left">
         <IonToolbar>
           <IonItem>
@@ -180,8 +180,8 @@ const SearchResult: React.FC = () => {
 
   const handleSearch = async (type: boolean) => {
     const api = axios.create({
-      //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-      baseURL: `http://localhost:8080`,
+      baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+     // baseURL: `http://localhost:8080`,
     });
 
     console.log("resultlist", resultlist);
@@ -216,15 +216,7 @@ const SearchResult: React.FC = () => {
           appointmentDate:_date.toDate()
         });
 
-        // history.push({
-        //   pathname: "/Home/SearchResult",
-        //   state: {
-        //     vetdetail: res.data,
-        //     location: resultlist.location,
-        //     date: _date.toDate(),
-        //     treatmentID: resultlist.treatmentID,
-        //   },
-        // });
+      
       })
       .catch((error) => {
         setMessage("Failed to search please try again!");
@@ -237,13 +229,15 @@ const SearchResult: React.FC = () => {
   function viewVet(item: any) {
     console.log(item);
     history.push({
-      pathname: "/SearchResult/MakeAppointment",
+      pathname: "/MakeAppointment",
       state: {
         veterdetail: item.veterSlot, 
         vetdetail: resultlist.vetdetail, 
         selectedVet: item.vet,
         treatmentID : resultlist.treatmentID,
-        appointmentDate: resultlist.date
+        appointmentDate: resultlist.date,
+        location: resultlist.location,
+        locationName: resultlist.locationName,
       }
     });
     return;
