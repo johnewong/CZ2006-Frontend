@@ -58,15 +58,16 @@ interface UserInfo {
 }
 
 const Profile: React.FC = () => {
+
+  const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
+
   const history = useHistory();
   const storage = window.localStorage;
   const [userInfo, setUserInfo] = useState<UserInfo>({customerName: "123", emailAddress: "", userID: 0,contactNumber:""});
   const [userName, setUsername] = useState<string>("");
   const [birthday, setBirthday] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
-  const [email, setEmail=()=>{
-    console.log(this);
-  }] = useState<string>("");
+  const [email, setemail]=useState<string>("");
   const [profileItems, setItems] = useState([]);
   const [contactNumber, setContactNumber] = useState<string>("");
   // const [emailAddress, setEmailAddress] = useState<string>("");
@@ -75,6 +76,27 @@ const Profile: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   const [icNumber, setIcNumber] = useState<string>("");
   const [userType, setUserType] = useState<string>("0");
+
+
+  useEffect(() => {
+
+    const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    setContactNumber(obj["contactNumber"])
+    console.log(obj["contactNumber"])
+    setBirthday(obj["birthdate"])
+    console.log(obj["birthday"])
+    setUsername(obj["userName"])
+    console.log(obj["userName"])
+
+
+    if (!userInfo) {
+      history.push("/Login");
+    }
+    else{
+      setUserInfo(obj);
+    }
+  }, [history]);
+
 
   const handleEdit = async () => {
     const EditData = {
@@ -92,6 +114,7 @@ const Profile: React.FC = () => {
       baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
       //baseURL: `http://localhost:8080`
     })
+    console.log(EditData)
 
     // try {
     //   await api.post("/account/user/profile", EditData)
@@ -109,21 +132,6 @@ const Profile: React.FC = () => {
     //   setIserror(true)
     // }
   }
-
-
-
-  useEffect(() => {
-    const _userInfo = storage.getItem("userInfo");
-    const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
-
-
-    if (!userInfo) {
-      history.push("/Login");
-    }
-    else{
-      setUserInfo(obj);
-    }
-  }, [history]);
 
 
 
@@ -160,8 +168,10 @@ const Profile: React.FC = () => {
               />
               <IonLabel style={{ fontSize: "20px" }}  class="ion-username">{}</IonLabel>
 
-              <IonInput value={userInfo.customerName}
-                        onIonChange={(e) => setEmail(e.detail.value!)}></IonInput>
+              <IonInput value={userName}
+                        class = "ion-text-center"
+                        placeholder = "username"
+                        onIonChange={(e) => setUsername(e.detail.value!)}></IonInput>
             </IonItem>
           </IonCol>
 
@@ -187,7 +197,10 @@ const Profile: React.FC = () => {
                 icon={calendarNumberOutline}
               />
               <IonLabel >{}</IonLabel>
-              <IonInput></IonInput>
+              <IonInput value={birthday}
+                        class = "ion-text-center"
+                        placeholder = "birthday"
+                        onIonChange={(e) => setBirthday(e.detail.value!)} ></IonInput>
             </IonItem>
           </IonCol>
 
@@ -199,8 +212,7 @@ const Profile: React.FC = () => {
               />
               <IonLabel >{}</IonLabel>
               <IonInput
-
-                  value={userInfo.contactNumber}
+                  value={contactNumber}
                   class = "ion-text-center"
                           placeholder = "Contact Number"
                           onIonChange={(e) => setContactNumber(e.detail.value!)} >
@@ -217,8 +229,10 @@ const Profile: React.FC = () => {
               {/*<IonLabel >{CurrentEmail}</IonLabel>*/}
               <IonInput
                 type="email"
-                value={userInfo.emailAddress}
-                onIonChange={(e) => setEmail(e.detail.value!)}
+                class="ion-text-center"
+                value={email}
+                placeholder = "Email address"
+                onIonChange={(e) => setemail(e.detail.value!)}
               ></IonInput>
             </IonItem>
           </IonCol>
