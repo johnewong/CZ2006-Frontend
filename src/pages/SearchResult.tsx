@@ -37,6 +37,7 @@ import {
   IonCardContent,
 } from "@ionic/react";
 import "../components/GoogleMapPlugin";
+import "./SearchResult.css";
 import "moment-timezone";
 import moment from "moment";
 import MapContainer from "../components/GoogleMapPlugin";
@@ -261,10 +262,9 @@ const SearchResult: React.FC = () => {
       <IonCard key={index} onClick={() => viewVet(item)}>
         <IonCardContent class="ion-text-left">
           <IonToolbar>
-            <IonItem>
-              
-              <img src="assets/images/ClinicName.png" width="250px" />
-            </IonItem>
+              <img src="assets/images/ClinicName.png" width="400px" />
+            </IonToolbar>
+          <IonToolbar>
             <IonItem>
               <IonGrid>
                 <IonRow>

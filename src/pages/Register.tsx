@@ -9,12 +9,19 @@ import {
     IonTabBar,
     IonTitle,
     IonToolbar,
+    IonDatetime,
     IonItem, IonLabel, IonInput, IonButton, IonIcon, IonAlert,IonSegment,IonSegmentButton,IonGrid, IonRow, IonCol, IonRouterLink
 } from '@ionic/react';
 
 import axios from "axios";
 import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle, cardOutline} from "ionicons/icons";
+import moment from 'moment';
+import "./Register.css"
 
+function validateEmail(email: string) {
+    const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
+    return re.test(String(email).toLowerCase());
+  }
 
 const Register: React.FC = () => {
     const history = useHistory();
@@ -32,10 +39,22 @@ const Register: React.FC = () => {
     const [message, setMessage] = useState<string>("");
     const [redirect, setRedirect] = useState<string>("");
 
+    const customDayShortNames = [
+        's\u00f8n',
+        'man',
+        'tir',
+        'ons',
+        'tor',
+        'fre',
+        'l\u00f8r'
+      ];
+      
     const handleRegister = async () => {
+
+        let formatDate = moment(birthDate).format("YYYY-MM-DD");
         const RegisterData = {
             "userName" : userName,
-            "birthDate": birthDate,
+            "birthDate": formatDate,
             "contactNumber": contactNumber,
             "emailAddress": emailAddress,
             "gender": gender,
@@ -43,6 +62,7 @@ const Register: React.FC = () => {
             "password": password,
             "userType": userType,
         };
+
         //is password matches
         if(password != confirmedPassword)
         {
@@ -137,17 +157,30 @@ const Register: React.FC = () => {
             </IonItem>
 
                 <IonCol>
-                    <IonItem>
+                    {/*<IonItem>
                         <IonIcon
                             style={{ fontSize: "20px", color: "#ffd401" }}
                             icon={calendarNumberOutline}
                         />
                         <IonInput   class = "ion-text-center"  
                                     onIonChange={(e) => setBirthDate(e.detail.value!)}
-                                    placeholder = "Birth Date" 
+                                    placeholder = "Year - Month - Date" 
                         >
                         </IonInput>
 
+                    </IonItem>*/}
+                    <IonItem >
+                        <IonIcon
+                                style={{ fontSize: "20px", color: "#ffd401" }}
+                                icon={calendarNumberOutline}
+                            />
+                        <IonDatetime    className = "birthday" 
+                                        displayFormat="MM/DD/YYYY"
+                                        min="1990-01-01" max="2012-12-31" 
+                                        placeholder = "Birth Date"
+                                        value={birthDate} 
+                                        onIonChange={e => setBirthDate(e.detail.value!)}
+                                        ></IonDatetime>
                     </IonItem>
                 </IonCol>
                 <IonCol>
@@ -231,7 +264,8 @@ const Register: React.FC = () => {
               <IonButton    size="default"
                             color="warning"
                             expand="block"
-                            onClick={handleRegister}><b>Sign up</b></IonButton>
+                            onClick={handleRegister}
+                            ><b>Sign up</b></IonButton>
                 <p style={{ fontSize: "medium" }}>
                     have an account?  <a  href="Login"  >Sign in!</a>
                     <div id={"Login"}></div>
