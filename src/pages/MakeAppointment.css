@@ -9,7 +9,7 @@
 .buttonCus{
     width: 100%;
     text-align: center;
-    margin-top: 70%;
+    margin-top: 10%;
     font-size:14px;
   }
 
@@ -18,7 +18,8 @@
 }
 .select-modal {
     background: rgba(0, 0, 0, 0.5) !important;
-    padding:50% 5%  !important;
+    
+    padding:70% 5%  !important;
  }
 
  .ion-select{
