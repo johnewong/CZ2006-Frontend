@@ -41,8 +41,8 @@ function formatDate(d: Date) {
 
 var treatment_data: any[] = [];
 const api = axios.create({
-  baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-  //baseURL: `http://localhost:8080`,
+  //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+  baseURL: `http://localhost:8080`,
 });
 
 const getTreatments = async () => {
@@ -126,7 +126,7 @@ export const Home: React.FC = ({}) => {
         console.log("search data", res.data);
 
         history.push({
-          pathname: "/Home/SearchResult",
+          pathname: "/SearchResult",
           state: {
             vetdetail: res.data,
             location: locationID,
@@ -265,7 +265,6 @@ export const Home: React.FC = ({}) => {
               color="warning"
               expand="block"
               onClick={handleSearch}
-              //    routerLink="/Home/SearchResult"
             >
               <b>Search</b>
             </IonButton>
