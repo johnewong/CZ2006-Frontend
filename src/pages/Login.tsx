@@ -28,49 +28,45 @@ const LoginMX: React.FC = () => {
   },[history]);
 
   const handleLogin =  () => {
-    if (!username) {
-        setMessage("Please enter a valid username");
-        setIserror(true);
-        return;
+    if(username == "" || password == "")
+    {
+      setMessage("Please enter username or password!");
+      setIserror(true)
+    }else{
+        const loginData = {
+          "username": username,
+          "password": password
+      }
+
+      console.log("loginData", loginData);
+      const api = axios.create({
+        baseURL: `http://localhost:8080`
+      })
+      api.post("/account/user/login", loginData)
+          .then(res => {       
+              console.log("data",res);       
+
+              let str =JSON.stringify(res.data); 
+              storage.setItem("userInfo", str);
+              history.push("/Home/");
+          })
+          .catch((error)=>{
+              setMessage("Auth failure! Please create an account");
+              setIserror(true)
+          })
     }
-    // if (validateEmail(email) === false) {
-    //     setMessage("Your email is invalid");
-    //     setIserror(true);
-    //     return;
-    // }
-
-    // if (!password || password.length < 6) {
-    //     setMessage("Please enter your password");
-    //     setIserror(true);
-    //     return;
-    // }
-
-    const loginData = {
-        "username": username,
-        "password": password
-    }
-
-    console.log("loginData", loginData);
-    const api = axios.create({
-      baseURL: `http://localhost:8080`
-    })
-     api.post("/account/user/login", loginData)
-        .then(res => {       
-            console.log("data",res);       
-
-            let str =JSON.stringify(res.data); 
-            storage.setItem("userInfo", str);
-            history.push("/Home/");
-         })
-         .catch((error)=>{
-            setMessage("Auth failure! Please create an account");
-            setIserror(true)
-         })
+    
         
   };
   return (
     <IonPage>
       <IonContent fullscreen className="ion-padding ion-text-center">
+        <IonAlert
+          isOpen={iserror}
+          onDidDismiss={() => setIserror(false)}
+          message={message}
+          buttons={["OK"]}
+              />
         <IonGrid>
         <IonRow>
           <IonCol>
