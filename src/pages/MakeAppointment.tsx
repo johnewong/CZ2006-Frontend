@@ -13,7 +13,7 @@ import {
   IonToolbar,
   IonModal,
 } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./MakeAppointment.css";
 import { IonGrid, IonRow, IonCol } from "@ionic/react";
 import {
@@ -44,6 +44,7 @@ import {
 } from "@ionic/react";
 import axios from "axios";
 import moment from "moment";
+import { UserContext } from "../App";
 
 
 function formatTime(d: Date) {
@@ -62,6 +63,8 @@ function formatTime(d: Date) {
 
 const avaiTimeArr: any [] = [];
 const MakeAppointment: React.FC = () => {
+  const user = useContext(UserContext);
+
   const [message, setMessage] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
   const [avaiTime, setAvailableTime] = useState<string>("");
@@ -95,9 +98,12 @@ const MakeAppointment: React.FC = () => {
   
   useEffect(() => {
     let userInfo = storage.getItem("userInfo");
-   
+    
     if (!userInfo) {
       history.push("/Login");
+    }else{
+      
+      user.setIsLoggedIn(true);
     }
   }, [history]);
 

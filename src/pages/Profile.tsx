@@ -95,21 +95,21 @@ const Profile: React.FC = () => {
 
     const obj = JSON.parse(localStorage.getItem('userInfo') || '{}');
     setContactNumber(obj["contactNumber"]);
-    console.log(obj["contactNumber"]);
     setBirthday(obj["birthDate"]);
-    console.log(obj["birthDate"]);
     setUsername(obj["userName"]);
-    console.log(obj["userName"]);
     setemailAddress(obj["emailAddress"]);
-    console.log(obj["emailAddress"]);
     setPassword(obj["password"]);
-    console.log(obj["password"]);
     setuserID(obj["userID"]);
-    console.log(obj["userID"]);
     setGender(obj["gender"]);
-    console.log("gender:",obj["gender"]);
-    setDisplayName(obj["displayName"])
-    console.log(obj["displayName"])
+    setDisplayName(obj["displayName"]);
+    // console.log(obj["contactNumber"]);
+    // console.log(obj["birthDate"]);
+    // console.log(obj["userName"]);
+    // console.log(obj["emailAddress"]);
+    // console.log(obj["password"]);
+    // console.log(obj["userID"]);
+    // console.log("gender:",obj["gender"]);
+    // console.log(obj["displayName"])
 
 
 

@@ -28,7 +28,7 @@ const LoginMX: React.FC = () => {
   useEffect(()=>{
     let userInfo = storage.getItem("userInfo");
 
-    //if(userInfo) history.push('/home');
+    // if(userInfo) history.push('/Home');
   },[history]);
 
   const handleLogin = async () => {
@@ -149,7 +149,7 @@ const LoginMX: React.FC = () => {
             </IonCol>
             {/*Register link*/}
             <IonCol class = "ion-text-right"> 
-                <IonButton routerLink="/Register"
+                <IonButton routerLink="/register"
                            class="button button-clear button-postive" 
                            color = "#ffd401"
                 ><a href="#">Sign Up!</a></IonButton>  

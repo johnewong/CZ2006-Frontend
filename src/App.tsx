@@ -34,6 +34,16 @@ import "./theme/variables.css";
 import Login from "./pages/Login";
 import React, { useContext, useEffect, useState } from "react";
 import MainTab from "./MainTab";
+import Register from "./pages/Register";
+import ForgetPassword from "./pages/ForgetPassword";
+import MakeAppointment from "./pages/MakeAppointment";
+import SearchResult from "./pages/SearchResult";
+import ResetPassword from "./pages/ResetPassword";
+import Setting from "./pages/Setting";
+import Profile from "./pages/Profile";
+import Account from "./pages/Account";
+import EventList from "./pages/EventList";
+import Home from "./pages/Home";
 interface IUserManager {
   setIsLoggedIn: Function;
 }
@@ -51,7 +61,6 @@ const App: React.FC = () => {
 
   const history = useHistory();
   const storage = window.localStorage;
-  console.log(storage.getItem("userInfo"))
   // useEffect(()=>{
   //   let userInfo = storage.getItem("userInfo");
   //     console.log("userInfo",userInfo);
@@ -65,9 +74,17 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        
-      <Route path="/Login" component={Login} exact={true} />
+     
       <Route path="/*" component={isLoggedIn?  MainTab : Login} />
+      <Route path="/register" component={Register} exact={true} />
+      <Route
+        path="/ForgetPassword"
+        component={ForgetPassword}
+        exact={true}
+      />
+      <Route path="/Login" component={Login} exact={true} />
+      <Route path="/register" component={Register} exact={true} />
+     
       </IonReactRouter>
     </IonApp>
   );

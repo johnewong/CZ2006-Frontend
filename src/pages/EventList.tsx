@@ -70,7 +70,7 @@ const EventList: React.FC = () => {
   useEffect(() => {
     let _userInfo = storage.getItem("userInfo");
     let _userInfoObj = JSON.parse(_userInfo || "{}");
-
+    
     if (!_userInfo) {
       history.push("/Login");
     } else {
@@ -87,7 +87,7 @@ const EventList: React.FC = () => {
   const getAppointments = async (_userInfoObj: UserInfo) => {
     try {
       const res = await api.get("appointment/customer/" + _userInfoObj.userID);
-      console.log("treatment data", res.data);
+     // console.log("treatment data", res.data);
       return res.data;
     } catch (error) {}
   };
@@ -95,10 +95,10 @@ const EventList: React.FC = () => {
   const [collapseNumber, setCollapseNumber] = useState(0);
   function onClick(index: number) {
     //useCallback(()=>setCollapseNumber(index), [collapseNumber]);
-    console.log("click!", index);
-    console.log("collapseNumber!", collapseNumber);
+  //  console.log("click!", index);
+  //  console.log("collapseNumber!", collapseNumber);
     if (index == collapseNumber) {
-      console.log("toggle");
+ //     console.log("toggle");
       setCollapseNumber(100);
     } else {
       setCollapseNumber(index);

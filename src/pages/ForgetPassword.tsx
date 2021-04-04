@@ -63,7 +63,7 @@ const ForgetPassword: React.FC = () => {
             <IonLabel color="#bd9e07" >Back</IonLabel>
           </IonChip>
         </IonButton>
-     
+        
         <IonGrid  className="ion-padding ion-text-center">
         <IonRow>
             <IonCol>
