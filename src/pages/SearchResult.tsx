@@ -308,13 +308,13 @@ const SearchResult: React.FC = () => {
               fill="clear"
               color="#000000"
               onClick={() => handleSearch(false)}
-            >
+            > 
               <IonIcon icon={caretBack} />
               Previous
             </IonButton>
           </IonButtons>
           <IonTitle style={{ fontSize: "22px" }} color="#000000">
-            <b> {moment(searchDate).format("YYYY-MM-DD")}</b>
+            <b> {moment(searchDate).format("DD-MMM-YYYY")}</b>
           </IonTitle>
           <IonButtons slot="primary">
             <IonButton
