@@ -229,7 +229,7 @@ const SearchResult: React.FC = () => {
   function viewVet(item: any) {
     console.log(item);
     history.push({
-      pathname: "SearchResult/MakeAppointment",
+      pathname: "/MakeAppointment",
       state: {
         veterdetail: item.veterSlot, 
         vetdetail: resultlist.vetdetail, 

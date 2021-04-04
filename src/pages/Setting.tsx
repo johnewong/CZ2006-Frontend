@@ -14,7 +14,7 @@ import {
     IonLabel,
 
     IonTitle,
-    IonPage, IonToolbar, IonButton
+    IonPage, IonToolbar, IonButton, IonCard, IonCardHeader, IonCardContent, IonText, IonCardTitle
 
 } from "@ionic/react";
 
@@ -51,13 +51,21 @@ const Setting: React.FC = () => {
 
             </IonHeader>
             <IonItem>
-                <p>
-                <p>Grooming appointments, boarding schedules, vet visits—our pets have busy lives.
+                <IonCard>
+                   <img src= "assets/images/Banner.png" width = "300px" />
+                    <IonCardTitle class = "ion-text-center">
+                        About Pet Clinic
+                    </IonCardTitle>
+                    <IonCardContent>
+                        <IonText>
+                        Grooming appointments, boarding schedules, vet visits—our pets have busy lives.
                     Manage it all with the free app for iOS or Android! With our apps,
                     you can handle all your veterinary needs right from your phone.
                     The comprehensive app allows you to make appointment requests,
                     see your pet’s vaccine history, view our office hours and refill prescriptions whenever it’s most convenient for you!
-                </p></p>
+                        </IonText>
+                    </IonCardContent>
+                </IonCard>
 
 
             </IonItem>
