@@ -80,11 +80,7 @@ const EventList: React.FC = () => {
   }, []);
 
   const api = axios.create({
-<<<<<<< HEAD
     baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`,
-=======
-    baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
->>>>>>> aab6a9a7e83561bb2738fb5c9fc902cdba5b1f97
     //baseURL: `http://localhost:8080`,
   });
 

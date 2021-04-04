@@ -44,13 +44,8 @@ const LoginMX: React.FC = () => {
 
       console.log("loginData", loginData);
       const api = axios.create({
-<<<<<<< HEAD
         baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
         // baseURL: `http://localhost:8080`
-=======
-          baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-       //S baseURL: `http://localhost:8080`
->>>>>>> aab6a9a7e83561bb2738fb5c9fc902cdba5b1f97
       })
       await api.post("/account/user/login", loginData)
           .then(res => {       
