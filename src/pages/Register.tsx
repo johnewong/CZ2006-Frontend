@@ -5,7 +5,7 @@ import {
     IonHeader,
     IonLifeCycleContext,
     IonPage,
-    IonRoute,
+    IonChip,
     IonTabBar,
     IonTitle,
     IonToolbar,
@@ -14,9 +14,10 @@ import {
 } from '@ionic/react';
 
 import axios from "axios";
-import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,female, male, personCircle, cardOutline} from "ionicons/icons";
+import {personAddOutline,maleFemaleOutline,calendarNumberOutline,callOutline,mailOutline,lockClosedOutline,arrowBack, male, personCircle, cardOutline} from "ionicons/icons";
 import moment from 'moment';
 import "./Register.css"
+import { Icon } from 'ionicons/dist/types/components/icon/icon';
 
 function validateEmail(email: string) {
     const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
@@ -36,6 +37,7 @@ const Register: React.FC = () => {
     const [userType, setUserType] = useState<string>("0");
 
     const [iserror, setIserror] = useState<boolean>(false);
+    const [issuccessful, setIsSuccessful] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
 
       
@@ -56,7 +58,7 @@ const Register: React.FC = () => {
         if(validateEmail(emailAddress))
         {
             //is password matches
-            if(password != confirmedPassword)
+            if(password != confirmedPassword && password !=null && userName!=null && birthDate!=null && contactNumber!=null && emailAddress!=null && icNumber !=null)
             {
                 setMessage("Please make sure your passwords match.");
                 setIserror(true);
@@ -75,8 +77,7 @@ const Register: React.FC = () => {
                         console.log(res.data);
                     // console.log(str);
                     setMessage("Registered successfully!");
-                    setIserror(true);
-                    redirectEventlist();
+                    setIsSuccessful(true);
                     });
                 } catch(err){
                     setMessage("User Existed!");
@@ -85,14 +86,14 @@ const Register: React.FC = () => {
             }
         }else
         {
-            setMessage("Please enter valid email address!");
+            setMessage("Please enter valid information!");
             setIserror(true)
         }
 
     }
         
     function redirectEventlist() {
-        setIserror(false);
+        setIsSuccessful(false);
         history.push("/login");
       }
   // @ts-ignore
@@ -100,6 +101,13 @@ const Register: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+            <IonButton routerLink="/Login" class = "button button-clear"> 
+            <IonChip color = "dark">
+                <IonIcon icon={arrowBack}
+                        color="#bd9e07" />
+                <IonLabel color="#bd9e07" >Back</IonLabel>
+            </IonChip>
+            </IonButton>
           <IonTitle>Register</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -116,12 +124,24 @@ const Register: React.FC = () => {
                     }
                 ]}
               />
-
+        <IonAlert
+                isOpen={issuccessful}
+                onDidDismiss={() => setIsSuccessful(false)}
+                //header={}
+                message={message}
+                buttons = {[
+                    {
+                        text: 'OK',
+                        handler: () => {
+                            redirectEventlist()}
+                    }
+                ]}
+              />
         <IonGrid>
           <IonCol>
           <IonRow>
             <IonCol>
-              <img src="assets/images/Logo.png" width="200px" />
+              <img src="assets/images/Logo.png" width="180px" />
             </IonCol>
           </IonRow>
           </IonCol>
@@ -275,10 +295,12 @@ const Register: React.FC = () => {
 
                               }}>
                             <b>Sign up</b></IonButton>
-                <p style={{ fontSize: "medium" }}>
-                    have an account?  <a  href="Login"  >Sign in!</a>
-                    <div id={"Login"}></div>
-            </p>
+                <IonCol class = "ion-text-center"> 
+                    <IonButton routerLink="/Login"
+                            class="button button-clear button-postive" 
+                            color = "#46b0e0"
+                    ><a href="#">Already have an account? Login here!</a></IonButton>  
+                </IonCol>
 
             </IonCol>
 

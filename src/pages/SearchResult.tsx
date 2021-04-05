@@ -147,14 +147,21 @@ const SearchResult: React.FC = () => {
   }, [location]);
 
   function ClinicDetail(item: any) {
+    let operatingHourStart = moment(
+      item.operatingHourStart
+    ).format("hh:mm A");
+    
+    let operatingHourEnd = moment(
+      item.operatingHourEnd
+    ).format("hh:mm A");
     return (
       <div>
         <IonRow>
-          <IonCol>
+          <IonCol size = "50">
             <IonLabel>
-              <b>Description: </b>
+              <b>Operation Hours: </b>
             </IonLabel>
-            <IonLabel>{item.vetDescription}</IonLabel>
+            <IonLabel>{operatingHourStart  + " ~ " + operatingHourEnd}</IonLabel>
           </IonCol>
         </IonRow>
 
@@ -234,6 +241,7 @@ const SearchResult: React.FC = () => {
         veterdetail: item.veterSlot, 
         vetdetail: resultlist.vetdetail, 
         selectedVet: item.vet,
+
         treatmentID : resultlist.treatmentID,
         appointmentDate: resultlist.date,
         location: resultlist.location,
