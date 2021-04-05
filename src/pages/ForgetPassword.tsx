@@ -36,7 +36,7 @@ const ForgetPassword: React.FC = () => {
              api.post("/account/user/forgetpassword", EmailData)
             .then(res => {
                 let str =JSON.stringify(res.data); 
-                console.log(res.data);
+               // console.log(res.data);
                 //console.log(str);
                 
             });
