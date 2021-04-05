@@ -66,23 +66,7 @@ const EventList: React.FC = () => {
   const storage = window.localStorage;
   const [appointmentList, setAppointment] = useState<Array<Item>>([]);
   const [userInfo, setUserInfo] = useState<UserInfo>();
-
-  useEffect(() => {
-    let _userInfo = storage.getItem("userInfo");
-    let _userInfoObj = JSON.parse(_userInfo || "{}");
-    
-    if (!_userInfo) {
-      history.push("/Login");
-    } else {
-      setUserInfo(_userInfoObj);
-      getAppointments(_userInfoObj).then((data) => setAppointment(data));
-    }
-  }, []);
-
-  const api = axios.create({
-    baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`,
-    //baseURL: `http://localhost:8080`,
-  });
+  const [temp, setTemp] = useState(0);
 
   const getAppointments = async (_userInfoObj: UserInfo) => {
     try {
@@ -91,7 +75,30 @@ const EventList: React.FC = () => {
       return res.data;
     } catch (error) {}
   };
+  useEffect(() => {
+    let _userInfo = storage.getItem("userInfo");
+    let _userInfoObj = JSON.parse(_userInfo || "{}");
+    
+    if (!_userInfo) {
+      history.push("/Login");
+    } else {
+     setUserInfo(_userInfoObj);
+     getAppointments(_userInfoObj).then((data) => setAppointment(data));
+    }
+    
+  }, [temp]);
+  
+  useEffect(()=>{
+    setInterval(()=>{
+      setTemp((prevTemp)=>prevTemp+1)
+    }, 10000)
+  }, [])
+  const api = axios.create({
+    baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`,
+    //baseURL: `http://localhost:8080`,
+  });
 
+  
   const [collapseNumber, setCollapseNumber] = useState(0);
   function onClick(index: number) {
     //useCallback(()=>setCollapseNumber(index), [collapseNumber]);
