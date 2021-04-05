@@ -178,7 +178,7 @@ const MakeAppointment: React.FC = () => {
       pathname: "/SearchResult",
       state: {
         vetdetail: resultlist.vetdetail,
-        
+        date:resultlist.date,
         location: resultlist.location,
         locationName: resultlist.locationName,
       },

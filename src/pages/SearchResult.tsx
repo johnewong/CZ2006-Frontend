@@ -142,6 +142,7 @@ const SearchResult: React.FC = () => {
     if (location.state) {
       let a = location.state as ResultList;
       setResultlist(a);
+      console.log(location.state)
       setSearchDate(a.date as Date);
     }
   }, [location]);
@@ -184,7 +185,7 @@ const SearchResult: React.FC = () => {
       </div>
     );
   }
-
+  let _date: moment.Moment;
   const handleSearch = async (type: boolean) => {
     const api = axios.create({
       baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
@@ -193,7 +194,7 @@ const SearchResult: React.FC = () => {
 
     console.log("resultlist", resultlist);
     console.log("type", type);
-    let _date: moment.Moment;
+   
     if (!type) {
       _date = moment(searchDate).add(-1, "day");
     } else {
@@ -220,7 +221,7 @@ const SearchResult: React.FC = () => {
           locationName:resultlist.locationName,
           date: _date.toDate(),
           treatmentID: resultlist.treatmentID,
-          appointmentDate:_date.toDate()
+          appointmentDate:_date.toDate(),
         });
 
       
@@ -241,7 +242,7 @@ const SearchResult: React.FC = () => {
         veterdetail: item.veterSlot, 
         vetdetail: resultlist.vetdetail, 
         selectedVet: item.vet,
-
+        date: resultlist.date,
         treatmentID : resultlist.treatmentID,
         appointmentDate: resultlist.date,
         location: resultlist.location,

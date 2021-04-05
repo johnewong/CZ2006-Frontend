@@ -48,7 +48,7 @@ const api = axios.create({
 const getTreatments = async () => {
   try {
     const res = await api.get("/treatment");
-    console.log("treatment data", res.data);
+   // console.log("treatment data", res.data);
     return res.data;
   } catch (error) {}
 };
@@ -56,7 +56,7 @@ const getTreatments = async () => {
 const getLocations = async () => {
   try {
     const res = await api.get("/vet/locations");
-    console.log("location data", res.data);
+  //  console.log("location data", res.data);
     return res.data;
   } catch (error) {}
 };
@@ -117,13 +117,13 @@ export const Home: React.FC = ({}) => {
     let formatdate = formatDate(date);
     let locationID = location;
     let locationPair = locationItems.find(m => m["LocationID"]==locationID)! as LocationPair;
-    console.log("/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID);
+   // console.log("/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID);
     await api
       .get(
         "/appointment/search/" + locationID + "/" + formatdate + "/" + treatmentID
       )
       .then((res) => {
-        console.log("search data", res.data);
+     //   console.log("search data", res.data);
 
         history.push({
           pathname: "/SearchResult",
