@@ -235,6 +235,7 @@ const Profile: React.FC = () => {
                 icon={calendarNumberOutline}
               />
 
+
               <IonDatetime value={birthday}
                         displayFormat="DD-MMM-YYYY"
                         min="1900-01-01" max="2021-01-01"

@@ -62,7 +62,7 @@ const Setting: React.FC = () => {
                     Manage it all with the free app for iOS or Android! With our apps,
                     you can handle all your veterinary needs right from your phone.
                     The comprehensive app allows you to make appointment requests,
-                    see your pet’s vaccine history, view our office hours and refill prescriptions whenever it’s most convenient for you!
+                     view our office hours and refill prescriptions whenever it’s most convenient for you!
                         </IonText>
                     </IonCardContent>
                 </IonCard>
