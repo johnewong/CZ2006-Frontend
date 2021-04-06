@@ -29,8 +29,8 @@ const ForgetPassword: React.FC = () => {
         setIserror(true)
 
         const api = axios.create({
-          baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-          //baseURL: `http://localhost:8080`
+          //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+          baseURL: `http://localhost:8080`
         })
         try {
              api.post("/account/user/forgetpassword", EmailData)

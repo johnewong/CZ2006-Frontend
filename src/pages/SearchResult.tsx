@@ -188,8 +188,8 @@ const SearchResult: React.FC = () => {
   let _date: moment.Moment;
   const handleSearch = async (type: boolean) => {
     const api = axios.create({
-      baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
-      //baseURL: `http://localhost:8080`,
+      //baseURL: `http://yifeilinuxvm.southeastasia.cloudapp.azure.com`
+      baseURL: `http://localhost:8080`,
     });
 
     console.log("resultlist", resultlist);
